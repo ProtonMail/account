@@ -9,7 +9,6 @@
 
 ## Dev
 
-- `npm run dev -- --no-prerender`
+- `npm run dev`
 
-> Prerender because of translation package. If you want to start the project on a custom port you need
-to add the flag `-p <port>`
+> You must have the lib **frontend-commons**. As it's not available yet, install it via npm link ;)
