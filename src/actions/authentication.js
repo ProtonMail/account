@@ -79,37 +79,33 @@ const actions = (store) => {
     }
 
     async function login(state, opt) {
-        try {
-            console.log('login.load', opt);
-            const { config, user } = await userConnector.login(opt);
-            console.log('login.success', { config, user, opt });
+        console.log('login.load', opt);
+        const { config, user } = await userConnector.login(opt);
+        console.log('login.success', { config, user, opt });
 
-            if (config) {
-                const data = { user, isLoggedIn: false };
+        if (config) {
+            const data = { user, isLoggedIn: false };
 
-                if (config.is2FA) {
-                    data.step = '2fa';
-                }
-
-                if (config.isUnlockable) {
-                    data.step = 'unlock';
-                }
-                return store.setState(toState(state, 'auth', data));
+            if (config.is2FA) {
+                data.step = '2fa';
             }
 
-            store.setState(
-                toState(state, 'auth', {
-                    user,
-                    isLoggedIn: true,
-                    step: ''
-                })
-            );
-
-            !opt.raw && (await loadUserConfig(state, user));
-            route('/dashboard', store.getState());
-        } catch (e) {
-            console.error(e);
+            if (config.isUnlockable) {
+                data.step = 'unlock';
+            }
+            return store.setState(toState(state, 'auth', data));
         }
+
+        store.setState(
+            toState(state, 'auth', {
+                user,
+                isLoggedIn: true,
+                step: ''
+            })
+        );
+
+        !opt.raw && (await loadUserConfig(state, user));
+        route('/dashboard', store.getState());
     }
 
     async function loadAuthUser(state) {
