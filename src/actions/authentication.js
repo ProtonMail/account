@@ -128,7 +128,6 @@ const actions = (store) => {
         logout,
         unlock,
         login2FA,
-        login,
         loadAuthUser
     });
 };
