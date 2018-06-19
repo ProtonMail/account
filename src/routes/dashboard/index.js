@@ -1,24 +1,13 @@
-import { h, Component } from 'preact';
-import { route } from 'preact-router';
-import { isLoggedIn, get as getUser } from 'frontend-commons/src/user/model';
+import { h } from 'preact';
+import { connect } from 'unistore/full/preact';
 
-import { logout } from '../../actions/auth';
+export default connect(['auth', 'config'])(({ auth, config }) => {
+    console.log('DASHBOARD', auth)
+  return (<div id="dashboard" style="margin-top: 100px">
+        <h1>Bonjour <b>{auth.user.Name}</b></h1>
 
-export default class Dashboard extends Component {
-
-    componentWillMount() {
-        if (!isLoggedIn()) {
-            return route('/');
-        }
-        this.setState({ user: getUser() });
-    }
-
-    render({ user, config }) {
-
-        const userData = user || this.state.user ||  getUser();
-
-        return (<div id="dashboard" style="margin-top: 100px">
-                <h1>Bonjour <b>{userData.Name}</b></h1>
-        </div>);
-    }
-}
+        <pre>
+            {JSON.stringify(config, null, 2)}
+        </pre>
+  </div>);
+})
