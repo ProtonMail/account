@@ -20,7 +20,17 @@
     ]
   },
   "eslintConfig": {
-    "extends": "eslint-config-synacor"
+    "extends": "eslint-config-synacor",
+    "rules": {
+      "indent": [
+        "error",
+        4
+      ],
+      "brace-style": [
+        "error",
+        "1tbs"
+      ]
+    }
   },
   "eslintIgnore": [
     "build/*"
