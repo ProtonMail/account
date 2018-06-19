@@ -11,11 +11,11 @@
     "lint": "eslint src",
     "test": "jest ./tests",
     "precommit": "lint-staged",
-    "pretty": "prettier --write $(find src -type f -name '*.js')"
+    "pretty": "prettier -c --write $(find src -type f -name '*.js')"
   },
   "lint-staged": {
     "*.js": [
-      "prettier --write",
+      "echo 0 || prettier -c --write",
       "git add"
     ]
   },
