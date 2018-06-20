@@ -19,11 +19,6 @@ html, body {
 	height: 100%;
 }
 
-#u2f:after {
-	content: "";
-	flex: 2;
-}
-
 .badge {
     border-radius: 2px;
     margin: 2px;
@@ -35,3 +30,17 @@ html, body {
 .badge-danger {
     background-color: red;
 }
+
+
+.alert {
+    border-radius: 2px;
+    margin: 2px;
+    padding: 10px 15px;
+    color: #629347;
+    font-weight: bold;
+}
+
+.alert-info {
+    background-color: #dfeed7;
+}
+

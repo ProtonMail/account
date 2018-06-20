@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { connect } from 'unistore/full/preact';
 
-import style from './style';
+import style from './style.css';
 
 import U2FKeyList from './U2FKeyList/U2FKeyList';
 
@@ -15,16 +15,16 @@ export default connect(mapStateToProps)(( { user } ) => {
     return (
         <div class={style.twoFactor}>
             <h2>Two-Factor Authentication</h2>
-            <p> Two-factor authentication is currently {TwoFactor ? 'on' : 'off'}.</p>
+            <div class="alert alert-info"> Two-factor authentication is currently {TwoFactor ? 'on' : 'off'}.</div>
             <div id="totp" class={style.item}>
-                <p style={{ flex: 2 }}>2FA via Application</p>
+                <div style={{ flex: 2 }}>2FA via Application</div>
                 <button style={{ flex: 1 }}>{TOTP ? 'Disable' : 'Enable'}</button>
-                <p style={{ flex: 2 }}>
+                <div style={{ flex: 2 }}>
                     <a href="#">Regenerate recovery codes</a>
-                    <i> i</i>
-                </p>
+                    <i data-toggle="tooltip" data-placement="top" title="Regenerate recovery codes will invalidate existing recovery codes"> i</i>
+                </div>
             </div>
-            <div id="u2f" class={style.item}>
+            <div id="u2f" class={[ style.item, style.u2fItem ].join(' ')}>
                 <p style={{ flex: 2 }}>2FA via Security Key</p>
                 <button style={{ flex: 1 }}>{U2FKeys.length ? 'Disable' : 'Enable'}</button>
             </div>
