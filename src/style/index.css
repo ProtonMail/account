@@ -23,3 +23,15 @@ html, body {
 	content: "";
 	flex: 2;
 }
+
+.badge {
+    border-radius: 2px;
+    margin: 2px;
+    padding: 2px 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.badge-danger {
+    background-color: red;
+}

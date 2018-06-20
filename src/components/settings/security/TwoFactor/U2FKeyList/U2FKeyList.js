@@ -1,6 +1,7 @@
 import { h, cx } from 'preact';
 
-import style from './style';
+import style from './style.css';
+import globalStyle from '../../../../../style/index.css';
 
 /**
  * Lists the U2FKeys, given as props.
@@ -10,15 +11,25 @@ import style from './style';
  */
 export default ( { U2FKeys, style: propsStyle = {} } ) => {
     if (!U2FKeys.length) return null;
-    return <ul id="u2f-list" style={propsStyle}>
-        <li className={style.listHeader}>
-            <p>U2F Keys</p>
-            <p><a href="#">Add a new key</a></p>
+
+    console.debug({ globalStyle });
+
+    return <ul id="u2f-list" style={propsStyle} class={style.list}>
+        <li class={style.listHeader}>
+            <div>U2F Keys</div>
+            <div><a href="#">Add a new key</a></div>
         </li>
-        {U2FKeys.map(u2fKey => (<li key={u2fKey.KeyHandle} className={style.listElement}>
-                <p>{u2fKey.Label}</p>
-                <button>Delete</button>
-            </li>)
+        {U2FKeys.map(u2fKey => {
+                const headerClass = [ style.listElementHeader ];
+                if (u2fKey.Compromised) headerClass.push(style.listElementHeaderCompromised);
+                return (<li key={u2fKey.KeyHandle} class={style.listElement}>
+                    <div class={headerClass.join(' ')} style={{ marginRight: 'auto' }}>{u2fKey.Label}</div>
+                    {!!u2fKey.Compromised && (
+                        <div class={[ 'badge', 'badge-danger' ].join(' ')}>Compromised</div>
+                    )}
+                    <button>Delete</button>
+                </li>);
+            }
         )}
     </ul>;
 }

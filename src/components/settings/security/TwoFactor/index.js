@@ -13,10 +13,10 @@ export default connect(mapStateToProps)(( { user } ) => {
     if (!Object.keys(user).length) return null;
     const { TwoFactor, TOTP, U2FKeys } = user;
     return (
-        <div className={style.twoFactor}>
+        <div class={style.twoFactor}>
             <h2>Two-Factor Authentication</h2>
             <p> Two-factor authentication is currently {TwoFactor ? 'on' : 'off'}.</p>
-            <div id="totp" className={style.item}>
+            <div id="totp" class={style.item}>
                 <p style={{ flex: 2 }}>2FA via Application</p>
                 <button style={{ flex: 1 }}>{TOTP ? 'Disable' : 'Enable'}</button>
                 <p style={{ flex: 2 }}>
@@ -24,7 +24,7 @@ export default connect(mapStateToProps)(( { user } ) => {
                     <i> i</i>
                 </p>
             </div>
-            <div id="u2f" className={style.item}>
+            <div id="u2f" class={style.item}>
                 <p style={{ flex: 2 }}>2FA via Security Key</p>
                 <button style={{ flex: 1 }}>{U2FKeys.length ? 'Disable' : 'Enable'}</button>
             </div>

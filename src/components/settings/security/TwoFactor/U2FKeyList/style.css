@@ -1,16 +1,31 @@
-.listHeader {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.listElement {
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid black;
-}
-
 .list {
     display: flex;
     flex-direction: column;
 }
+
+.listHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+ }
+
+.listElement {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+.listElement:not(:last-child){
+    border-bottom: 0;
+}
+
+.listElementHeaderCompromised {
+    text-decoration: line-through;
+}
+
+.listElementHeader {
+
+}
+
