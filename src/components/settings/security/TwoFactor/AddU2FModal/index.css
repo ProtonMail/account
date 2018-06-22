@@ -1,0 +1,43 @@
+.NameForm-name {
+    display: flex;
+    justify-content: space-between;
+    align-self: stretch;
+}
+
+.NameForm-name label {
+    flex: 1;
+}
+
+.NameForm-name div {
+    flex: 4;
+}
+
+.NameForm-name input {
+    width: 100%
+}
+
+.RegisterKeyForm-container {
+    align-items: stretch;
+}
+
+.RegisterKeyForm-status {
+    margin: auto 20%;
+}
+
+.RegisterKeyForm-status > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.RegisterKeyForm-status > div > span {
+    flex: 1;
+}
+
+.RegisterKeyForm-status > div > span:first-child {
+    text-align: left;
+}
+
+span.label {
+    color: #9592d1;
+}

@@ -1,17 +1,17 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import TwoFactorSettings from './TwoFactor';
 
 /**
  * Manages the setting security view.
  * @return {Component}
  */
-export default () => {
+export default function security() {
     return (
         <div>
             <h1>Security</h1>
             <div style={{ display: 'flex', width: '100%' }}>
                 <div style={{ flex: 1 }}>
-                    <TwoFactorSettings/>
+                    <TwoFactorSettings />
                 </div>
 
                 <div style={{ flex: 1 }}>
@@ -24,4 +24,4 @@ export default () => {
             </div>
         </div>
     );
-};
+}

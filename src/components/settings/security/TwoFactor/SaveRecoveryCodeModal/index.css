@@ -1,0 +1,33 @@
+.CodePresentation-List {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-self: stretch;
+}
+
+.CodePresentation-List > li:nth-child(4n) {
+    page-break-after: always;
+}
+
+.CodePresentation-Actions {
+    display: flex;
+    justify-content: space-around;
+    align-self: stretch;
+    text-align: left;
+
+}
+
+.TestCodeForm-InputContainer {
+    display: flex;
+    justify-content: space-around;
+    align-self: stretch;
+    flex: 1;
+}
+
+.TestCodeForm-InputContainer > * {
+    flex: 1;
+}
+
+.TestCodeForm-InputContainer input {
+    width: 100%;
+}
