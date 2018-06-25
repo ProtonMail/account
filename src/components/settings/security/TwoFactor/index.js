@@ -12,7 +12,7 @@ function mapStateToProps({ auth }) {
 }
 
 export default connect(mapStateToProps)(
-    class extends Component {
+    class TwoFactor extends Component {
 
         onOpenSaveRecoveryCodesModal() {
             this.setState({ SaveRecoveryCodesModalOpen: true });

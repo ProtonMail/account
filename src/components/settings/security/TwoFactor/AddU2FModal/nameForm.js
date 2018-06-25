@@ -2,18 +2,33 @@ import { h, Component } from 'preact';
 import { styles as ModalStyles } from '../../../../ui/Modal';
 import styles from './index.css';
 
+/**
+ * Label form for the U2F key.
+ */
 export default class NameForm extends Component {
+
+    /**
+     * triggered each time the name is updated.
+     * @param event
+     */
     onNameUpdated ( event ) {
         this.setState({ name: event.target.value });
     }
 
+    /**
+     * Submit the form.
+     * @param e
+     */
     onSubmit ( e ) {
         e.preventDefault();
         this.props.onSubmit({ name: this.state.name });
     }
 
-    constructor () {
-        super();
+    /**
+     * @constructor
+     */
+    constructor ( props ) {
+        super(props);
         this.state = {
             name: ''
         };

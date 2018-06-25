@@ -4,11 +4,23 @@ import { saveAs } from 'file-saver';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+/**
+ * generates a TXT document, and download it from the browser.
+ * @param {String[]} codes - the list of codes.
+ */
 function downloadClicked ( codes ) {
     const blob = new Blob([ codes.join('\r\n') ], { type: 'text/plain;charset=utf-8' });
     saveAs(blob, 'proton-recovery-codes.txt');
 }
 
+/**
+ * Display a list of codes.
+ * @param {Object} params - the params.
+ * @param {String[]} params.codes - the list of codes.
+ * @param {Function} onSubmit - triggered when next is pressed.
+ * @param {Function} onCancel - triggered when previous is pressed.
+ * @return {Component}
+ */
 export default ( { params: { codes }, onSubmit, onCancel } ) => {
     if (!codes) {
         codes = [

@@ -2,11 +2,24 @@ import { h, Component } from 'preact';
 import { styles as ModalStyles } from '../../../../ui/Modal';
 import styles from './index.css';
 
+/**
+ * Asks the user to give on of the recovery codes to be able to continue.
+ */
 export default class TestCodesModal extends Component {
+
+    /**
+     * verifies the code is valid.
+     * @param {String} code - the code to be checked.
+     * @return {boolean}
+     */
     isValid ( code ) {
         return this.props.params.codes.indexOf(code) > -1;
     }
 
+    /**
+     * Verfies the code each time it is updated by the user. If the code is not 8 chars, it will not be checked.
+     * @param {Event} e - the changed event.
+     */
     onCodeChange ( e ) {
         const code = e.target.value;
         let valid = 0;
@@ -16,14 +29,24 @@ export default class TestCodesModal extends Component {
         this.setState({ code: e.target.value, valid });
     }
 
-    constructor () {
-        super();
+    /**
+     * @constructor
+     * @param {Object} props
+     * @param {Object} props.params
+     * @param {String[]} props.params.codes - the list of recovery codes.
+     */
+    constructor ( props ) {
+        super(props);
         this.state = {
             code: '',
             valid: 0
         };
     }
 
+    /**
+     * Render the code section: either an input, if the code was not validated, or a span telling the code is validated.
+     * @return {Component}
+     */
     renderCode () {
         if (this.state.valid === 2) {
             return <span>v Test succeeded</span>;

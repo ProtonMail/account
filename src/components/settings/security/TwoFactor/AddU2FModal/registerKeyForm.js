@@ -7,15 +7,31 @@ import styles from './index.css';
 import image from './sign-u2f.png';
 import appProvider from 'frontend-commons/src/appProvider';
 
+/**
+ * Asks the user to press the button of the key, and calls the api.
+ */
 export default class RegisterKeyModal extends Component {
+
+    /**
+     * triggered when the challenge is solved successfully.
+     * @param {Object} result - the result.
+     */
     onRegisterSucceed ( result ) {
         this.setState({ result, status: 'success' });
     }
 
+    /**
+     * triggered when the challenge is not solved successfully.
+     * @param {Object} result - the result.
+     */
     onRegisterFails ( result ) {
         this.setState({ result, status: 'failure' });
     }
 
+    /**
+     * Called when the next button is pressed.
+     * @param e
+     */
     onSubmit ( e ) {
         e.preventDefault();
         this.props.onSubmit({
@@ -36,6 +52,9 @@ export default class RegisterKeyModal extends Component {
         });
     }
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
         this.state = {
@@ -48,6 +67,9 @@ export default class RegisterKeyModal extends Component {
         };
     }
 
+    /**
+     * triggers the call to the U2F register method.
+     */
     componentWillMount () {
         if (this.state.status === 'initialize') {
             const u2fConfig = appProvider.getConfig('u2f');

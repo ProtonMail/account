@@ -1,5 +1,12 @@
 import { styles as ModalStyles } from '../../../../ui/Modal';
 
+/**
+ * Shows information about the U2F Key usage.
+ * @param {Object} props
+ * @param {Function} props.onSubmit - called when next is pressed.
+ * @param {Function} props.onCancel - called when previous is pressed.
+ * @return {*}
+ */
 export default ( { onSubmit, onCancel } ) => (
     <form
         class={ModalStyles.wrapper}
