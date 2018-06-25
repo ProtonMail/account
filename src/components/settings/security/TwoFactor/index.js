@@ -14,14 +14,31 @@ function mapStateToProps({ auth }) {
 export default connect(mapStateToProps)(
     class TwoFactor extends Component {
 
+        /**
+         * opens the SaveRecoveryCodes Modal.
+         */
         onOpenSaveRecoveryCodesModal() {
             this.setState({ SaveRecoveryCodesModalOpen: true });
         }
 
+        /**
+         * closes the SaveRecoveryCodes Modal.
+         */
         onCloseSaveRecoveryCodesModal() {
             this.setState({ SaveRecoveryCodesModalOpen: false });
         }
 
+        /**
+         * @constructor
+         * @param {Object} props
+         * @param {Object} props.user
+         * @param {Int} props.user.TwoFactor - whether 2FA is active or not.
+         * @param {Int} props.user.TOTP - whether TOTP is active or not.
+         * @param {Object[]} props.user.U2FKeys - the list of U2FKeys.
+         * @param {Int} props.user.U2FKeys[].Compromised - whether the key is Compromised or not.
+         * @param {String} props.user.U2FKeys[].KeyHandle - the KeyHandle of the U2FKey.
+         * @param {String} props.user.U2FKeys[].Label - the Label of the Key.
+         */
         constructor(props) {
             super(props);
             this.state = {

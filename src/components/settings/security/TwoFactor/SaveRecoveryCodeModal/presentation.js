@@ -21,7 +21,7 @@ function downloadClicked ( codes ) {
  * @param {Function} onCancel - triggered when previous is pressed.
  * @return {Component}
  */
-export default ( { params: { codes }, onSubmit, onCancel } ) => {
+export default function Presentation ( { params: { codes }, onSubmit, onCancel } ) {
     if (!codes) {
         codes = [
             'd1e4822e',
@@ -74,7 +74,7 @@ export default ( { params: { codes }, onSubmit, onCancel } ) => {
                 </div>
             </div>
             <div class={ModalStyles.footer}>
-                <button type="reset" value="Reset">
+                <button type="reset" disabled={true} value="Reset">
                     Back
                 </button>
                 <button type="submit" value="Submit">
@@ -83,4 +83,6 @@ export default ( { params: { codes }, onSubmit, onCancel } ) => {
             </div>
         </form>
     );
-};
+}
+
+Presentation.canBeClosed = 'Hi';

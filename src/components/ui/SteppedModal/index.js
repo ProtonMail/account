@@ -18,11 +18,15 @@ export default class SteppedModal extends Component {
 
     /**
      * called after the SteppedModal is closed.
+     * @param {Event} requestClosed - the event.
+     * @param {Boolean} lastStepSuccess - whether the last step succeeded.
      */
-    onRequestClose () {
-        this.setState({ step: 0 });
-        this.props.handleCloseModal();
-        console.debug('SteppedModal closed');
+    onRequestClose ( requestClosed = null, lastStepSuccess = false ) {
+        if (!this.props.steps[ this.state.step ].mustSucceed || lastStepSuccess) {
+            this.setState({ step: 0 });
+            this.props.handleCloseModal();
+            console.debug('SteppedModal closed');
+        }
     }
 
     /**
@@ -33,7 +37,7 @@ export default class SteppedModal extends Component {
         const state = this.state;
 
         if (this.state.step + 1 === this.props.steps.length) { // if last step
-            this.onRequestClose();
+            this.onRequestClose(null, true);
         } else {
             this.setState({ step: (state.step + 1), params: { ...state.params, ...result } });
         }
@@ -70,6 +74,7 @@ export default class SteppedModal extends Component {
      * @param {Object[]} props.steps - the different steps to be proceeded.
      * @param {Component} props.steps[].component - the component of the current step.
      * @param {String} props.steps[].title - the title of the current step.
+     * @param {Boolean} [props.steps[].mustSucceed=false] - If the whole process must succeed. If true, the only possibility to close the modal is to click on the final submit button.
      * @param {Function} props.handleCloseModal - to be called when the callback is closed.
      * @param {?Function} props.onAfterOpen - to be called after the modal is opened.
      */

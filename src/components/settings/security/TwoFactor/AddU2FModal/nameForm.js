@@ -51,7 +51,7 @@ export default class NameForm extends Component {
                         </label>
                         <div>
                             <input
-                                onChange={this.onNameUpdated.bind(this)}
+                                onInput={this.onNameUpdated.bind(this)}
                                 value={this.state.name}
                                 type="name"
                                 id="inputName"
@@ -64,7 +64,7 @@ export default class NameForm extends Component {
                     <button type="reset" value="Reset">
                         Back
                     </button>
-                    <button type="submit" value="Submit">
+                    <button type="submit" disabled={!this.state.name} value="Submit">
                         Next
                     </button>
                 </div>
