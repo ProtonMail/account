@@ -12,7 +12,7 @@ export default ( { onSubmit, onCancel } ) => (
         class={ModalStyles.wrapper}
         onSubmit={( e ) => {
             e.preventDefault();
-            onSubmit({});
+            onSubmit();
         }}
         onReset={( e ) => {
             e.preventDefault();

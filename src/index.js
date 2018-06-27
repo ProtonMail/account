@@ -8,7 +8,11 @@ const store = createStore({
     isLoggedIn: false,
     user: {},
     step: 'login'
-  }
+  },
+    settings: {
+        addU2FKey: {},
+        reset2FARecoveryCodes: {}
+    }
 });
 
 hookErrorActions(store, (e) => {

@@ -1,18 +1,18 @@
-.NameForm-name {
+.name {
     display: flex;
     justify-content: space-between;
     align-self: stretch;
 }
 
-.NameForm-name label {
+.name .label {
     flex: 1;
 }
 
-.NameForm-name div {
+.name .inputContainer {
     flex: 4;
 }
 
-.NameForm-name input {
+.name .textInput {
     width: 100%
 }
 

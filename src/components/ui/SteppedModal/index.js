@@ -33,7 +33,7 @@ export default class SteppedModal extends Component {
      * Triggers the next step. If the last step is reached, closes the modal.
      * @param {Object} result - the result of the current step, to be appended the `state.params`.
      */
-    onNextStep ( result ) {
+    onNextStep ( result = {} ) {
         const state = this.state;
 
         if (this.state.step + 1 === this.props.steps.length) { // if last step
@@ -47,7 +47,7 @@ export default class SteppedModal extends Component {
      * Triggers the previous step. If the current step is the first step, the modal is closed.
      * @param {Object} params - the params to be appended to `state.params`.
      */
-    onPreviousStep ( params ) {
+    onPreviousStep ( params = {}) {
         const state = this.state;
         if (this.state.step === 0) {
             this.onRequestClose();

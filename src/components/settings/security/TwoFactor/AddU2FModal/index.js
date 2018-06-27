@@ -1,6 +1,6 @@
 import Presentation from './presentation';
-import NameForm from './nameForm';
-import RegisterKeyForm from './registerKeyForm';
+import FormName from './formName';
+import RegisterKeyForm from './formRegisterKey';
 import RecoveryCodeSteps from '../SaveRecoveryCodeModal';
 
 export default [
@@ -12,7 +12,7 @@ export default [
     },
     {
         title: 'Name your U2F Key',
-        component: (params, onSubmit, onCancel) => <NameForm params={params} onSubmit={onSubmit} onCancel={onCancel} />
+        component: (params, onSubmit, onCancel) => <FormName params={params} onSubmit={onSubmit} onCancel={onCancel} />
     },
     {
         title: 'Register new U2F Key',

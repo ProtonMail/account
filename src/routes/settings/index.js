@@ -12,7 +12,7 @@ import { connect } from 'unistore/full/preact';
 function renderContent ( setting, user ) {
     switch (setting) {
         case 'security':
-            return <Security/>;
+            return <Security user={user}/>;
         default:
             return (
                 <h1>
