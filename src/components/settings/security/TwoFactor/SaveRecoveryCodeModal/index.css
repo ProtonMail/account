@@ -1,33 +1,32 @@
-.CodePresentation-List {
+.list {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-self: stretch;
 }
 
-.CodePresentation-List > li:nth-child(4n) {
+.list > .item:nth-child(4n) {
     page-break-after: always;
 }
 
-.CodePresentation-Actions {
+.actions {
     display: flex;
     justify-content: space-around;
     align-self: stretch;
     text-align: left;
-
 }
 
-.TestCodeForm-InputContainer {
+.inputContainer {
     display: flex;
     justify-content: space-around;
     align-self: stretch;
     flex: 1;
 }
 
-.TestCodeForm-InputContainer > * {
+.inputContainer > * {
     flex: 1;
 }
 
-.TestCodeForm-InputContainer input {
+.inputContainer .codeInput {
     width: 100%;
 }

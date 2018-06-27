@@ -16,28 +16,28 @@
     width: 100%
 }
 
-.RegisterKeyForm-container {
+.container {
     align-items: stretch;
 }
 
-.RegisterKeyForm-status {
+.status {
     margin: auto 20%;
 }
 
-.RegisterKeyForm-status > div {
+.status > .row{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.RegisterKeyForm-status > div > span {
+.status > .row > .text {
     flex: 1;
 }
 
-.RegisterKeyForm-status > div > span:first-child {
+.status > .row > .text:first-child {
     text-align: left;
 }
 
-span.label {
+.text.label {
     color: #9592d1;
 }

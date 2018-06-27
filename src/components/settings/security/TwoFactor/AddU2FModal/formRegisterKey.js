@@ -33,20 +33,20 @@ const FormRegisterKey = ({ settings: { addU2FKey }, onCancel, onSubmit: onSubmit
                 props.onCancel();
             }}
         >
-            <div class={[ styles[ 'RegisterKeyForm-container' ], ModalStyles.content ].join(' ')}>
+            <div class={[ styles.container, ModalStyles.content ].join(' ')}>
                 <img src={image}/>
 
-                <div class={styles[ 'RegisterKeyForm-status' ]}>
-                    <div>
-                        <span>Activate your key</span>
-                        <span>
-                                {addU2FKey.status || 'fetching'}...
-                            </span>
+                <div class={styles.status}>
+                    <div class={styles.row}>
+                        <span class={styles.text}>Activate your key</span>
+                        <span class={styles.text}>
+                            {addU2FKey.status || 'fetching'}...
+                        </span>
                     </div>
 
-                    <div>
-                        <span>Name</span>
-                        <span class={styles.label}>{name}</span>
+                    <div class={styles.row}>
+                        <span class={styles.text}>Name</span>
+                        <span class={[ styles.text, styles.label ].join(' ')}>{name}</span>
                     </div>
                 </div>
             </div>

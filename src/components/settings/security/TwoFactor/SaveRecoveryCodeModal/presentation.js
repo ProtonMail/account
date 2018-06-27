@@ -24,14 +24,14 @@ const renderContent = (codes) => {
                 account if you loose your 2FA device
             </p>
             <p>Each recovery code can only be used once</p>
-            <ol class={styles[ 'CodePresentation-List' ]}>
+            <ol class={styles.list}>
                 {codes.map((code) => (
-                    <li>
+                    <li class={styles.item}>
                         <pre>{code}</pre>
                     </li>
                 ))}
             </ol>
-            <div class={styles[ 'CodePresentation-Actions' ]}>
+            <div class={styles.actions}>
                 <a href="#" onClick={() => downloadClicked(codes)}>
                     DOWNLOAD CODES
                 </a>

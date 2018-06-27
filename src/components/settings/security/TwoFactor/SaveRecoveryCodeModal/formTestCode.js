@@ -43,10 +43,11 @@ const FormTestCode = ({
                     Test your recovery codes by entering one of your codes below. If you did not save your recovery
                     codes, go back and save them.
                 </p>
-                <div class={styles[ 'TestCodeForm-InputContainer' ]}>
+                <div class={styles.inputContainer}>
                     <span>Input your code</span>
                     <div>
                         <input
+                            class={styles.codeInput}
                             onInput={({ target: { value: code } }) => {
                                 model.code = code;
                                 if (code.length === 8) {
