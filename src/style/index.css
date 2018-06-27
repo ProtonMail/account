@@ -18,3 +18,8 @@ html, body {
 #app {
 	height: 100%;
 }
+
+#u2f:after {
+	content: "";
+	flex: 2;
+}

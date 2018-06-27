@@ -1,0 +1,16 @@
+.listHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.listElement {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+}

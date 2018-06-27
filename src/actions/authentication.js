@@ -88,6 +88,7 @@ const actions = (store) => {
 
             if (config.is2FA) {
                 data.step = '2fa';
+                data.twoFactorData = { ...config.twoFactorData };
             }
 
             if (config.isUnlockable) {

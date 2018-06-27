@@ -54,6 +54,7 @@
     "preact-cli-lodash": "^1.1.0",
     "preact-compat": "^3.17.0",
     "preact-router": "^2.5.7",
+    "u2f": "git+https://github.com/ProtonMail/u2f.git",
     "unistore": "^3.0.6"
   },
   "jest": {
