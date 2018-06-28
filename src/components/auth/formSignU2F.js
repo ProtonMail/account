@@ -17,7 +17,8 @@ class FormSignU2F extends Component {
         if (success && !U2FResponse.ErrorCode) {
             return <div><p>Success</p></div>;
         }
-        return (<div>
+
+        return (<div id={this.props.id} style={this.props.style} class={this.props.class}>
             <p>Activate your security key</p>
             {!success && !!U2FResponse.ErrorCode && <p>
                 <span>Sorry, it did not work. (error code: {U2FResponse.ErrorCode})</span>

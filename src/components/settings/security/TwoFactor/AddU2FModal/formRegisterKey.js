@@ -1,7 +1,8 @@
 import { connect } from 'unistore/full/preact';
 import settingsActions from '../../../../../actions/settings';
 
-import { styles as ModalStyles } from '../../../../ui/Modal';
+import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
+
 import styles from './index.css';
 
 import image from './sign-u2f.png';
@@ -19,21 +20,18 @@ const onSubmit = (e, onSubmitProps, resetStoreAction) => {
 };
 
 const FormRegisterKey = ({ settings: { addU2FKey }, onCancel, onSubmit: onSubmitProps, addU2FKeyRegisterAction, resetStoreAction }) => {
-    console.debug('FormRegisterKey');
-    console.debug({ addU2FKey });
     const { response: {name} = {}} = addU2FKey;
     addU2FKeyRegisterAction();
 
     return (
-        <form
-            class={ModalStyles.wrapper}
+        <ModalWrapper
             onSubmit={(e) => onSubmit(e, onSubmitProps, resetStoreAction)}
             onReset={(e) => {
                 e.preventDefault();
                 props.onCancel();
             }}
         >
-            <div class={[ styles.container, ModalStyles.content ].join(' ')}>
+            <ModalContent class={styles.container}>
                 <img src={image}/>
 
                 <div class={styles.status}>
@@ -49,16 +47,16 @@ const FormRegisterKey = ({ settings: { addU2FKey }, onCancel, onSubmit: onSubmit
                         <span class={[ styles.text, styles.label ].join(' ')}>{name}</span>
                     </div>
                 </div>
-            </div>
-            <div class={ModalStyles.footer}>
+            </ModalContent>
+            <ModalFooter>
                 <button type="reset" value="Reset">
                     Back
                 </button>
                 <button type="submit" value="Submit" disabled={(addU2FKey.status !== 'finished')}>
                     Next
                 </button>
-            </div>
-        </form>
+            </ModalFooter>
+        </ModalWrapper>
     );
 };
 

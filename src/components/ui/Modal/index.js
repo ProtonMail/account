@@ -1,8 +1,6 @@
 import ReactModal from 'react-modal';
 import ModalStyles from './index.css';
 
-export const styles = ModalStyles;
-
 /**
  * Creates a new modal, using a predefined style.
  * @param {boolean} isOpen - Whether the modal is open or not.
@@ -27,3 +25,8 @@ export default ( { isOpen, title, children, onRequestClose, onAfterOpen, content
 
     </ReactModal>);
 };
+
+export Content from './Content';
+export Footer from './Footer';
+export Wrapper from './Wrapper';
+

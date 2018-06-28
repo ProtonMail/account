@@ -1,4 +1,5 @@
-import { styles as ModalStyles } from '../../../../ui/Modal';
+import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
+
 
 /**
  * Shows information about the U2F Key usage.
@@ -8,8 +9,7 @@ import { styles as ModalStyles } from '../../../../ui/Modal';
  * @return {*}
  */
 export default ( { onSubmit, onCancel } ) => (
-    <form
-        class={ModalStyles.wrapper}
+    <ModalWrapper
         onSubmit={( e ) => {
             e.preventDefault();
             onSubmit();
@@ -19,7 +19,7 @@ export default ( { onSubmit, onCancel } ) => (
             onCancel();
         }}
     >
-        <div class={ModalStyles.content}>
+        <ModalContent>
             <p>This wizard will add a new security key to your Proton Account. </p>
             <p>
                 Please note that you will not be able to access your account if you loose your U2F device and your
@@ -35,14 +35,14 @@ export default ( { onSubmit, onCancel } ) => (
                     READ 2FA GUIDE
                 </a>
             </div>
-        </div>
-        <div class={ModalStyles.footer}>
+        </ModalContent>
+        <ModalFooter>
             <button type="reset" value="Reset">
                 Back
             </button>
             <button type="submit" value="Submit">
                 Next
             </button>
-        </div>
-    </form>
+        </ModalFooter>
+    </ModalWrapper>
 );

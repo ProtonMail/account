@@ -1,7 +1,9 @@
 import { connect } from 'unistore/full/preact';
 import settingsActions from '../../../../../actions/settings';
 
-import { styles as ModalStyles } from '../../../../ui/Modal';
+import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
+
+
 import styles from './index.css';
 
 const renderInfo = (step) => {
@@ -26,8 +28,7 @@ const FormTestCode = ({
     }
 
     return (
-        <form
-            class={ModalStyles.wrapper}
+        <ModalWrapper
             onSubmit={(e) => {
                 e.preventDefault();
                 onSubmit();
@@ -38,7 +39,7 @@ const FormTestCode = ({
                 onCancel();
             }}
         >
-            <div class={ModalStyles.content}>
+            <ModalContent>
                 <p style={{ flex: 2 }}>
                     Test your recovery codes by entering one of your codes below. If you did not save your recovery
                     codes, go back and save them.
@@ -67,16 +68,16 @@ const FormTestCode = ({
                 <div style={{ flex: 1 }}>
                     {renderInfo(step)}
                 </div>
-            </div>
-            <div class={ModalStyles.footer}>
+            </ModalContent>
+            <ModalFooter>
                 <button type="reset" value="Reset">
                     Back
                 </button>
                 <button type="submit" value="Submit" disabled={step !== 'success'}>
                     Finish
                 </button>
-            </div>
-        </form>
+            </ModalFooter>
+        </ModalWrapper>
     );
 };
 
