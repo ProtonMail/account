@@ -33,7 +33,6 @@ const actions = (store) => {
     }
 
     async function addU2FKeyName (state, { name }) {
-
         return store.setState(
             toState(state, 'settings', toState(state.settings, 'addU2FKey', {
                     response: {
@@ -48,60 +47,58 @@ const actions = (store) => {
         const u2fConfig = appProvider.getConfig('u2f');
         const { settings: { addU2FKey: { status = 'initialization', request: storedRequest, response: storedResponse } } } = state;
 
-        switch (status) {
-            case 'initialization':
-                const request = { // todo move that in frontend commons
-                    Challenge: 'KGOcAJhmPwMKZ4r8vFb2vZZktLh9wZCmLKHxQQH1bxY',
-                    Versions: [ 'U2F_V2' ],
-                    RegisteredKeys: []
-                };
-                return store.setState(
-                    toState(state, 'settings', toState(state.settings, 'addU2FKey', { status: 'pending', request }))
-                );
-            case 'pending':
-                console.debug({ storedRequest });
-                const response = await register(storedRequest, u2fConfig.appID, u2fConfig.timeout);
-                return store.setState(
-                    toState(state, 'settings',
-                        toState(state.settings, 'addU2FKey',
-                            {
-                                status: !!response ? 'success' : 'failure',
-                                request: {},
-                                response: { ...storedResponse, ...response }
-                            }
-                        )
-                    )
-                );
-            case 'success':
-                // todo send result
-                return store.setState(
-                    toState(state, 'settings',
-                        {
-                            addU2FKey: toState(state.settings, 'addU2FKey', { status: 'finished' }).addU2FKey,
-                            reset2FARecoveryCodes: toState(state.settings, 'reset2FARecoveryCodes', {
-                                request: {
-                                    codes: [
-                                        'd1e4822e',
-                                        '2d83d85b',
-                                        '717ebed4',
-                                        'a9ffee38',
-                                        'f34ebdf7',
-                                        'd1321481',
-                                        '2572f6cd',
-                                        '39bd63b3',
-                                        'c8016641',
-                                        'a9b4cf9d',
-                                        '8f475f77',
-                                        '123d33b1'
-                                    ]
-                                },
-                                step: 'init'
-                            }).reset2FARecoveryCodes
-                        }
-                    )
-                );
+        console.debug('fetching');
+        store.setState(
+            toState(state, 'settings', toState(state.settings, 'addU2FKey', { status: 'fetching' }))
+        );
+        // todo add call in frontend commons
+        const request = { // todo move that in frontend commons
+            Challenge: 'KGOcAJhmPwMKZ4r8vFb2vZZktLh9wZCmLKHxQQH1bxY',
+            Versions: [ 'U2F_V2' ],
+            RegisteredKeys: []
+        };
 
-        }
+        store.setState(
+            toState(state, 'settings', toState(state.settings, 'addU2FKey', { status: 'pending' }))
+        );
+        console.debug('pending');
+
+        // then call U2F api
+        const response = await register(request, u2fConfig.appID, u2fConfig.timeout);
+        store.setState(
+            toState(state, 'settings',
+                toState(state.settings, 'addU2FKey', { status: !!response ? 'success' : 'failure' })
+            )
+        );
+        console.debug('finish');
+
+        // then send response...
+        // todo send response ;)
+        const codes = [
+            'aefd34ba',
+            '2d83d85b',
+            '717ebed4',
+            'a9ffee38',
+            'f34ebdf7',
+            'd1321481',
+            '2572f6cd',
+            '39bd63b3',
+            'c8016641',
+            'a9b4cf9d',
+            '8f475f77',
+            '123d33b1'
+        ];
+        return store.setState(
+            toState(state, 'settings',
+                {
+                    addU2FKey: toState(state.settings, 'addU2FKey', { status: 'finished' }).addU2FKey,
+                    reset2FARecoveryCodes: toState(state.settings, 'reset2FARecoveryCodes', {
+                        request: { codes },
+                        step: 'init'
+                    }).reset2FARecoveryCodes
+                }
+            )
+        );
     }
 
     async function reset2FARecoveryCodes (state, opt) {
