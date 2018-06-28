@@ -7,6 +7,7 @@ import appProvider from 'frontend-commons/src/appProvider';
 import { isVPN } from 'frontend-commons/src/utils/appType';
 
 import toActions from '../lib/toActions';
+import { sign } from 'u2f';
 
 /**
  * @link { https://github.com/developit/unistore#usage }
@@ -51,6 +52,20 @@ const actions = (store) => {
         });
         store.setState(data);
         route('/', data);
+    }
+
+    async function loginSignU2F (state) {
+        const u2fConfig = appProvider.getConfig('u2f');
+
+        let result = {};
+        try {
+            result = await sign(state.auth.twoFactorData.U2F, u2fConfig.appID, u2fConfig.timeout);
+            store.setState(toState(state, 'auth', { twoFactorResponse: { success: true } }));
+            return login2FA(state, { U2FResponse: result });
+        } catch (e) {
+            if (!e.ErrorCode) throw e;
+            return store.setState(toState(state, 'auth', { twoFactorResponse: { success: false, U2FResponse: e } }));
+        }
     }
 
     async function login2FA(state, opt) {
@@ -129,7 +144,8 @@ const actions = (store) => {
         logout,
         unlock,
         login2FA,
-        loadAuthUser
+        loadAuthUser,
+        loginSignU2F
     });
 };
 

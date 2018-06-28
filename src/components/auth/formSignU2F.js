@@ -1,23 +1,30 @@
 import { h, Component } from 'preact';
-import { sign } from 'u2f';
-import appProvider from 'frontend-commons/src/appProvider';
+import authActions from './../../actions/authentication';
+import { connect } from 'unistore/full/preact';
 
 class FormSignU2F extends Component {
+    sendSignRequest () {
+        this.props.loginSignU2FAction();
+    }
+
     componentDidMount () {
-        const u2fConfig = appProvider.getConfig('u2f');
-
-        sign(this.props.request, u2fConfig.appID, u2fConfig.timeout)
-            .then(this.props.onSignFinished)
-            .catch(( e ) => console.error({ error: e }));
-
+        this.sendSignRequest();
     }
 
     render () {
-        return (<div>
-            <p>Please press your authentication device.</p>
-        </div>);
+        const { success, U2FResponse = {} } = this.props.auth.twoFactorResponse;
 
+        if (success && !U2FResponse.ErrorCode) {
+            return <div><p>Success</p></div>;
+        }
+        return (<div>
+            <p>Activate your security key</p>
+            {!success && !!U2FResponse.ErrorCode && <p>
+                <span>Sorry, it did not work. (error code: {U2FResponse.ErrorCode})</span>
+                <button onClick={() => this.sendSignRequest()}>Retry</button>
+            </p>}
+        </div>);
     }
 }
 
-export default FormSignU2F;
+export default connect('auth', authActions)(FormSignU2F);

@@ -7,7 +7,8 @@ const store = createStore({
   auth: {
     isLoggedIn: false,
     user: {},
-    step: 'login'
+    step: 'login',
+      twoFactorResponse: {}
   },
     settings: {
         addU2FKey: {},
