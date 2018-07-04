@@ -2,6 +2,12 @@ import { verify } from 'frontend-commons/src/api/paymentsApi';
 import { loadExtendedConfig } from 'frontend-commons/src/user/model';
 import { isVPN } from 'frontend-commons/src/utils/appType';
 import appProvider from 'frontend-commons/src/appProvider';
+import {
+    getAddU2FChallenge,
+    addU2FKey,
+    resetRecoveryCodes,
+    removeU2FKey
+} from 'frontend-commons/src/settings/security';
 
 import toActions from '../lib/toActions';
 import { register } from 'u2f';
@@ -17,14 +23,19 @@ const actions = (store) => {
      * @param  {Object} value
      * @return {Object}       new state
      */
-    const toState = (state, key, value) => ({ [ key ]: { ...state[ key ], ...value } });
+    const toState = (state, key, value) => ({ [key]: { ...state[key], ...value } });
 
-    async function resetStore (state, actions) {
+    /**
+     * Resets the state for the actions
+     * @param state
+     * @param {string[]} actions - the actions to reset (for the settings store only)
+     * @returns {Promise<void>}
+     */
+    async function resetStore(state, actions) {
         let newState = state;
         for (const action of actions) {
-            console.debug({ action });
-            if (newState.settings[ action ]) {
-                newState = { settings: { ...newState.settings, [ action ]: {} } };
+            if (newState.settings[action]) {
+                newState = { settings: { ...newState.settings, [action]: {} } };
             }
         }
         if (newState !== state) {
@@ -32,128 +43,130 @@ const actions = (store) => {
         }
     }
 
-    async function addU2FKeyName (state, { name }) {
-        return store.setState(
-            toState(state, 'settings', toState(state.settings, 'addU2FKey', {
-                    response: {
-                        name
-                    }
-                })
-            )
-        );
+    /**
+     * update the `addU2FKey` state.
+     * @param {Object} data the data to update.
+     * @returns {Promise<void>}
+     */
+    async function updateAddU2FKeyState(state, data) {
+        return store.setState(toState(state, 'settings', toState(state.settings, 'addU2FKey', data)));
     }
 
-    async function addU2FKeyRegister (state) {
+    /**
+     * Stores a name for a new U2F key. Erases any ongoing registration on the same browser.
+     * @param state
+     * @param {String} name
+     * @returns {Promise<void>}
+     */
+    async function addU2FKeyName(state, name) {
+        // erases any registering key. Not an issue, because the registration is supposed to be after the name setup.
+        return updateAddU2FKeyState(state, { response: { name } });
+    }
+
+    /**
+     * Fetches and sends a U2F register request to the U2F API.
+     * @param state
+     * @returns {Promise<void>}
+     */
+    async function addU2FKeyRegister(state) {
         const u2fConfig = appProvider.getConfig('u2f');
-        const { settings: { addU2FKey: { status = 'initialization', request: storedRequest, response: storedResponse } } } = state;
+        const { settings: { addU2FKey: { response: storedResponse } } } = state;
 
-        console.debug('fetching');
-        store.setState(
-            toState(state, 'settings', toState(state.settings, 'addU2FKey', { status: 'fetching' }))
-        );
-        // todo add call in frontend commons
-        const request = { // todo move that in frontend commons
-            Challenge: 'KGOcAJhmPwMKZ4r8vFb2vZZktLh9wZCmLKHxQQH1bxY',
-            Versions: [ 'U2F_V2' ],
-            RegisteredKeys: []
-        };
+        await updateAddU2FKeyState(state, { status: 'fetching' });
 
-        store.setState(
-            toState(state, 'settings', toState(state.settings, 'addU2FKey', { status: 'pending' }))
-        );
-        console.debug('pending');
+        const request = await getAddU2FChallenge();
+
+        await updateAddU2FKeyState(state, { status: 'pending' });
 
         // then call U2F api
-        const response = await register(request, u2fConfig.appID, u2fConfig.timeout);
-        store.setState(
-            toState(state, 'settings',
-                toState(state.settings, 'addU2FKey', { status: !!response ? 'success' : 'failure' })
-            )
-        );
-        console.debug('finish');
+        const u2fResponse = await register(request, u2fConfig.appID, u2fConfig.timeout);
+
+        await updateAddU2FKeyState(state, { status: u2fResponse ? 'success' : 'failure' });
 
         // then send response...
-        // todo send response ;)
-        const codes = [
-            'aefd34ba',
-            '2d83d85b',
-            '717ebed4',
-            'a9ffee38',
-            'f34ebdf7',
-            'd1321481',
-            '2572f6cd',
-            '39bd63b3',
-            'c8016641',
-            'a9b4cf9d',
-            '8f475f77',
-            '123d33b1'
-        ];
+        const result = await addU2FKey(
+            { ...u2fResponse, Label: storedResponse.name },
+            state.scope.creds,
+            state.scope.response
+        );
+
+        const codes = result.data.TwoFactorRecoveryCodes;
+
+        const newState = {
+            ...toState(state, 'settings', {
+                addU2FKey: toState(state.settings, 'addU2FKey', { status: 'finished' }).addU2FKey,
+                reset2FARecoveryCodes: toState(state.settings, 'reset2FARecoveryCodes', {
+                    request: { codes }
+                }).reset2FARecoveryCodes
+            }),
+            ...toState(state, 'config', toState(state.config, 'settings', toState(state.config.settings, 'user', {
+                ...result.data.UserSettings
+            }))),
+            ...toState(state, 'scope', { used: true })
+        };
+
         return store.setState(
-            toState(state, 'settings',
-                {
-                    addU2FKey: toState(state.settings, 'addU2FKey', { status: 'finished' }).addU2FKey,
-                    reset2FARecoveryCodes: toState(state.settings, 'reset2FARecoveryCodes', {
-                        request: { codes },
-                        step: 'init'
-                    }).reset2FARecoveryCodes
-                }
-            )
+            newState
         );
     }
 
-    async function reset2FARecoveryCodes (state, opt) {
-        const {
-            settings: {
-                reset2FARecoveryCodes: {
-                    step = 'init',
-                    request: {
-                        codes
-                    } = {}
-                }
-            }
-        } = state;
+    /**
+     * Initializes the reset2FARecoveryCodes procedure.
+     *
+     * Fetches new codes if none are already in the state.
+     * @param state
+     * @returns {Promise<void>}
+     */
+    async function reset2FARecoveryCodesInit(state) {
+        let { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = state;
 
-        switch (step) {
-            case 'init':
-                return store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
-                    step: (codes && codes.length) ? 'checking' : 'fetching'
-                })));
-            case 'fetching':
-                return store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
-                    request: {
-                        codes: [
-                            'd1e4822e',
-                            '2d83d85b',
-                            '717ebed4',
-                            'a9ffee38',
-                            'f34ebdf7',
-                            'd1321481',
-                            '2572f6cd',
-                            '39bd63b3',
-                            'c8016641',
-                            'a9b4cf9d',
-                            '8f475f77',
-                            '123d33b1'
-                        ]
-                    },
-                    step: 'checking',
-                    response: { code: '' }
-                })));
-            case 'checking':
-            case 'failure':
-                console.debug({ codes, code: opt.code, index: codes.indexOf(opt.code) });
-                return store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
-                    step: (codes.indexOf(opt.code) < 0) ? 'failure' : 'success',
-                    response: { ...opt }
-                })));
+        if (!codes || !codes.length) {
+            const response = await resetRecoveryCodes(state.scope.creds, state.scope.response);
+            codes = response.data.TwoFactorRecoveryCodes;
         }
+        store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
+            request: { codes }
+        })));
+    }
+
+    /**
+     * Verifies a given code is in the new codes.
+     * @param state
+     * @param {string} code - the code to verify.
+     * @returns {Promise<void>}
+     */
+    async function reset2FARecoveryCodesCheckNewCode(state, code) {
+        const { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = state;
+
+        return store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
+            result: codes.indexOf(code) >= 0,
+            response: { code }
+        })));
+    }
+
+    /**
+     * Sends a delete request to the API.
+     * @param state
+     * @param {Object} u2fKey - the U2F Key to delete.
+     * @param {String} u2fKey.KeyHandle - the key handle of the U2F Key.
+     * @returns {Promise<void>}
+     */
+    async function deleteU2FKey(state, u2fKey) {
+        const result = await removeU2FKey(u2fKey.KeyHandle, state.scope.creds, state.scope.response);
+        return store.setState(toState(state, 'config', toState(state.config, 'settings',
+            toState(state.config.settings, 'user', {
+                ...result.data.UserSettings
+            })
+        )));
     }
 
     return toActions({
         addU2FKeyName,
         addU2FKeyRegister,
-        reset2FARecoveryCodes,
-        resetStore
+        reset2FARecoveryCodesCheckNewCode,
+        reset2FARecoveryCodesInit,
+        resetStore,
+        deleteU2FKey
     });
 };
 

@@ -9,21 +9,37 @@ import styles from './index.css';
 import image from './sign-u2f.png';
 
 /**
- * Called when the next button is pressed.
- * @param e
- * @param onSubmitProps
- * @param resetStoreAction
+ * Modal Form to register a new U2F Key.
+ *
+ * Fetches the challenge from the server, forward it to U2F API, and sends back the answer to the API.
  */
-
 class FormRegisterKey extends Component {
-    onSubmit = (e) => {
+
+    /**
+     * when next button is pressed.
+     * @param {Event} e
+     */
+    onSubmit(e) {
         e.preventDefault();
         this.props.onSubmit();
-        this.props.resetStoreAction(['addU2FKey']);
     }
 
     componentDidMount() {
         this.props.addU2FKeyRegisterAction();
+    }
+
+    componentWillReceiveProps(newProps) {
+        const {
+            settings: { addU2FKey: { status: newStatus } }
+        } = newProps;
+
+        const {
+            settings: { addU2FKey: { status } }
+        } = this.props;
+
+        if (newStatus !== status && newStatus === 'finished') {
+            this.props.forbidCancel();
+        }
     }
 
     render () {
@@ -36,7 +52,7 @@ class FormRegisterKey extends Component {
                 onSubmit={(e) => this.onSubmit(e)}
                 onReset={(e) => {
                     e.preventDefault();
-                    props.onCancel();
+                    this.props.onCancel();
                 }}
             >
                 <ModalContent class={styles.container}>
@@ -57,7 +73,7 @@ class FormRegisterKey extends Component {
                     </div>
                 </ModalContent>
                 <ModalFooter>
-                    <button type="reset" value="Reset">
+                    <button type="reset" value="Reset" disabled={(status === 'finished')}>
                         Back
                     </button>
                     <button type="submit" value="Submit" disabled={(status !== 'finished')}>
@@ -68,7 +84,6 @@ class FormRegisterKey extends Component {
         );
     }
 }
-/**
- * Asks the user to press the button of the key, and calls the api.
- */
-export default connect('settings', settingsActions)(FormRegisterKey);
+
+
+export default connect(['scope', 'settings'], settingsActions)(FormRegisterKey);

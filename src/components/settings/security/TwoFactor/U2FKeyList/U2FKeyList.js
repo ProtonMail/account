@@ -1,40 +1,12 @@
 import { h, Component } from 'preact';
-import AddU2FModalSteps from '../AddU2FModal';
 
 import style from './style.css';
-import SteppedModal from '../../../../ui/SteppedModal';
+import ConfirmModal from '../../../../ui/ConfirmModal';
+import TextButton from '../../../../ui/TextButton';
+import settingsActions from '../../../../../actions/settings';
+import { connect } from 'unistore/full/preact';
 
-export default class U2FKeyList extends Component {
-
-    /**
-     * opens the AddU2FKey modal.
-     */
-    openModal() {
-        this.setState({ U2FModalOpen: true });
-    }
-
-    /**
-     * closes the AddU2FKey modal.
-     */
-    closeModal() {
-        this.setState({ U2FModalOpen: false });
-    }
-
-    /**
-     * @constructor
-     * @param {Object} props
-     * @param {Object[]} props.U2FKeys - the list of U2FKey
-     * @param {Int} props.U2FKeys[].Compromised - whether the key is compromised or not.
-     * @param {String} props.U2FKeys[].KeyHandle - The key handle of the current key.
-     * @param {String} props.U2FKeys[].Label - The label of the current key.
-     */
-    constructor ( props ) {
-        super(props);
-        this.state = {
-            U2FModalOpen: false
-        };
-    }
-
+class U2FKeyList extends Component {
     /**
      * renders an U2F Key.
      * @param {Object} u2fKey - the U2F Key to render.
@@ -43,7 +15,7 @@ export default class U2FKeyList extends Component {
      * @param {String} u2fKey.Label - The label of the current key.
      * @return {Component}
      */
-    static renderU2FKey ( u2fKey ) {
+    renderU2FKey(u2fKey) {
         const headerClass = [style.listElementHeader];
         if (u2fKey.Compromised) headerClass.push(style.listElementHeaderCompromised);
         return (
@@ -52,7 +24,10 @@ export default class U2FKeyList extends Component {
                     {u2fKey.Label}
                 </div>
                 {!!u2fKey.Compromised && <div class={['badge', 'badge-danger'].join(' ')}>Compromised</div>}
-                <button>Delete</button>
+                <button onClick={() => this.setState({
+                    confirmDeleteModal: u2fKey
+                })}>Delete
+                </button>
             </li>
         );
     }
@@ -60,23 +35,41 @@ export default class U2FKeyList extends Component {
     render() {
         if (!this.props.U2FKeys.length) return null;
 
+        const confirmDeleteModal = this.state.confirmDeleteModal;
+
+        const closeModal = () => {
+            this.setState({ confirmDeleteModal: "" });
+        };
         return (
             <ul id="u2f-list" style={this.props.style} class={style.list}>
-                <SteppedModal
-                    isOpen={this.state.U2FModalOpen}
-                    handleCloseModal={this.closeModal.bind(this)}
-                    steps={AddU2FModalSteps}
-                />
+                <ConfirmModal
+                    title="Confirm Security Key Deletion"
+                    scope="password"
+                    isOpen={!!confirmDeleteModal}
+                    onAfterClose={closeModal}
+                    onConfirm={() => {
+                        this.props.deleteU2FKeyAction(confirmDeleteModal);
+                    }}
+                    onCancel={() => {
+                    }}
+                >
+                    <div>
+                        Are you sure you want to delete the
+                        key <span>{confirmDeleteModal ? confirmDeleteModal.Label : ''}</span>?
+                    </div>
+                </ConfirmModal>
                 <li class={style.listHeader}>
                     <div>U2F Keys</div>
                     <div>
-                        <a onClick={this.openModal.bind(this)} href="#">
+                        <TextButton onClick={this.props.openModal} href="#">
                             Add a new key
-                        </a>
+                        </TextButton>
                     </div>
                 </li>
-                {this.props.U2FKeys.map(U2FKeyList.renderU2FKey.bind(this))}
+                {this.props.U2FKeys.map(this.renderU2FKey.bind(this))}
             </ul>
         );
     }
 }
+
+export default connect('settings', settingsActions)(U2FKeyList);

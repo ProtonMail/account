@@ -4,8 +4,8 @@ import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper
 /**
  * Shows information about the U2F Key usage.
  * @param {Object} props
- * @param {Function} props.onSubmit - called when next is pressed.
- * @param {Function} props.onCancel - called when previous is pressed.
+ * @param {Function} props.onSubmit - triggers the next step.
+ * @param {Function} props.onCancel - triggers the previous step.
  * @return {*}
  */
 export default ( { onSubmit, onCancel } ) => (

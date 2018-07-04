@@ -5,9 +5,9 @@ import { loadExtendedConfig } from 'frontend-commons/src/user/model';
 import * as userConnector from 'frontend-commons/src/auth/userConnector';
 import appProvider from 'frontend-commons/src/appProvider';
 import { isVPN } from 'frontend-commons/src/utils/appType';
+import { signU2F } from '../helpers/u2f';
 
 import toActions from '../lib/toActions';
-import { sign } from 'u2f';
 
 /**
  * @link { https://github.com/developit/unistore#usage }
@@ -54,18 +54,14 @@ const actions = (store) => {
         route('/', data);
     }
 
-    async function loginSignU2F (state) {
-        const u2fConfig = appProvider.getConfig('u2f');
-
-        let result = {};
-        try {
-            result = await sign(state.auth.twoFactorData.U2F, u2fConfig.appID, u2fConfig.timeout);
-            store.setState(toState(state, 'auth', { twoFactorResponse: { success: true } }));
-            return login2FA(state, { U2FResponse: result });
-        } catch (e) {
-            if (!e.ErrorCode) throw e;
-            return store.setState(toState(state, 'auth', { twoFactorResponse: { success: false, U2FResponse: e } }));
-        }
+    /**
+     * Logins using a U2F key.
+     * @param state
+     * @returns {Promise<*>} calls @link{login2FA}
+     */
+    async function loginU2F(state) {
+        const result = await signU2F(state.auth.twoFactorData.U2F);
+        return login2FA(state, { U2FResponse: result });
     }
 
     async function login2FA(state, opt) {
@@ -145,7 +141,7 @@ const actions = (store) => {
         unlock,
         login2FA,
         loadAuthUser,
-        loginSignU2F
+        loginU2F
     });
 };
 

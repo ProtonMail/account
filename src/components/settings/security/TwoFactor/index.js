@@ -3,7 +3,8 @@ import { h, Component } from 'preact';
 import style from './style.css';
 
 import U2FKeyList from './U2FKeyList/U2FKeyList';
-import SaveRecoveryCodesSteps from './SaveRecoveryCodeModal';
+import { steps as SaveRecoveryCodesSteps, beforeClose as SaveRecoveryCodesBeforeClose } from './SaveRecoveryCodeModal';
+import { steps as AddU2FModalSteps, beforeClose as AddU2FModalBeforeClose } from './AddU2FModal';
 import SteppedModal from '../../../ui/SteppedModal';
 
 export default class TwoFactorSettings extends Component {
@@ -23,6 +24,20 @@ export default class TwoFactorSettings extends Component {
     }
 
     /**
+     * opens the SaveRecoveryCodes Modal.
+     */
+    onOpenU2FModal () {
+        this.setState({ U2FModalOpen: true });
+    }
+
+    /**
+     * closes the U2F Modal.
+     */
+    onCloseU2FModal () {
+        this.setState({ U2FModalOpen: false });
+    }
+
+    /**
      * @constructor
      * @param {Object} props
      * @param {Object} props.user
@@ -36,7 +51,8 @@ export default class TwoFactorSettings extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            SaveRecoveryCodesModalOpen: false
+            SaveRecoveryCodesModalOpen: false,
+            U2FModalOpen: false
         };
     }
 
@@ -56,6 +72,7 @@ export default class TwoFactorSettings extends Component {
                         <SteppedModal
                             isOpen={this.state.SaveRecoveryCodesModalOpen}
                             handleCloseModal={this.onCloseSaveRecoveryCodesModal.bind(this)}
+                            beforeClose={SaveRecoveryCodesBeforeClose}
                             steps={SaveRecoveryCodesSteps}
                         />
                         <a href="#" onClick={this.onOpenSaveRecoveryCodesModal.bind(this)}>
@@ -70,11 +87,19 @@ export default class TwoFactorSettings extends Component {
                         </i>
                     </div>
                 </div>
-                <div id="u2f" class={[ style.item, style.u2fItem ].join(' ')}>
+                <div id="u2f" class={[style.item, style.u2fItem].join(' ')}>
                     <p style={{ flex: 2 }}>2FA via Security Key</p>
-                    <button style={{ flex: 1 }}>{U2FKeys.length ? 'Disable' : 'Enable'}</button>
+                    <button style={{ flex: 1 }} onClick={() => this.onOpenU2FModal()}>{U2FKeys.length
+                        ? 'Disable'
+                        : 'Enable'}</button>
+                    <SteppedModal
+                        isOpen={this.state.U2FModalOpen}
+                        handleCloseModal={() => this.onCloseU2FModal()}
+                        steps={AddU2FModalSteps}
+                        beforeClose={AddU2FModalBeforeClose}
+                    />
                 </div>
-                <U2FKeyList U2FKeys={U2FKeys}/>
+                <U2FKeyList U2FKeys={U2FKeys} openModal={() => this.onOpenU2FModal()}/>
             </div>
         );
     }

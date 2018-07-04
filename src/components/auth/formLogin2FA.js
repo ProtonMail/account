@@ -6,8 +6,8 @@ const formLogin2FA = ({ login2FA, twoFactorData: { isTOTP = true, U2F: U2FReques
     const model = {};
     return (<form onsubmit={e => (e.preventDefault(), login2FA(model))}>
         <fieldset>
-            {isTOTP && U2FRequest && <legend> Choose one of the following 2FA methods </legend>}
-            {isTOTP && (<div>
+            <legend> Choose one of the following 2FA methods</legend>
+            <div>
                 <label htmlFor="password2FA">2FA code</label>
                 <div class={style.twoFactorOption}>
                     <input
@@ -25,8 +25,7 @@ const formLogin2FA = ({ login2FA, twoFactorData: { isTOTP = true, U2F: U2FReques
                             model.password2FA = value;
                         }}/>
                 </div>
-            </div>)}
-
+            </div>
             {U2FRequest && (<div>
                 <label htmlFor="u2fKey">Security key</label>
                 <FormSignU2F id="u2fKey" class={style.twoFactorOption}/>

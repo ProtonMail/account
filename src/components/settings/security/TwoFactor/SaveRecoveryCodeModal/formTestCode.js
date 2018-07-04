@@ -6,33 +6,36 @@ import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper
 
 import styles from './index.css';
 
-const renderInfo = (step) => {
-    switch (step) {
-        case "success": return(<p>✓ Test succeeded</p>);
-        case "failure": return (<p>⚠ Please test your recovery code to proceed</p>)
+const renderInfo = (result) => {
+    switch (result) {
+        case true:
+            return (<p>✓ Test succeeded</p>);
+        case false:
+            return (<p>⚠ Please test your recovery code to proceed</p>);
         default: return (<p>Your recovery code will not be erased</p>)
     }
 };
 
+/**
+ * Modal Form to test that a given code is one of the new recovery code.
+ * @param {Object} props
+ * @param {Function} props.onSubmit - triggers the next step.
+ * @param {Function} props.onCancel - triggers the previous step.
+ * @returns {ModalWrapper}
+ */
 const FormTestCode = ({
     onSubmit,
     onCancel,
-    settings: { reset2FARecoveryCodes: { step, response = {} } },
-    reset2FARecoveryCodesAction,
-    resetStoreAction
+    settings: { reset2FARecoveryCodes: { result, response = {} } },
+    reset2FARecoveryCodesCheckNewCodeAction,
 }) => {
     const model = { code: response.code };
-
-    if (step === 'init') {
-        reset2FARecoveryCodesAction();
-    }
 
     return (
         <ModalWrapper
             onSubmit={(e) => {
                 e.preventDefault();
                 onSubmit();
-                resetStoreAction([ 'addU2FKey', 'reset2FARecoveryCodes' ]);
             }}
             onReset={(e) => {
                 e.preventDefault();
@@ -52,7 +55,7 @@ const FormTestCode = ({
                             onInput={({ target: { value: code } }) => {
                                 model.code = code;
                                 if (code.length === 8) {
-                                    reset2FARecoveryCodesAction(model);
+                                    reset2FARecoveryCodesCheckNewCodeAction(model.code);
                                 }
                             }}
                             required={true}
@@ -61,19 +64,19 @@ const FormTestCode = ({
                             type="code"
                             id="verifyCode"
                             placeholder="Code"
-                            disabled={step === 'success'}
+                            disabled={!!result}
                         />
                     </div>
                 </div>
                 <div style={{ flex: 1 }}>
-                    {renderInfo(step)}
+                    {renderInfo(result)}
                 </div>
             </ModalContent>
             <ModalFooter>
                 <button type="reset" value="Reset">
                     Back
                 </button>
-                <button type="submit" value="Submit" disabled={step !== 'success'}>
+                <button type="submit" value="Submit" disabled={!result}>
                     Finish
                 </button>
             </ModalFooter>

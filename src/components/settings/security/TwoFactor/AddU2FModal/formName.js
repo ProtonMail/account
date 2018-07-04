@@ -9,11 +9,10 @@ import { connect } from 'unistore/full/preact';
  */
 const FormName = ({ onSubmit, onCancel, addU2FKeyNameAction, settings: { addU2FKey: addU2FKeyStore } }) => {
     const model = { name: (addU2FKeyStore.response ? addU2FKeyStore.response.name : '') };
-    console.debug(addU2FKeyStore);
     return (<ModalWrapper
         onSubmit={(e) => {
             e.preventDefault();
-            addU2FKeyNameAction(model);
+            addU2FKeyNameAction(model.name);
             onSubmit();
         }}
         onReset={(e) => {

@@ -9,7 +9,7 @@ import { connect } from 'unistore/full/preact';
  * @param {Object} user
  * @returns {Component}
  */
-function renderContent ( setting, user ) {
+function renderContent(setting, user) {
     switch (setting) {
         case 'security':
             return <Security user={user}/>;
@@ -22,7 +22,11 @@ function renderContent ( setting, user ) {
     }
 }
 
-export default connect([ 'auth' ])(( { side, auth: { user } } ) => {
+export default connect(['auth', 'config'])(({ side, config }) => {
+    if (!config) {
+        return null;
+    }
+    const { settings: { user } } = config;
     console.log('SETTINGS', user);
     if (!Object.keys(user).length) return null;
     return (

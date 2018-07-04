@@ -2,9 +2,12 @@ import { h, Component } from 'preact';
 import authActions from './../../actions/authentication';
 import { connect } from 'unistore/full/preact';
 
+/**
+ * Form for the login 2FA action.
+ */
 class FormSignU2F extends Component {
     sendSignRequest () {
-        this.props.loginSignU2FAction();
+        this.props.loginU2FAction();
     }
 
     componentDidMount () {
