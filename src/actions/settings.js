@@ -1,12 +1,11 @@
-import { verify } from 'frontend-commons/src/api/paymentsApi';
-import { loadExtendedConfig } from 'frontend-commons/src/user/model';
-import { isVPN } from 'frontend-commons/src/utils/appType';
 import appProvider from 'frontend-commons/src/appProvider';
 import {
     getAddU2FChallenge,
     addU2FKey,
     resetRecoveryCodes,
-    removeU2FKey
+    removeU2FKey,
+    disableTwoFactor as disableTwoFactorApi,
+    disableTOTP as disableTOTPApi
 } from 'frontend-commons/src/settings/security';
 
 import toActions from '../lib/toActions';
@@ -45,6 +44,7 @@ const actions = (store) => {
 
     /**
      * update the `addU2FKey` state.
+     * @param state
      * @param {Object} data the data to update.
      * @returns {Promise<void>}
      */
@@ -74,7 +74,7 @@ const actions = (store) => {
 
         await updateAddU2FKeyState(state, { status: 'fetching' });
 
-        const request = await getAddU2FChallenge();
+        const request = await getAddU2FChallenge(true);
 
         await updateAddU2FKeyState(state, { status: 'pending' });
 
@@ -85,7 +85,13 @@ const actions = (store) => {
 
         // then send response...
         const result = await addU2FKey(
-            { ...u2fResponse, Label: storedResponse.name },
+            {
+                Label: storedResponse.name,
+                KeyHandle: u2fResponse.KeyHandle,
+                ClientData: u2fResponse.ClientData,
+                RegistrationData: u2fResponse.RegistrationData,
+                Version: u2fResponse.Version
+            },
             state.scope.creds,
             state.scope.response
         );
@@ -144,6 +150,14 @@ const actions = (store) => {
         })));
     }
 
+    async function updateUserSettingsFromResponse(state, result) {
+        return store.setState(toState(state, 'config', toState(state.config, 'settings',
+            toState(state.config.settings, 'user', {
+                ...result.data.UserSettings
+            })
+        )));
+    }
+
     /**
      * Sends a delete request to the API.
      * @param state
@@ -152,12 +166,21 @@ const actions = (store) => {
      * @returns {Promise<void>}
      */
     async function deleteU2FKey(state, u2fKey) {
-        const result = await removeU2FKey(u2fKey.KeyHandle, state.scope.creds, state.scope.response);
-        return store.setState(toState(state, 'config', toState(state.config, 'settings',
-            toState(state.config.settings, 'user', {
-                ...result.data.UserSettings
-            })
-        )));
+        return await updateUserSettingsFromResponse(
+            state,
+            await removeU2FKey(u2fKey.KeyHandle, state.scope.creds, state.scope.response)
+        );
+    }
+
+    async function disableTOTP(state) {
+        return await updateUserSettingsFromResponse(
+            state, await disableTOTPApi(state.scope.creds, state.scope.response));
+    }
+
+    async function disableTwoFactor(state) {
+        return await updateUserSettingsFromResponse(
+            state, await disableTwoFactorApi(state.scope.creds, state.scope.response)
+        );
     }
 
     return toActions({
@@ -166,7 +189,9 @@ const actions = (store) => {
         reset2FARecoveryCodesCheckNewCode,
         reset2FARecoveryCodesInit,
         resetStore,
-        deleteU2FKey
+        deleteU2FKey,
+        disableTOTP,
+        disableTwoFactor
     });
 };
 

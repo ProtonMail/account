@@ -1,40 +1,25 @@
 import { h, Component } from 'preact';
+import { connect } from 'unistore/full/preact';
 
 import style from './style.css';
 
 import U2FKeyList from './U2FKeyList/U2FKeyList';
 import { steps as SaveRecoveryCodesSteps, beforeClose as SaveRecoveryCodesBeforeClose } from './SaveRecoveryCodeModal';
-import { steps as AddU2FModalSteps, beforeClose as AddU2FModalBeforeClose } from './AddU2FModal';
 import SteppedModal from '../../../ui/SteppedModal';
+import ConfirmModal from '../../../ui/ConfirmModal';
+import TextButton from '../../../ui/TextButton';
 
-export default class TwoFactorSettings extends Component {
+import settingsAction from '../../../../actions/settings';
+import { beforeClose as AddU2FModalBeforeClose, steps as AddU2FModalSteps } from './AddU2FModal';
 
-    /**
-     * opens the SaveRecoveryCodes Modal.
-     */
-    onOpenSaveRecoveryCodesModal () {
-        this.setState({ SaveRecoveryCodesModalOpen: true });
+class TwoFactorSettings extends Component {
+
+    openModal(modalName) {
+        this.setState({ modal: modalName });
     }
 
-    /**
-     * closes the SaveRecoveryCodes Modal.
-     */
-    onCloseSaveRecoveryCodesModal () {
-        this.setState({ SaveRecoveryCodesModalOpen: false });
-    }
-
-    /**
-     * opens the SaveRecoveryCodes Modal.
-     */
-    onOpenU2FModal () {
-        this.setState({ U2FModalOpen: true });
-    }
-
-    /**
-     * closes the U2F Modal.
-     */
-    onCloseU2FModal () {
-        this.setState({ U2FModalOpen: false });
+    closeModal() {
+        this.setState({ modal: '' });
     }
 
     /**
@@ -51,33 +36,89 @@ export default class TwoFactorSettings extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            modal: '',
             SaveRecoveryCodesModalOpen: false,
-            U2FModalOpen: false
+            U2FModalOpen: false,
+            DisableU2FModalOpen: false
         };
     }
 
+    renderDisableTwoFactorModal() {
+        return (<ConfirmModal
+            title="Disable 2FA"
+            scope="password"
+            isOpen={this.state.modal === 'Disable2FA'}
+            onAfterClose={() => this.closeModal()}
+            onConfirm={() => {
+                this.props.disableTwoFactorAction();
+            }}
+            onCancel={() => {
+            }}
+        >
+            <div>
+                Are you sure you want to disable totally two factor authentication?
+            </div>
+        </ConfirmModal>);
+    }
+
+    renderDisableTOTPModal() {
+        return (<ConfirmModal
+            title="Disable TOTP"
+            scope="password"
+            isOpen={this.state.modal === 'DisableTOTP'}
+            onAfterClose={() => this.closeModal()}
+            onConfirm={() => {
+                this.props.disableTOTPAction();
+            }}
+            onCancel={() => {
+            }}
+        >
+            <div>
+                Are you sure you want to disable 2FA via application?
+            </div>
+        </ConfirmModal>);
+    }
+
+    renderAddU2FModal() {
+        return (<SteppedModal
+            isOpen={this.state.modal === 'AddU2FKey'}
+            handleCloseModal={() => this.closeModal()}
+            steps={AddU2FModalSteps}
+            beforeClose={AddU2FModalBeforeClose}
+        />);
+    }
+
+    renderSaveRecoveryCodesModal() {
+        return (<SteppedModal
+            isOpen={this.state.modal === 'SaveRecoveryCodes'}
+            handleCloseModal={() => this.closeModal()}
+            beforeClose={SaveRecoveryCodesBeforeClose}
+            steps={SaveRecoveryCodesSteps}
+        />);
+    }
+
     render () {
-        const { TwoFactor, TOTP, U2FKeys } = this.props;
+        const { TwoFactor, TOTP, U2FKeys = []} = this.props;
         return (
             <div class={style.twoFactor}>
+                {this.renderDisableTOTPModal()}
+                {this.renderDisableTwoFactorModal()}
+                {this.renderAddU2FModal()}
+                {this.renderSaveRecoveryCodesModal()}
                 <h2>Two-Factor Authentication</h2>
-                <div class="alert alert-info">
-                    {' '}
-                    Two-factor authentication is currently {TwoFactor ? 'on' : 'off'}.
+                <div class="alert alert-info" style={{ flexDirection: 'row' }}>
+                    Two-factor authentication is currently {TwoFactor ? 'on' : 'off'}.{' '}
+                    {!!TwoFactor && <TextButton onClick={() => this.openModal('Disable2FA')}>Turn off</TextButton>}
                 </div>
                 <div id="totp" class={style.item}>
                     <div style={{ flex: 2 }}>2FA via Application</div>
-                    <button style={{ flex: 1 }}>{TOTP ? 'Disable' : 'Enable'}</button>
+                    <button style={{ flex: 1 }} onClick={() => TOTP && this.openModal('DisableTOTP')}>
+                        {TOTP ? 'Disable' : 'Enable'}
+                    </button>
                     <div style={{ flex: 2 }}>
-                        <SteppedModal
-                            isOpen={this.state.SaveRecoveryCodesModalOpen}
-                            handleCloseModal={this.onCloseSaveRecoveryCodesModal.bind(this)}
-                            beforeClose={SaveRecoveryCodesBeforeClose}
-                            steps={SaveRecoveryCodesSteps}
-                        />
-                        <a href="#" onClick={this.onOpenSaveRecoveryCodesModal.bind(this)}>
+                        <TextButton onClick={() => this.openModal('SaveRecoveryCodes')}>
                             Regenerate recovery codes
-                        </a>
+                        </TextButton>
                         <i
                             data-toggle="tooltip"
                             data-placement="top"
@@ -88,19 +129,15 @@ export default class TwoFactorSettings extends Component {
                     </div>
                 </div>
                 <div id="u2f" class={[style.item, style.u2fItem].join(' ')}>
-                    <p style={{ flex: 2 }}>2FA via Security Key</p>
-                    <button style={{ flex: 1 }} onClick={() => this.onOpenU2FModal()}>{U2FKeys.length
-                        ? 'Disable'
-                        : 'Enable'}</button>
-                    <SteppedModal
-                        isOpen={this.state.U2FModalOpen}
-                        handleCloseModal={() => this.onCloseU2FModal()}
-                        steps={AddU2FModalSteps}
-                        beforeClose={AddU2FModalBeforeClose}
-                    />
+                    <div style={{ flex: 2 }}>2FA via Security Key</div>
+                    <button style={{ flex: 1 }} onClick={() => this.openModal('AddU2FKey')}>
+                        {U2FKeys.length ? 'Add another key' : 'Enable'}
+                    </button>
                 </div>
-                <U2FKeyList U2FKeys={U2FKeys} openModal={() => this.onOpenU2FModal()}/>
+                <U2FKeyList U2FKeys={U2FKeys}/>
             </div>
         );
     }
 }
+
+export default connect('settings', settingsAction)(TwoFactorSettings);

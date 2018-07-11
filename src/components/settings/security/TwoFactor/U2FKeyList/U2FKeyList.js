@@ -6,6 +6,7 @@ import TextButton from '../../../../ui/TextButton';
 import settingsActions from '../../../../../actions/settings';
 import { connect } from 'unistore/full/preact';
 
+
 class U2FKeyList extends Component {
     /**
      * renders an U2F Key.
@@ -33,23 +34,19 @@ class U2FKeyList extends Component {
     }
 
     render() {
-        if (!this.props.U2FKeys.length) return null;
-
         const confirmDeleteModal = this.state.confirmDeleteModal;
 
         const closeModal = () => {
-            this.setState({ confirmDeleteModal: "" });
+            this.setState({ confirmDeleteModal: ''});
         };
         return (
-            <ul id="u2f-list" style={this.props.style} class={style.list}>
+            <ul style={this.props.style} class={style.list}>
                 <ConfirmModal
                     title="Confirm Security Key Deletion"
                     scope="password"
                     isOpen={!!confirmDeleteModal}
                     onAfterClose={closeModal}
-                    onConfirm={() => {
-                        this.props.deleteU2FKeyAction(confirmDeleteModal);
-                    }}
+                    onConfirm={() => this.props.deleteU2FKeyAction(confirmDeleteModal)}
                     onCancel={() => {
                     }}
                 >
@@ -58,14 +55,6 @@ class U2FKeyList extends Component {
                         key <span>{confirmDeleteModal ? confirmDeleteModal.Label : ''}</span>?
                     </div>
                 </ConfirmModal>
-                <li class={style.listHeader}>
-                    <div>U2F Keys</div>
-                    <div>
-                        <TextButton onClick={this.props.openModal} href="#">
-                            Add a new key
-                        </TextButton>
-                    </div>
-                </li>
                 {this.props.U2FKeys.map(this.renderU2FKey.bind(this))}
             </ul>
         );

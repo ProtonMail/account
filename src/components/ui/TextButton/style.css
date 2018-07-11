@@ -2,9 +2,10 @@
     background: none !important;
     border: none;
     padding: 0 !important;
-
-    /*optional*/
     color: #069;
     text-decoration: underline;
     cursor: pointer;
+    display: inline;
+    text-align: left;
+    box-shadow: none;
 }
