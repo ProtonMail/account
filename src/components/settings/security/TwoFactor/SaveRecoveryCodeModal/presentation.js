@@ -16,6 +16,14 @@ class Presentation extends Component {
         this.props.reset2FARecoveryCodesInitAction();
     }
 
+    componentWillReceiveProps(newProps) {
+        const { settings: { reset2FARecoveryCodes: { error } } } = newProps;
+
+        if (this.props.settings.reset2FARecoveryCodes.error !== error && error) {
+            this.props.onReset(error.message);
+        }
+    }
+
     /**
      * generates a TXT file, containing the codes, and download it on the browser.
      */
@@ -43,7 +51,7 @@ class Presentation extends Component {
                 <ol className={styles.list}>
                     {codes.map((code) => (
                         <li className={styles.item}>
-                            <pre>{code}</pre>
+                            <pre class={styles.code}>{code}</pre>
                         </li>
                     ))}
                 </ol>,

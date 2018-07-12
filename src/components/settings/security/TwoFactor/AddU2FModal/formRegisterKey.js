@@ -3,10 +3,12 @@ import { connect } from 'unistore/full/preact';
 import settingsActions from '../../../../../actions/settings';
 
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
+import TextButton from '../../../../ui/TextButton';
 
 import styles from './index.css';
 
 import image from './sign-u2f.png';
+import { getErrorMessage } from '../../../../../helpers/u2f';
 
 /**
  * Modal Form to register a new U2F Key.
@@ -42,6 +44,38 @@ class FormRegisterKey extends Component {
         }
     }
 
+
+    renderStatus() {
+        const {
+            settings: { addU2FKey: { response: { name } = {}, status, request, error } }
+        } = this.props;
+
+        if (status !== 'failure') {
+            return (<div className={styles.status}>
+                <div className={styles.row}>
+                    <span className={styles.text}>Activate your key</span>
+                    <span className={styles.text}>
+                            {status || 'fetching'}...
+                        </span>
+                </div>
+
+                <div className={styles.row}>
+                    <span className={styles.text}>Name</span>
+                    <span className={[styles.text, styles.label].join(' ')}>{name}</span>
+                </div>
+            </div>);
+
+        }
+        if (error.ErrorCode) {
+            return (<div className={styles.status}>
+                <span>{getErrorMessage(error, true)}</span>
+                <TextButton onClick={() => this.props.addU2FKeyRegisterAction()}>Retry</TextButton>
+            </div>);
+        }
+
+        this.props.onReset(error.message);
+    }
+
     render () {
         const {
             settings: { addU2FKey: { response: { name } = {}, status } },
@@ -58,19 +92,7 @@ class FormRegisterKey extends Component {
                 <ModalContent class={styles.container}>
                     <img src={image}/>
 
-                    <div class={styles.status}>
-                        <div class={styles.row}>
-                            <span class={styles.text}>Activate your key</span>
-                            <span class={styles.text}>
-                            {status || 'fetching'}...
-                        </span>
-                        </div>
-
-                        <div class={styles.row}>
-                            <span class={styles.text}>Name</span>
-                            <span class={[ styles.text, styles.label ].join(' ')}>{name}</span>
-                        </div>
-                    </div>
+                    {this.renderStatus()}
                 </ModalContent>
                 <ModalFooter>
                     <button type="reset" value="Reset" disabled={(status === 'finished')}>

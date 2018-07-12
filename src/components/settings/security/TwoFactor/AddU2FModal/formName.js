@@ -35,6 +35,7 @@ const FormName = ({ onSubmit, onCancel, addU2FKeyNameAction, settings: { addU2FK
                         required
                         placeholder="Name"
                         class={styles.textInput}
+                        ref={input => input && input.focus()}
                     />
                 </div>
             </div>

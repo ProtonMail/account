@@ -99,6 +99,10 @@ class TwoFactorSettings extends Component {
 
     render () {
         const { TwoFactor, TOTP, U2FKeys = []} = this.props;
+
+        const totpClass = [style.item];
+        if (!TwoFactor) totpClass.push(style.lastItem);
+
         return (
             <div class={style.twoFactor}>
                 {this.renderDisableTOTPModal()}
@@ -110,12 +114,12 @@ class TwoFactorSettings extends Component {
                     Two-factor authentication is currently {TwoFactor ? 'on' : 'off'}.{' '}
                     {!!TwoFactor && <TextButton onClick={() => this.openModal('Disable2FA')}>Turn off</TextButton>}
                 </div>
-                <div id="totp" class={style.item}>
+                <div id="totp" class={totpClass.join(' ')}>
                     <div style={{ flex: 2 }}>2FA via Application</div>
                     <button style={{ flex: 1 }} onClick={() => TOTP && this.openModal('DisableTOTP')}>
                         {TOTP ? 'Disable' : 'Enable'}
                     </button>
-                    <div style={{ flex: 2 }}>
+                    {!!TwoFactor && (<div style={{ flex: 2 }}>
                         <TextButton onClick={() => this.openModal('SaveRecoveryCodes')}>
                             Regenerate recovery codes
                         </TextButton>
@@ -126,9 +130,9 @@ class TwoFactorSettings extends Component {
                         >
                             i
                         </i>
-                    </div>
+                    </div>)}
                 </div>
-                <div id="u2f" class={[style.item, style.u2fItem].join(' ')}>
+                <div id="u2f" class={[style.item, style.lastItem].join(' ')}>
                     <div style={{ flex: 2 }}>2FA via Security Key</div>
                     <button style={{ flex: 1 }} onClick={() => this.openModal('AddU2FKey')}>
                         {U2FKeys.length ? 'Add another key' : 'Enable'}

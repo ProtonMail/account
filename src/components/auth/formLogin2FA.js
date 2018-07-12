@@ -28,7 +28,7 @@ const formLogin2FA = ({ login2FA, twoFactorData: { isTOTP = true, U2F: U2FReques
             </div>
             {U2FRequest && (<div>
                 <label htmlFor="u2fKey">Security key</label>
-                <FormSignU2F id="u2fKey" class={style.twoFactorOption}/>
+                <FormSignU2F id="u2fKey" class={style.twoFactorOption}  />
             </div>)}
         </fieldset>
 

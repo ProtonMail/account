@@ -11,7 +11,7 @@
     align-items: center;
 }
 
-.u2fItem:after {
+.lastItem:after {
     content: "";
     flex: 2;
 }

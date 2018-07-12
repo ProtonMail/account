@@ -22,7 +22,14 @@ const actions = (store) => {
      * @param  {Object} value
      * @return {Object}       new state
      */
-    const toState = (state, key, value) => ({ [key]: { ...state[key], ...value } });
+    const toState = (state, key, value) => {
+        console.debug({
+            key,
+            value,
+            state: state[key]
+        });
+        return ({ [key]: { ...state[key], ...value } });
+    };
 
     /**
      * Resets the state for the actions
@@ -49,14 +56,15 @@ const actions = (store) => {
      * @returns {Promise<void>}
      */
     async function updateAddU2FKeyState(state, data) {
-        return store.setState(toState(state, 'settings', toState(state.settings, 'addU2FKey', data)));
+        await store.setState(toState(state, 'settings', toState(state.settings, 'addU2FKey', data)));
+        return await store.getState();
     }
 
     /**
      * Stores a name for a new U2F key. Erases any ongoing registration on the same browser.
      * @param state
      * @param {String} name
-     * @returns {Promise<void>}
+     * @returns {Promise<void>} the new state.
      */
     async function addU2FKeyName(state, name) {
         // erases any registering key. Not an issue, because the registration is supposed to be after the name setup.
@@ -70,50 +78,71 @@ const actions = (store) => {
      */
     async function addU2FKeyRegister(state) {
         const u2fConfig = appProvider.getConfig('u2f');
-        const { settings: { addU2FKey: { response: storedResponse } } } = state;
+        let { settings: { addU2FKey: { response: storedResponse, status, request, errorCode } } } = state;
 
-        await updateAddU2FKeyState(state, { status: 'fetching' });
+        console.debug({
+            errorCode,
+            request,
+            requestEmpty: request && !Object.keys(request).length,
+            result: !(errorCode && request && Object.keys(request).length)
+        });
 
-        const request = await getAddU2FChallenge(true);
+        if (!(errorCode && request && Object.keys(request).length)) {
+            // if failure, no need to refetch the challenge
+            state = await updateAddU2FKeyState(state, { status: 'fetching' });
 
-        await updateAddU2FKeyState(state, { status: 'pending' });
+            request = await getAddU2FChallenge(true);
+        }
 
-        // then call U2F api
-        const u2fResponse = await register(request, u2fConfig.appID, u2fConfig.timeout);
+        state = await updateAddU2FKeyState(state, { request, status: 'pending' });
 
-        await updateAddU2FKeyState(state, { status: u2fResponse ? 'success' : 'failure' });
+        let u2fResponse;
+        try {
+            // then call U2F api
+            u2fResponse = await register(request, u2fConfig.appID, u2fConfig.timeout);
+        } catch (e) {
+            return await updateAddU2FKeyState(state, { status: 'failure', error: e });
+        }
+
+        state = await updateAddU2FKeyState(state, { status: u2fResponse ? 'success' : 'failure' });
 
         // then send response...
-        const result = await addU2FKey(
-            {
-                Label: storedResponse.name,
-                KeyHandle: u2fResponse.KeyHandle,
-                ClientData: u2fResponse.ClientData,
-                RegistrationData: u2fResponse.RegistrationData,
-                Version: u2fResponse.Version
-            },
-            state.scope.creds,
-            state.scope.response
-        );
+        try {
+            const result = await addU2FKey(
+                {
+                    Label: storedResponse.name,
+                    KeyHandle: u2fResponse.KeyHandle,
+                    ClientData: u2fResponse.ClientData,
+                    RegistrationData: u2fResponse.RegistrationData,
+                    Version: u2fResponse.Version
+                },
+                state.scope.creds,
+                state.scope.response
+            );
 
-        const codes = result.data.TwoFactorRecoveryCodes;
+            const codes = result.data.TwoFactorRecoveryCodes;
 
-        const newState = {
-            ...toState(state, 'settings', {
-                addU2FKey: toState(state.settings, 'addU2FKey', { status: 'finished' }).addU2FKey,
-                reset2FARecoveryCodes: toState(state.settings, 'reset2FARecoveryCodes', {
-                    request: { codes }
-                }).reset2FARecoveryCodes
-            }),
-            ...toState(state, 'config', toState(state.config, 'settings', toState(state.config.settings, 'user', {
-                ...result.data.UserSettings
-            }))),
-            ...toState(state, 'scope', { used: true })
-        };
+            const newState = {
+                ...toState(state, 'settings', {
+                    addU2FKey: toState(state.settings, 'addU2FKey', { status: 'finished' }).addU2FKey,
+                    reset2FARecoveryCodes: toState(state.settings, 'reset2FARecoveryCodes', {
+                        request: { codes }
+                    }).reset2FARecoveryCodes
+                }),
+                ...toState(state, 'config', toState(state.config, 'settings', toState(state.config.settings, 'user', {
+                    ...result.data.UserSettings
+                }))),
+                ...toState(state, 'scope', { used: true })
+            };
 
-        return store.setState(
-            newState
-        );
+            return store.setState(
+                newState
+            );
+        }
+        catch (e) {
+            await updateAddU2FKeyState(state, { status: 'failure', error: e });
+            throw e;
+        }
     }
 
     /**
@@ -126,13 +155,20 @@ const actions = (store) => {
     async function reset2FARecoveryCodesInit(state) {
         let { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = state;
 
-        if (!codes || !codes.length) {
-            const response = await resetRecoveryCodes(state.scope.creds, state.scope.response);
-            codes = response.data.TwoFactorRecoveryCodes;
+        try {
+            if (!codes || !codes.length) {
+                const response = await resetRecoveryCodes(state.scope.creds, state.scope.response);
+                codes = response.data.TwoFactorRecoveryCodes;
+            }
+            store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
+                request: { codes }
+            })));
+        } catch (e) {
+            store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
+                error: e
+            })));
+            throw e;
         }
-        store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
-            request: { codes }
-        })));
     }
 
     /**
@@ -196,3 +232,4 @@ const actions = (store) => {
 };
 
 export default actions;
+

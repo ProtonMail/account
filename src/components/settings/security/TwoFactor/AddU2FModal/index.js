@@ -9,8 +9,8 @@ import actions from '../../../../../actions/settings';
 export const steps = [
     {
         title: 'Register new U2F Key',
-        component: ({ params, onNextStep, onPreviousStep }) => (
-            <Presentation params={params} onSubmit={onNextStep} onCancel={onPreviousStep}/>
+        component: ({ params, onNextStep, onPreviousStep, message }) => (
+            <Presentation params={params} onSubmit={onNextStep} onCancel={onPreviousStep} message={message}/>
         )
     },
     ...ScopeModal('password'),
@@ -24,11 +24,12 @@ export const steps = [
     },
     {
         title: 'Register new U2F Key',
-        component: ({ params, onNextStep, onPreviousStep, forbidCancel }) => (<RegisterKeyForm
+        component: ({ params, onNextStep, onPreviousStep, forbidCancel, onReset }) => (<RegisterKeyForm
             params={params}
             onSubmit={onNextStep}
             onCancel={onPreviousStep}
             forbidCancel={forbidCancel}
+            onReset={onReset}
         />)
     },
     ...RecoveryCodeSteps

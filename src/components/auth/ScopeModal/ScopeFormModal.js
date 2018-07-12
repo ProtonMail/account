@@ -100,6 +100,9 @@ class ScopeFormModal extends Component {
                 }}
             >
                 <ModalContent>
+                    {!!this.props.message && (
+                        <div>{this.props.message}</div>
+                    )}
                     <div style={style}>
                         <label htmlFor="password">password</label>
                         <input
@@ -110,6 +113,7 @@ class ScopeFormModal extends Component {
                             required
                             placeholder="Password"
                             onInput={this.onFieldUpdated.bind(this)}
+                            autoFocus={true}
                         />
                     </div>
                     {this.renderTwoFactor()}

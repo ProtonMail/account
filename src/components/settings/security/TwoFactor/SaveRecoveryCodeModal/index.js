@@ -9,10 +9,11 @@ export const steps = [
     {
         title: 'Save your recovery codes',
         mustSucceed: true,
-        component: ({ params, onNextStep, onPreviousStep }) => (<Presentation
+        component: ({ params, onNextStep, onPreviousStep, onReset }) => (<Presentation
             params={params}
             onSubmit={onNextStep}
             onCancel={onPreviousStep}
+            onReset={onReset}
         />)
     },
     {

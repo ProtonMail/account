@@ -65,6 +65,7 @@ const FormTestCode = ({
                             id="verifyCode"
                             placeholder="Code"
                             disabled={!!result}
+                            autoFocus={true}
                         />
                     </div>
                 </div>

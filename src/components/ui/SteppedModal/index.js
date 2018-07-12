@@ -53,7 +53,8 @@ export default class SteppedModal extends Component {
                 step: (state.step + 1),
                 params: { ...state.params, ...result },
                 previousAction: 'next',
-                mustSucceed: false
+                mustSucceed: false,
+                message: null
             });
         }
     }
@@ -71,9 +72,23 @@ export default class SteppedModal extends Component {
                 step: (state.step - 1),
                 params: { ...state.params, ...params },
                 previousAction: 'previous',
-                mustSucceed: false
+                mustSucceed: false,
+                message: null
             });
         }
+    }
+
+    onReset(message = null) {
+        if (this.props.beforeClose) {
+            this.props.beforeClose();
+        }
+        this.setState({
+            message,
+            step: 0,
+            params: {},
+            previousAction: 'enter',
+            mustSucceed: false
+        });
     }
 
     /**
@@ -128,7 +143,9 @@ export default class SteppedModal extends Component {
             onNextStep: this.onNextStep.bind(this),
             onPreviousStep: this.onPreviousStep.bind(this),
             onSkipStep: this.onSkipStep.bind(this),
-            forbidCancel: this.forbidCancel.bind(this)
+            onReset: this.onReset.bind(this),
+            forbidCancel: this.forbidCancel.bind(this),
+            message: this.state.message
         });
     }
 

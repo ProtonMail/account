@@ -60,7 +60,18 @@ const actions = (store) => {
      * @returns {Promise<*>} calls @link{login2FA}
      */
     async function loginU2F(state) {
-        const result = await signU2F(state.auth.twoFactorData.U2F);
+        let result;
+        try {
+            result = await signU2F(state.auth.twoFactorData.U2F);
+        } catch (e) {
+            if (!e.ErrorCode == null) throw e;
+            return store.setState(toState(state, 'auth', {
+                twoFactorResponse: {
+                    success: false,
+                    U2FResponse: e
+                }
+            }));
+        }
         return login2FA(state, { U2FResponse: result });
     }
 
@@ -120,6 +131,17 @@ const actions = (store) => {
         route('/dashboard', store.getState());
     }
 
+    async function abortLogin(state) {
+        const data = toState(state, 'auth', {
+            user: {},
+            isLoggedIn: false,
+            step: 'login'
+        });
+        store.setState({ config: null });
+        store.setState(data);
+        route('/', data);
+    }
+
     async function loadAuthUser(state) {
         appProvider.setAppI18n(addLocale, useLocale);
         const data = await userConnector.reloadAuth();
@@ -140,6 +162,7 @@ const actions = (store) => {
         logout,
         unlock,
         login2FA,
+        abortLogin,
         loadAuthUser,
         loginU2F
     });

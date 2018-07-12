@@ -1,12 +1,17 @@
 .list {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     align-self: stretch;
+    padding: 0 5%;
 }
 
-.list > .item:nth-child(4n) {
-    page-break-after: always;
+.item {
+    width: 15%;
+    margin-left: 10%;
+}
+
+.code {
 }
 
 .actions {
