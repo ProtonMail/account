@@ -16,7 +16,7 @@ function renderContent(setting, user) {
         default:
             return (
                 <h1>
-                    Paramètres pour <b>{user.Name}</b>
+                    Paramètres pour <b>{user.Username}</b>
                 </h1>
             );
     }

@@ -30,8 +30,6 @@ class FormSignU2F extends Component {
     render () {
         const { success, U2FResponse = {} } = this.props.auth.twoFactorResponse;
 
-        console.debug({ success, U2FResponse });
-
         if (success && !U2FResponse.ErrorCode) {
             return <div><p>Success</p></div>;
         }

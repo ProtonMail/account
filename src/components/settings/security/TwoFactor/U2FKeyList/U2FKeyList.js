@@ -55,7 +55,7 @@ class U2FKeyList extends Component {
                         key <span>{confirmDeleteModal ? confirmDeleteModal.Label : ''}</span>?
                     </div>
                 </ConfirmModal>
-                {this.props.U2FKeys.map(this.renderU2FKey.bind(this))}
+                {this.props.U2FKeys.map((u2fKey) => this.renderU2FKey(u2fKey))}
             </ul>
         );
     }

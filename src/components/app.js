@@ -13,6 +13,8 @@ import Dashboard from '../routes/dashboard';
 import authActions from '../actions/authentication';
 import { isLoggedIn as isAuthenticated } from 'frontend-commons/src/user/model';
 
+import Notification from './ui/Notification';
+
 appProvider.setConfig(config);
 const authEvent = appDispatcher('auth');
 
@@ -44,6 +46,7 @@ export default connect(
                 <Dashboard path="/dashboard" config={auth.config} user={auth.user}/>
                 <Settings path="/settings/:side?" config={auth.config} user={auth.user}/>
             </Router>
+            <Notification/>
         </div>
     );
 });

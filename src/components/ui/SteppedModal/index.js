@@ -41,9 +41,8 @@ export default class SteppedModal extends Component {
 
     /**
      * Triggers the next step. If the last step is reached, closes the modal.
-     * @param {Object} result - the result of the current step, to be appended the `state.params`.
      */
-    onNextStep(result = {}) {
+    onNextStep() {
         const state = this.state;
 
         if (this.state.step + 1 >= this.props.steps.length) { // if last step
@@ -51,7 +50,6 @@ export default class SteppedModal extends Component {
         } else {
             this.setState({
                 step: (state.step + 1),
-                params: { ...state.params, ...result },
                 previousAction: 'next',
                 mustSucceed: false,
                 message: null
@@ -61,16 +59,14 @@ export default class SteppedModal extends Component {
 
     /**
      * Triggers the previous step. If the current step is the first step, the modal is closed.
-     * @param {Object} params - the params to be appended to `state.params`.
      */
-    onPreviousStep(params = {}) {
+    onPreviousStep() {
         const state = this.state;
         if (this.state.step === 0) {
             this.onRequestClose();
         } else {
             this.setState({
                 step: (state.step - 1),
-                params: { ...state.params, ...params },
                 previousAction: 'previous',
                 mustSucceed: false,
                 message: null
@@ -85,7 +81,6 @@ export default class SteppedModal extends Component {
         this.setState({
             message,
             step: 0,
-            params: {},
             previousAction: 'enter',
             mustSucceed: false
         });
@@ -111,7 +106,6 @@ export default class SteppedModal extends Component {
 
     /**
      * @constructor
-     * @param {Object} props
      * @param props.isOpen - whether the step modal should be opened or not.
      * @param {Object[]} props.steps - the different steps to be proceeded.
      * @param {Component} props.steps[].component - the component of the current step.
@@ -123,7 +117,6 @@ export default class SteppedModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            params: {},
             step: 0,
             previousAction: 'enter',
             mustSucceed: false
@@ -139,12 +132,11 @@ export default class SteppedModal extends Component {
             return null;
         }
         return this.props.steps[this.state.step].component({
-            params: this.state.params,
-            onNextStep: this.onNextStep.bind(this),
-            onPreviousStep: this.onPreviousStep.bind(this),
-            onSkipStep: this.onSkipStep.bind(this),
-            onReset: this.onReset.bind(this),
-            forbidCancel: this.forbidCancel.bind(this),
+            onNextStep: () => this.onNextStep(),
+            onPreviousStep: () => this.onPreviousStep(),
+            onSkipStep: () => this.onSkipStep(),
+            onReset: (message) => this.onReset(message),
+            forbidCancel: () => this.forbidCancel(),
             message: this.state.message
         });
     }
@@ -153,8 +145,10 @@ export default class SteppedModal extends Component {
         if (!this.props.steps || !this.props.steps.length) return null;
         return (<Modal
             isOpen={this.props.isOpen}
-            onAfterOpen={this.onAfterOpen.bind(this)}
-            onRequestClose={this.onRequestClose.bind(this)}
+            onAfterOpen={() => this.onAfterOpen()}
+            onRequestClose={(requestClosed = null, lastStepSuccess = false) => this.onRequestClose(
+                requestClosed, lastStepSuccess
+            )}
             title={this.computeCurrentTitle()}
         >
             {this.renderCurrentStep()}

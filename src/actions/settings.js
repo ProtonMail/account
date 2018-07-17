@@ -9,7 +9,9 @@ import {
 } from 'frontend-commons/src/settings/security';
 
 import toActions from '../lib/toActions';
+import { error, success, info } from '../lib/notification';
 import { register } from 'u2f';
+
 
 /**
  * @link { https://github.com/developit/unistore#usage }
@@ -22,14 +24,7 @@ const actions = (store) => {
      * @param  {Object} value
      * @return {Object}       new state
      */
-    const toState = (state, key, value) => {
-        console.debug({
-            key,
-            value,
-            state: state[key]
-        });
-        return ({ [key]: { ...state[key], ...value } });
-    };
+    const toState = (state, key, value) => ({ [key]: { ...state[key], ...value } });
 
     /**
      * Resets the state for the actions
@@ -79,13 +74,6 @@ const actions = (store) => {
     async function addU2FKeyRegister(state) {
         const u2fConfig = appProvider.getConfig('u2f');
         let { settings: { addU2FKey: { response: storedResponse, status, request, errorCode } } } = state;
-
-        console.debug({
-            errorCode,
-            request,
-            requestEmpty: request && !Object.keys(request).length,
-            result: !(errorCode && request && Object.keys(request).length)
-        });
 
         if (!(errorCode && request && Object.keys(request).length)) {
             // if failure, no need to refetch the challenge
@@ -164,10 +152,7 @@ const actions = (store) => {
                 request: { codes }
             })));
         } catch (e) {
-            store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
-                error: e
-            })));
-            throw e;
+            store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', { error: e })));
         }
     }
 
@@ -186,11 +171,15 @@ const actions = (store) => {
         })));
     }
 
+    /**
+     * Updates the settings from the store.
+     * @param state
+     * @param result
+     * @returns {Promise<void>}
+     */
     async function updateUserSettingsFromResponse(state, result) {
         return store.setState(toState(state, 'config', toState(state.config, 'settings',
-            toState(state.config.settings, 'user', {
-                ...result.data.UserSettings
-            })
+            toState(state.config.settings, 'user', { ...result.data.UserSettings })
         )));
     }
 
@@ -202,21 +191,38 @@ const actions = (store) => {
      * @returns {Promise<void>}
      */
     async function deleteU2FKey(state, u2fKey) {
-        return await updateUserSettingsFromResponse(
-            state,
-            await removeU2FKey(u2fKey.KeyHandle, state.scope.creds, state.scope.response)
-        );
+        try {
+            await updateUserSettingsFromResponse(
+                state,
+                await removeU2FKey(u2fKey.KeyHandle, state.scope.creds, state.scope.response)
+            );
+            success('Your key was successfully deleted');
+        } catch (e) {
+            error(e.message, { error: e });
+        }
     }
 
     async function disableTOTP(state) {
-        return await updateUserSettingsFromResponse(
-            state, await disableTOTPApi(state.scope.creds, state.scope.response));
+        try {
+            await updateUserSettingsFromResponse(
+                state,
+                await disableTOTPApi(state.scope.creds, state.scope.response)
+            );
+            success('2FA via application was successfully disabled');
+        } catch (e) {
+            error(e.message, { error: e });
+        }
     }
 
     async function disableTwoFactor(state) {
-        return await updateUserSettingsFromResponse(
-            state, await disableTwoFactorApi(state.scope.creds, state.scope.response)
-        );
+        try {
+            await updateUserSettingsFromResponse(
+                state, await disableTwoFactorApi(state.scope.creds, state.scope.response)
+            );
+            success('Two Factor authentication was successfully disabled');
+        } catch (e) {
+            error(e.message, { error: e });
+        }
     }
 
     return toActions({

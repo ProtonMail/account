@@ -56,7 +56,7 @@ class TwoFactorSettings extends Component {
             }}
         >
             <div>
-                Are you sure you want to disable totally two factor authentication?
+                Are you sure you want to disable totally Two Factor Authentication?
             </div>
         </ConfirmModal>);
     }

@@ -76,7 +76,7 @@ class ScopeFormModal extends Component {
                 maxLength="8"
                 required
                 value={this.state.data.twoFactorCode}
-                onInput={this.onFieldUpdated.bind(this)}/>
+                onInput={(e) => this.onFieldUpdated(e)}/>
             {info['2FA'].U2F && (<div style={style}>
                 <TextButton onClick={() => this.props.unscopeU2FAction()}>
                     Or use your security key
@@ -112,7 +112,7 @@ class ScopeFormModal extends Component {
                             value={this.state.data.password}
                             required
                             placeholder="Password"
-                            onInput={this.onFieldUpdated.bind(this)}
+                            onInput={(e) => this.onFieldUpdated(e)}
                             autoFocus={true}
                         />
                     </div>
