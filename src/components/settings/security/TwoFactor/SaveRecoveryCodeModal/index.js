@@ -5,7 +5,7 @@ import store from '../../../../../helpers/store';
 import actions from '../../../../../actions/settings';
 
 export const steps = [
-    ...ScopeModal('password', true),
+    ...ScopeModal('password'),
     {
         title: 'Save your recovery codes',
         mustSucceed: true,
@@ -30,5 +30,6 @@ export const steps = [
 export const beforeClose = () => {
     beforeCloseScopeModal();
     const { resetStoreAction } = actions(store);
+
     resetStoreAction(store.getState(), ['reset2FARecoveryCodes']);
 };

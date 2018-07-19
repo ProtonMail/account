@@ -10,6 +10,8 @@ export default class SteppedModal extends Component {
      * called after the SteppedModal is opened.
      */
     onAfterOpen() {
+        this.setState({ step: 0 });
+
         if (this.props.onAfterOpen) {
             this.props.onAfterOpen();
         }
@@ -22,10 +24,11 @@ export default class SteppedModal extends Component {
      */
     onRequestClose(requestClosed = null, lastStepSuccess = false) {
         if (!(this.state.mustSucceed || this.props.steps[this.state.step].mustSucceed ) || lastStepSuccess) {
+            this.setState({ step: -1 });
+
             if (this.props.beforeClose) {
                 this.props.beforeClose(lastStepSuccess);
             }
-            this.setState({ step: 0 });
             this.props.handleCloseModal();
         }
     }
@@ -61,7 +64,7 @@ export default class SteppedModal extends Component {
      */
     onPreviousStep() {
         const state = this.state;
-        if (this.state.step === 0) {
+        if (this.state.step <= 0) {
             this.onRequestClose();
         } else {
             this.setState({
@@ -97,7 +100,7 @@ export default class SteppedModal extends Component {
      * @return {String} the current step.
      */
     computeCurrentTitle() {
-        if (this.state.step >= this.props.steps.length) {
+        if (this.state.step >= this.props.steps.length || this.state.step === -1) {
             return 'Loading';
         }
         return this.props.steps[this.state.step].title;
@@ -116,7 +119,7 @@ export default class SteppedModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            step: 0,
+            step: -1,
             previousAction: 'enter',
             mustSucceed: false
         };
@@ -127,7 +130,7 @@ export default class SteppedModal extends Component {
      * @return {Component}
      */
     renderCurrentStep() {
-        if (this.state.step >= this.props.steps.length) {
+        if (this.state.step >= this.props.steps.length || this.state.step === -1) {
             return null;
         }
         return this.props.steps[this.state.step].component({
