@@ -1,19 +1,12 @@
 import { signU2F } from '../helpers/u2f';
-import toActions from '../lib/toActions';
+import toActions from '../helpers/toActions';
 import { authInfo } from 'frontend-commons/src/crypto/srp';
+import { toState } from '../helpers/stateFormatter';
 
 /**
  * @link{https://github.com/developit/unistore#usage}
  */
 export default (store) => {
-    /**
-     * Format the state and extend it as it's not recursive with unistore
-     * @param  {Oject} state
-     * @param  {String} key
-     * @param  {Object} value
-     * @return {Object}       new state
-     */
-    const toState = (state, key, value) => ({ [key]: { ...state[key], ...value } });
 
     /**
      * initializate the unscope process.
@@ -33,7 +26,6 @@ export default (store) => {
      * @param {Object} opt
      * @param {string} opt.password - the password
      * @param {?string} twoFactorCode - the 2FA code (TOTP or recovery code).
-     * @returns {Promise<void>}
      */
     async function unscopePassword(state, { password, twoFactorCode = null }) {
         store.setState(toState(state, 'scope', toState(state.scope, 'creds', { password, twoFactorCode })));
@@ -52,16 +44,18 @@ export default (store) => {
     /**
      * reset the two factor data (code and U2F).
      * @param state
-     * @returns {Promise<void>}
      */
     async function unscopeResetTwoFactor(state) {
-        return store.setState(toState(state, 'scope', { creds: { password: state.scope.creds.password } }));
+        return store.setState(toState(state, 'scope', {
+            creds: {
+                password: state.scope.creds.password
+            }
+        }));
     }
 
     /**
      * reset the state for the scope
      * @param state
-     * @returns {Promise<void>}
      */
     async function resetScopeState(state) {
         store.setState({ scope: {} });

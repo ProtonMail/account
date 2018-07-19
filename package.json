@@ -57,7 +57,7 @@
     "preact-compat": "^3.17.0",
     "preact-router": "^2.5.7",
     "react-copy-to-clipboard": "^5.0.1",
-    "u2f": "github:ProtonMail/u2f.git#master",
+    "u2f": "github:ProtonMail/u2f.git#a955625453689d7ec462ef8b2fb19eaf86f51891",
     "unistore": "^3.0.6"
   },
   "jest": {

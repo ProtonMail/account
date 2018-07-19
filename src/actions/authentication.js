@@ -7,21 +7,14 @@ import appProvider from 'frontend-commons/src/appProvider';
 import { isVPN } from 'frontend-commons/src/utils/appType';
 import { signU2F } from '../helpers/u2f';
 
-import toActions from '../lib/toActions';
+import toActions from '../helpers/toActions';
+import { toState } from '../helpers/stateFormatter';
+
 
 /**
  * @link { https://github.com/developit/unistore#usage }
  */
 const actions = (store) => {
-    /**
-     * Format the state and extend it as it's not recursive with unistore
-     * @param  {Oject} state
-     * @param  {String} key
-     * @param  {Object} value
-     * @return {Object}       new state
-     */
-    const toState = (state, key, value) => ({ [key]: { ...state[key], ...value } });
-
     async function loadUserConfig(state, user) {
         const { organization, payment, settings } = await loadExtendedConfig(user);
         appProvider.loadI18n(settings.user.Locale);

@@ -21,17 +21,17 @@
     text-align: left;
 }
 
-.inputContainer {
+.nameInputContainer {
     display: flex;
     justify-content: space-around;
     align-self: stretch;
     flex: 1;
 }
 
-.inputContainer > * {
+.nameInputContainer > * {
     flex: 1;
 }
 
-.inputContainer .codeInput {
+.nameInputContainer .codeInput {
     width: 100%;
 }

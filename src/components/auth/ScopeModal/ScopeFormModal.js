@@ -58,8 +58,10 @@ class ScopeFormModal extends Component {
 
         if (this.props.scope.creds.U2F) {
             return <div style={style}>
-                <span>Your security key was used. </span> <TextButton
-                onClick={this.props.unscopeResetTwoFactorAction}>Undo</TextButton>
+                <span>Your security key was used. </span>
+                <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
+                    Undo
+                </TextButton>
             </div>;
         }
 

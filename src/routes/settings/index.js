@@ -10,16 +10,12 @@ import { connect } from 'unistore/full/preact';
  * @returns {Component}
  */
 function renderContent(setting, user) {
-    switch (setting) {
-        case 'security':
-            return <Security user={user}/>;
-        default:
-            return (
-                <h1>
-                    Paramètres pour <b>{user.Username}</b>
-                </h1>
-            );
+    if (setting === 'security') {
+        return (<Security user={user}/>);
     }
+    return (<h1>
+        Paramètres pour <b>{user.Username}</b>
+    </h1>);
 }
 
 export default connect(['auth', 'config'])(({ side, config }) => {

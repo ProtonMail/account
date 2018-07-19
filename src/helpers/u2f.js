@@ -10,29 +10,26 @@ export const ERROR_CODE = {
     TIMEOUT: 5
 };
 
+const ERROR_MAP = {
+    [ERROR_CODE.SUCCESS]: () => {
+        throw new Error('This is a success!');
+    },
+    [ERROR_CODE.OTHER_ERROR]: () => 'An error occurred',
+    [ERROR_CODE.BAD_REQUEST]: () => 'An internal error occurred.',
+    [ERROR_CODE.CONFIGURATION_UNSUPPORTED]: () => 'This security key is not supported.',
+    [ERROR_CODE.DEVICE_INELIGIBLE]: (register) =>
+        register ? 'This security key is already registered for your account!' : 'This security key is not recognized.'
+
+};
+
 export async function signU2F(U2FRequest) {
     const u2fConfig = appProvider.getConfig('u2f');
     return await sign(U2FRequest, u2fConfig.appID, u2fConfig.timeout);
 }
 
 export function getErrorMessage({ ErrorCode: errorCode }, register = false) {
-    switch (errorCode) {
-        case ERROR_CODE.SUCCESS:
-            throw new Error('This is a success!');
-        case ERROR_CODE.OTHER_ERROR:
-            return 'An error occurred';
-        case ERROR_CODE.BAD_REQUEST:
-            return 'An internal error occurred.';
-        case ERROR_CODE.CONFIGURATION_UNSUPPORTED:
-            return 'This security key is not supported.';
-        case ERROR_CODE.DEVICE_INELIGIBLE:
-            if (register) {
-                return 'This security key is already registered for your account!';
-            }
-            return 'This security key is not recognized.';
-        case ERROR_CODE.TIMEOUT:
-            return 'The request timed out. Please try again.';
-        default:
-            throw new Error(`The error code "${errorCode}" does not exist`);
+    if (ERROR_MAP[errorCode]) {
+        return ERROR_MAP[errorCode](register);
     }
+    throw new Error(`The error code "${errorCode}" does not exist`);
 }

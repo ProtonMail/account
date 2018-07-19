@@ -24,7 +24,7 @@ class U2FKeyList extends Component {
                 <div class={headerClass.join(' ')} style={{ marginRight: 'auto' }}>
                     {u2fKey.Label}
                 </div>
-                {!!u2fKey.Compromised && <div class={['badge', 'badge-danger'].join(' ')}>Compromised</div>}
+                {!!u2fKey.Compromised && <div class='badge badge-danger'>Compromised</div>}
                 <button onClick={() => this.setState({
                     confirmDeleteModal: u2fKey
                 })}>Delete

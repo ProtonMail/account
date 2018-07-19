@@ -1,6 +1,6 @@
 import ScopeFormModal from './ScopeFormModal';
 
-import store from '../../../lib/store';
+import store from '../../../helpers/store';
 import actions from '../../../actions/scope';
 
 export const steps = (scope) => {
@@ -11,8 +11,12 @@ export const steps = (scope) => {
         {
             title: 'Confirm your identity',
             component: ({ params, onNextStep, onPreviousStep, onSkipStep, message }) => (
-                <ScopeFormModal onSubmit={onNextStep} onCancel={onPreviousStep} skip={onSkipStep} params={params}
-                                message={message}/>)
+                <ScopeFormModal
+                    onSubmit={onNextStep}
+                    onCancel={onPreviousStep}
+                    skip={onSkipStep}
+                    params={params}
+                    message={message}/>)
         }
     ];
 };

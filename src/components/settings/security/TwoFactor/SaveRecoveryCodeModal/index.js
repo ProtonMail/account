@@ -1,7 +1,7 @@
 import Presentation from './presentation';
 import TestCode from './formTestCode';
 import { steps as ScopeModal, beforeClose as beforeCloseScopeModal } from '../../../../auth/ScopeModal';
-import store from '../../../../../lib/store';
+import store from '../../../../../helpers/store';
 import actions from '../../../../../actions/settings';
 
 export const steps = [

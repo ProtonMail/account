@@ -7,13 +7,12 @@ import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper
 import styles from './index.css';
 
 const renderInfo = (result) => {
-    switch (result) {
-        case true:
-            return (<p>✓ Test succeeded</p>);
-        case false:
-            return (<p>⚠ Please test your recovery code to proceed</p>);
-        default: return (<p>Your recovery code will not be erased</p>)
+    if (typeof result === 'undefined') {
+        // result is undefined until the input is lower than 6 characters.
+        return (<p>Your recovery code will not be erased</p>);
     }
+
+    return <p>{result ? '✓ Test succeeded' : '⚠ Please test your recovery code to proceed'}</p>;
 };
 
 /**
@@ -27,7 +26,7 @@ const FormTestCode = ({
     onSubmit,
     onCancel,
     settings: { reset2FARecoveryCodes: { result, response = {} } },
-    reset2FARecoveryCodesCheckNewCodeAction,
+    reset2FARecoveryCodesCheckNewCodeAction
 }) => {
     const model = { code: response.code };
 

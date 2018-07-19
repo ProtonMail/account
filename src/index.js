@@ -3,7 +3,7 @@ import App from './components/app';
 import { createStore, Provider } from 'unistore/full/preact';
 import hookErrorActions from './lib/hookErrorActions';
 
-import store from './lib/store';
+import store from './helpers/store';
 
 hookErrorActions(store, (e) => {
   console.log('-------- ¯\\_(ツ)_/¯ -------');

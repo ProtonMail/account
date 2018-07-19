@@ -61,7 +61,7 @@ class FormRegisterKey extends Component {
 
                 <div className={styles.row}>
                     <span className={styles.text}>Name</span>
-                    <span className={[styles.text, styles.label].join(' ')}>{name}</span>
+                    <span className={[styles.text, styles.nameLabel].join(' ')}>{name}</span>
                 </div>
             </div>);
 

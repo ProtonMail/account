@@ -3,7 +3,8 @@ import { Content, Footer, Wrapper } from './Modal';
 import SteppedModal from './SteppedModal';
 import { steps as scopeModalSteps, beforeClose as beforeCloseScopeModal } from '../auth/ScopeModal';
 
-class ConfirmModal extends Component {
+export default class ConfirmModal extends Component {
+    // for some reason, using stateless component produces a Build error...
     render() {
         const {
             children,
@@ -11,13 +12,11 @@ class ConfirmModal extends Component {
             isOpen,
             onConfirm,
             onAfterClose,
-            scope = null,
-            onCancel = null,
-            onAfterOpen = null,
+            scope = undefined,
+            onCancel = undefined,
             cancelText = 'Cancel',
             confirmText = 'Confirm'
         } = this.props;
-
         const steps = [
             {
                 title,
@@ -52,21 +51,20 @@ class ConfirmModal extends Component {
             steps.push(...scopeModalSteps(scope));
         }
 
+        const beforeClose = async (success) => {
+            if (success) {
+                await onConfirm();
+            }
+            if (scope) {
+                beforeCloseScopeModal();
+            }
+        };
+
         return (<SteppedModal
                 isOpen={isOpen}
                 handleCloseModal={onAfterClose}
                 steps={steps}
-                beforeClose={async (success) => {
-                    if (success) {
-                        await onConfirm();
-                    }
-                    if (scope) {
-                        beforeCloseScopeModal();
-                    }
-                }}/>
+                beforeClose={beforeClose}/>
         );
-
     }
 }
-
-export default ConfirmModal;

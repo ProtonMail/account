@@ -33,9 +33,8 @@ export default class SteppedModal extends Component {
     onSkipStep() {
         if (this.state.previousAction === 'next' || this.state.previousAction === 'enter') {
             return this.onNextStep();
-        } else {
-            return this.onPreviousStep();
         }
+        return this.onPreviousStep();
     }
 
 

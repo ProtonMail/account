@@ -21,10 +21,10 @@ const FormName = ({ onSubmit, onCancel, addU2FKeyNameAction, settings: { addU2FK
         }}>
         <ModalContent>
             <div class={styles.name}>
-                <label class={styles.label} htmlFor="name">
+                <label class={styles.nameLabel} htmlFor="name">
                     Name
                 </label>
-                <div class={styles.inputContainer}>
+                <div class={styles.nameInputContainer}>
                     <input
                         onInput={({ target: { value } }) => {
                             model.name = value;
@@ -34,7 +34,7 @@ const FormName = ({ onSubmit, onCancel, addU2FKeyNameAction, settings: { addU2FK
                         id="inputName"
                         required
                         placeholder="Name"
-                        class={styles.textInput}
+                        class={styles.nameTextInput}
                         ref={input => input && input.focus()}
                     />
                 </div>

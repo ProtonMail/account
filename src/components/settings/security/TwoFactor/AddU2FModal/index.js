@@ -3,7 +3,7 @@ import FormName from './formName';
 import RegisterKeyForm from './formRegisterKey';
 import { steps as RecoveryCodeSteps, beforeClose as beforeCloseRecoveryCodeModal } from '../SaveRecoveryCodeModal';
 import { steps as ScopeModal, beforeClose as beforeCloseScopeModal } from '../../../../auth/ScopeModal/index';
-import store from '../../../../../lib/store';
+import store from '../../../../../helpers/store';
 import actions from '../../../../../actions/settings';
 
 export const steps = [

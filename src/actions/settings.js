@@ -1,30 +1,23 @@
 import appProvider from 'frontend-commons/src/appProvider';
 import {
-    getAddU2FChallenge,
     addU2FKey,
-    resetRecoveryCodes,
-    removeU2FKey,
+    disableTOTP as disableTOTPApi,
     disableTwoFactor as disableTwoFactorApi,
-    disableTOTP as disableTOTPApi
+    getAddU2FChallenge,
+    removeU2FKey,
+    resetRecoveryCodes
 } from 'frontend-commons/src/settings/security';
 
-import toActions from '../lib/toActions';
-import { error, success, info } from '../lib/notification';
+import toActions from '../helpers/toActions';
+import { error, success } from '../helpers/notification';
 import { register } from 'u2f';
+import { toState, extended } from '../helpers/stateFormatter';
 
 
 /**
  * @link { https://github.com/developit/unistore#usage }
  */
 const actions = (store) => {
-    /**
-     * Format the state and extend it as it's not recursive with unistore
-     * @param  {Object} state
-     * @param  {String} key
-     * @param  {Object} value
-     * @return {Object}       new state
-     */
-    const toState = (state, key, value) => ({ [key]: { ...state[key], ...value } });
 
     /**
      * Resets the state for the actions
@@ -48,22 +41,22 @@ const actions = (store) => {
      * update the `addU2FKey` state.
      * @param state
      * @param {Object} data the data to update.
-     * @returns {Promise<void>}
+     * @return {Object} new state
+     * @private
      */
-    async function updateAddU2FKeyState(state, data) {
-        await store.setState(toState(state, 'settings', toState(state.settings, 'addU2FKey', data)));
-        return await store.getState();
+    function updateAddU2FKeyState(state, data) {
+        store.setState(extended(state, 'settings.addU2FKey', data));
+        return store.getState();
     }
 
     /**
      * Stores a name for a new U2F key. Erases any ongoing registration on the same browser.
      * @param state
      * @param {String} name
-     * @returns {Promise<void>} the new state.
      */
     async function addU2FKeyName(state, name) {
         // erases any registering key. Not an issue, because the registration is supposed to be after the name setup.
-        return updateAddU2FKeyState(state, { response: { name } });
+        store.setState(extended(state, 'settings.addU2FKey', { response: { name }}));
     }
 
     /**
@@ -73,7 +66,16 @@ const actions = (store) => {
      */
     async function addU2FKeyRegister(state) {
         const u2fConfig = appProvider.getConfig('u2f');
-        let { settings: { addU2FKey: { response: storedResponse, status, request, errorCode } } } = state;
+
+        const addU2FKeyState = state.settings.addU2FKey;
+        const {
+            status,
+            errorCode,
+            response: storedResponse
+        } = addU2FKeyState;
+        let {
+            request
+        } = addU2FKeyState;
 
         if (!(errorCode && request && Object.keys(request).length)) {
             // if failure, no need to refetch the challenge
@@ -141,18 +143,17 @@ const actions = (store) => {
      * @returns {Promise<void>}
      */
     async function reset2FARecoveryCodesInit(state) {
-        let { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = state;
+        const { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = state;
 
         try {
             if (!codes || !codes.length) {
                 const response = await resetRecoveryCodes(state.scope.creds, state.scope.response);
-                codes = response.data.TwoFactorRecoveryCodes;
+                store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
+                    request: { codes: response.data.TwoFactorRecoveryCodes }
+                })));
             }
-            store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
-                request: { codes }
-            })));
         } catch (e) {
-            store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', { error: e })));
+            store.setState(extended(state, 'settings.reset2FARecoveryCodes', { error: e }));
         }
     }
 
@@ -165,22 +166,20 @@ const actions = (store) => {
     async function reset2FARecoveryCodesCheckNewCode(state, code) {
         const { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = state;
 
-        return store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
+        return store.setState(extended(state, 'settings.reset2FARecoveryCodes', {
             result: codes.indexOf(code) >= 0,
             response: { code }
-        })));
+        }));
     }
 
     /**
      * Updates the settings from the store.
      * @param state
      * @param result
-     * @returns {Promise<void>}
+     * @private
      */
-    async function updateUserSettingsFromResponse(state, result) {
-        return store.setState(toState(state, 'config', toState(state.config, 'settings',
-            toState(state.config.settings, 'user', { ...result.data.UserSettings })
-        )));
+    function updateUserSettingsFromResponse(state, result) {
+        store.setState(extended(state, 'config.settings.user', { ...result.data.UserSettings }));
     }
 
     /**
@@ -192,7 +191,7 @@ const actions = (store) => {
      */
     async function deleteU2FKey(state, u2fKey) {
         try {
-            await updateUserSettingsFromResponse(
+            updateUserSettingsFromResponse(
                 state,
                 await removeU2FKey(u2fKey.KeyHandle, state.scope.creds, state.scope.response)
             );
@@ -204,7 +203,7 @@ const actions = (store) => {
 
     async function disableTOTP(state) {
         try {
-            await updateUserSettingsFromResponse(
+            updateUserSettingsFromResponse(
                 state,
                 await disableTOTPApi(state.scope.creds, state.scope.response)
             );
@@ -214,14 +213,19 @@ const actions = (store) => {
         }
     }
 
+    /**
+     * Disables Two Factor
+     * @param state
+     * @returns {Promise<void>}
+     */
     async function disableTwoFactor(state) {
         try {
-            await updateUserSettingsFromResponse(
+            updateUserSettingsFromResponse(
                 state, await disableTwoFactorApi(state.scope.creds, state.scope.response)
             );
             success('Two Factor authentication was successfully disabled');
         } catch (e) {
-            error(e.message, { error: e });
+            error(e.message, e);
         }
     }
 

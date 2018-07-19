@@ -4,15 +4,15 @@
     align-self: stretch;
 }
 
-.name .label {
+.nameLabel {
     flex: 1;
 }
 
-.name .inputContainer {
+.nameInputContainer {
     flex: 4;
 }
 
-.name .textInput {
+.nameTextInput {
     width: 100%
 }
 
@@ -24,20 +24,20 @@
     margin: auto 20%;
 }
 
-.status > .row{
+.row{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.status > .row > .text {
+.text {
     flex: 1;
 }
 
-.status > .row > .text:first-child {
+.text:first-child {
     text-align: left;
 }
 
-.text.label {
+.text.nameLabel {
     color: #9592d1;
 }
