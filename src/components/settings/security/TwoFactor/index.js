@@ -100,8 +100,10 @@ class TwoFactorSettings extends Component {
     render () {
         const { TwoFactor, TOTP, U2FKeys = []} = this.props;
 
-        const totpClass = [style.item];
-        if (!TwoFactor) totpClass.push(style.lastItem);
+        const u2fClasses = [style.item];
+        if (!!TwoFactor) {
+            u2fClasses.push(style.lastItem);
+        }
 
         return (
             <div class={style.twoFactor}>
@@ -110,16 +112,16 @@ class TwoFactorSettings extends Component {
                 {this.renderAddU2FModal()}
                 {this.renderSaveRecoveryCodesModal()}
                 <h2>Two-Factor Authentication</h2>
-                <div class="alert alert-info" style={{ flexDirection: 'row' }}>
+                <div class="alert alert-info">
                     Two-factor authentication is currently {TwoFactor ? 'on' : 'off'}.{' '}
                     {!!TwoFactor && <TextButton onClick={() => this.openModal('Disable2FA')}>Turn off</TextButton>}
                 </div>
-                <div id="totp" class={totpClass.join(' ')}>
-                    <div style={{ flex: 2 }}>2FA via Application</div>
-                    <button style={{ flex: 1 }} onClick={() => TOTP && this.openModal('DisableTOTP')}>
+                <div id="totp" class={style.item}>
+                    <div class={style.description}>2FA via Application</div>
+                    <button class={style.action} onClick={() => TOTP && this.openModal('DisableTOTP')}>
                         {TOTP ? 'Disable' : 'Enable'}
                     </button>
-                    {!!TwoFactor && (<div style={{ flex: 2 }}>
+                    {!!TwoFactor && (<div class={style.description}>
                         <TextButton onClick={() => this.openModal('SaveRecoveryCodes')}>
                             Regenerate recovery codes
                         </TextButton>
@@ -132,9 +134,9 @@ class TwoFactorSettings extends Component {
                         </i>
                     </div>)}
                 </div>
-                <div id="u2f" class={[style.item, style.lastItem].join(' ')}>
-                    <div style={{ flex: 2 }}>2FA via Security Key</div>
-                    <button style={{ flex: 1 }} onClick={() => this.openModal('AddU2FKey')}>
+                <div id="u2f" class={u2fClasses.join(' ')}>
+                    <div class={style.description}>2FA via Security Key</div>
+                    <button class={style.action} onClick={() => this.openModal('AddU2FKey')}>
                         {U2FKeys.length ? 'Add another key' : 'Enable'}
                     </button>
                 </div>

@@ -15,3 +15,11 @@
     content: "";
     flex: 2;
 }
+
+.description {
+    flex: 2;
+}
+
+.action {
+    flex: 1;
+}

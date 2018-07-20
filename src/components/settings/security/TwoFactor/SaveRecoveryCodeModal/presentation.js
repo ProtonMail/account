@@ -48,14 +48,14 @@ class Presentation extends Component {
             </p>
             <p>Each recovery code can only be used once</p>
             {codes && codes.length && [
-                <ol className={styles.list}>
+                <ol class={styles.list}>
                     {codes.map((code) => (
-                        <li className={styles.item}>
+                        <li class={styles.item}>
                             <pre class={styles.code}>{code}</pre>
                         </li>
                     ))}
                 </ol>,
-                < div className={styles.actions}>
+                < div class={styles.actions}>
                     <a href="#" onClick={() => this.downloadClicked()}>
                         DOWNLOAD CODES
                     </a>

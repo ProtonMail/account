@@ -42,12 +42,12 @@ const FormTestCode = ({
             }}
         >
             <ModalContent>
-                <p style={{ flex: 2 }}>
+                <p class={styles.description}>
                     Test your recovery codes by entering one of your codes below. If you did not save your recovery
                     codes, go back and save them.
                 </p>
-                <div class={styles.inputContainer}>
-                    <span>Input your code</span>
+                <div class="form-row">
+                    <label htmlFor="verifyCode">Input your code</label>
                     <div>
                         <input
                             class={styles.codeInput}
@@ -59,7 +59,6 @@ const FormTestCode = ({
                             }}
                             required={true}
                             value={model.code}
-                            style={{ width: '100%' }}
                             type="code"
                             id="verifyCode"
                             placeholder="Code"
@@ -68,7 +67,7 @@ const FormTestCode = ({
                         />
                     </div>
                 </div>
-                <div style={{ flex: 1 }}>
+                <div class={styles.result}>
                     {renderInfo(result)}
                 </div>
             </ModalContent>

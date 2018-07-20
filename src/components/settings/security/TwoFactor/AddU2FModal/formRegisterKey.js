@@ -51,23 +51,23 @@ class FormRegisterKey extends Component {
         } = this.props;
 
         if (status !== 'failure') {
-            return (<div className={styles.status}>
-                <div className={styles.row}>
-                    <span className={styles.text}>Activate your key</span>
-                    <span className={styles.text}>
+            return (<div class={styles.status}>
+                <div class={styles.row}>
+                    <span class={styles.text}>Activate your key</span>
+                    <span class={styles.text}>
                             {status || 'fetching'}...
                         </span>
                 </div>
 
-                <div className={styles.row}>
-                    <span className={styles.text}>Name</span>
-                    <span className={[styles.text, styles.nameLabel].join(' ')}>{name}</span>
+                <div class={styles.row}>
+                    <span class={styles.text}>Name</span>
+                    <span class={[styles.text, styles.nameLabel].join(' ')}>{name}</span>
                 </div>
             </div>);
 
         }
         if (error.ErrorCode) {
-            return (<div className={styles.status}>
+            return (<div class={styles.status}>
                 <span>{getErrorMessage(error, true)}</span>
                 <TextButton onClick={() => this.props.addU2FKeyRegisterAction()}>Retry</TextButton>
             </div>);

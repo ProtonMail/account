@@ -17,11 +17,14 @@ class U2FKeyList extends Component {
      * @return {Component}
      */
     renderU2FKey(u2fKey) {
-        const headerClass = [style.listElementHeader];
-        if (u2fKey.Compromised) headerClass.push(style.listElementHeaderCompromised);
+        const headerClasses = [style.listElementHeader];
+        if (u2fKey.Compromised) {
+            headerClasses.push(style.listElementHeaderCompromised);
+        }
+
         return (
             <li key={u2fKey.KeyHandle} class={style.listElement}>
-                <div class={headerClass.join(' ')} style={{ marginRight: 'auto' }}>
+                <div class={headerClasses.join(' ')}>
                     {u2fKey.Label}
                 </div>
                 {!!u2fKey.Compromised && <div class='badge badge-danger'>Compromised</div>}
@@ -40,7 +43,7 @@ class U2FKeyList extends Component {
             this.setState({ confirmDeleteModal: ''});
         };
         return (
-            <ul style={this.props.style} class={style.list}>
+            <ul class={style.list}>
                 <ConfirmModal
                     title="Confirm Security Key Deletion"
                     scope="password"

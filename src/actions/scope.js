@@ -1,7 +1,7 @@
 import { signU2F } from '../helpers/u2f';
 import toActions from '../helpers/toActions';
 import { authInfo } from 'frontend-commons/src/crypto/srp';
-import { toState } from '../helpers/stateFormatter';
+import { toState, extended } from '../helpers/stateFormatter';
 
 /**
  * @link{https://github.com/developit/unistore#usage}
@@ -28,7 +28,7 @@ export default (store) => {
      * @param {?string} twoFactorCode - the 2FA code (TOTP or recovery code).
      */
     async function unscopePassword(state, { password, twoFactorCode = null }) {
-        store.setState(toState(state, 'scope', toState(state.scope, 'creds', { password, twoFactorCode })));
+        store.setState(extended(state, 'scope.creds', { password, twoFactorCode }));
     }
 
     /**
@@ -37,8 +37,18 @@ export default (store) => {
      * @returns {Promise<void>}
      */
     async function unscopeU2F(state) {
-        const response = await signU2F(state.scope.response['2FA'].U2F);
-        store.setState(toState(state, 'scope', toState(state.scope, 'creds', { U2F: response })));
+        store.setState(toState(state, 'scope', { U2FRequest: { status: 'pending', error: undefined } }));
+        try {
+            const response = await signU2F(state.scope.response['2FA'].U2F);
+            store.setState(extended(state, 'scope.creds', { U2F: response }));
+        }
+        catch (e) {
+            if (!e.ErrorCode) {
+                throw  e;
+            }
+            store.setState(toState(state, 'scope', { U2FRequest: { status: 'failure', error: e } }));
+        }
+        // the state from the params is used, it discards U2FRequest, which now is useless.
     }
 
     /**
@@ -47,6 +57,7 @@ export default (store) => {
      */
     async function unscopeResetTwoFactor(state) {
         return store.setState(toState(state, 'scope', {
+            U2FRequest: {},
             creds: {
                 password: state.scope.creds.password
             }

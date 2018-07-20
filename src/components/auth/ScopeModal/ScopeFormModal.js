@@ -5,8 +5,8 @@ import { connect } from 'unistore/full/preact';
 import scopeActions from '../../../actions/scope';
 import TextButton from '../../ui/TextButton';
 
-
-const style = { display: 'flex', alignSelf: 'wrap', justifyContent: 'space-around', flex: 1 };
+import style from './index.css';
+import { getErrorMessage } from '../../../helpers/u2f';
 
 /**
  * Modal Form to asks credentials information (password and 2FA).
@@ -49,42 +49,80 @@ class ScopeFormModal extends Component {
     renderTwoFactor() {
         const info = this.props.scope.response;
         if (!info) {
-            return <div style={style}>Requesting authorization...</div>;
+            return <div class={style.scopeFormModal}>Requesting authorization...</div>;
         }
         if (!info.TwoFactor) {
             // returning empty div, to keep the place
-            return <div style={style}/>;
+            return <div class={style.scopeFormModal}/>;
         }
 
-        if (this.props.scope.creds.U2F) {
-            return <div style={style}>
+        const {
+            creds: { U2F } = {},
+            U2FRequest: { status, error } = {}
+        } = this.props.scope;
+
+        if (U2F) {
+            return (<div class={style.scopeFormModal}>
                 <span>Your security key was used. </span>
                 <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
                     Undo
                 </TextButton>
-            </div>;
+            </div>);
         }
 
-        return (<div style={style}>
-            <label htmlFor="twoFactorCode">2FA code</label>
-            <input
-                type="text"
-                name="twoFactorCode"
-                id="twoFactorCode"
-                autoCapitalize="off"
-                autoCorrect="off"
-                autoComplete="off"
-                minLength="6"
-                maxLength="8"
-                required
-                value={this.state.data.twoFactorCode}
-                onInput={(e) => this.onFieldUpdated(e)}/>
-            {info['2FA'].U2F && (<div style={style}>
-                <TextButton onClick={() => this.props.unscopeU2FAction()}>
-                    Or use your security key
+        if (status === 'pending') {
+            return (<div class={style.scopeFormModal}>
+                <p>
+                    <span>Please activate your security key... </span>
+                    <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
+                        Cancel
+                    </TextButton></p>
+            </div>);
+        }
+
+        if (status === 'failure') {
+            return (<div class={style.scopeFormModal}><p>
+                <span>{getErrorMessage(error)} You can </span>
+                <TextButton onClick={this.props.unscopeU2FAction}>
+                    Try again
                 </TextButton>
-            </div>)}
-        </div>);
+                <span> or </span>
+                <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
+                    Use a code
+                </TextButton>
+                <span>.</span>
+            </p>
+            </div>);
+        }
+
+        const components = [<div class={[style.scopeFormModal, 'form-row'].join(' ')}>
+            <label htmlFor="twoFactorCode" class={style.label}>2FA code</label>
+            <div>
+                <input
+                    class={style.input}
+                    type="text"
+                    name="twoFactorCode"
+                    id="twoFactorCode"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    autoComplete="off"
+                    minLength="6"
+                    maxLength="8"
+                    required
+                    value={this.state.data.twoFactorCode}
+                    onInput={(e) => this.onFieldUpdated(e)}/>
+            </div>
+        </div>];
+        if (info['2FA'].U2F) {
+            components.push((<div class={style.scopeFormModal}>
+                <p>
+                    <TextButton onClick={() => this.props.unscopeU2FAction()}>
+                        Or use your security key
+                    </TextButton>
+                </p>
+            </div>));
+        }
+        return components;
     }
 
     render() {
@@ -105,18 +143,21 @@ class ScopeFormModal extends Component {
                     {!!this.props.message && (
                         <div>{this.props.message}</div>
                     )}
-                    <div style={style}>
-                        <label htmlFor="password">password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            id="password"
-                            value={this.state.data.password}
-                            required
-                            placeholder="Password"
-                            onInput={(e) => this.onFieldUpdated(e)}
-                            autoFocus={true}
-                        />
+                    <div class={[style.scopeFormModal, 'form-row'].join(' ')}>
+                        <label htmlFor="password" class={style.label}>password</label>
+                        <div>
+                            <input
+                                class={style.input}
+                                type="password"
+                                name="password"
+                                id="password"
+                                value={this.state.data.password}
+                                required
+                                placeholder="Password"
+                                onInput={(e) => this.onFieldUpdated(e)}
+                                autoFocus={true}
+                            />
+                        </div>
                     </div>
                     {this.renderTwoFactor()}
                 </ModalContent>

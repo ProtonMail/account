@@ -21,17 +21,9 @@
     text-align: left;
 }
 
-.nameInputContainer {
-    display: flex;
-    justify-content: space-around;
-    align-self: stretch;
-    flex: 1;
+.description {
+    flex: 2;
 }
-
-.nameInputContainer > * {
-    flex: 1;
-}
-
-.nameInputContainer .codeInput {
-    width: 100%;
+.result{
+    flex: 2;
 }
