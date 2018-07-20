@@ -10,18 +10,17 @@ export const steps = (scope) => {
     return [
         {
             title: 'Confirm your identity',
-            component: ({ params, onNextStep, onPreviousStep, onSkipStep, message }) => (
+            component: ({ onNextStep, onPreviousStep, onSkipStep, message }) => (
                 <ScopeFormModal
                     onSubmit={onNextStep}
                     onCancel={onPreviousStep}
                     skip={onSkipStep}
-                    params={params}
                     message={message}/>)
         }
     ];
 };
 
-export const beforeClose = () => {
+export const beforeDismiss = () => {
     const { resetScopeStateAction } = actions(store);
     resetScopeStateAction(store.getState());
 };

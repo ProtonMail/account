@@ -1,6 +1,6 @@
 import Presentation from './presentation';
 import TestCode from './formTestCode';
-import { steps as ScopeModal, beforeClose as beforeCloseScopeModal } from '../../../../auth/ScopeModal';
+import { steps as ScopeModal, beforeDismiss as beforeDismissScopeModal } from '../../../../auth/ScopeModal';
 import store from '../../../../../helpers/store';
 import actions from '../../../../../actions/settings';
 
@@ -9,8 +9,7 @@ export const steps = [
     {
         title: 'Save your recovery codes',
         mustSucceed: true,
-        component: ({ params, onNextStep, onPreviousStep, onReset }) => (<Presentation
-            params={params}
+        component: ({ onNextStep, onPreviousStep, onReset }) => (<Presentation
             onSubmit={onNextStep}
             onCancel={onPreviousStep}
             onReset={onReset}
@@ -19,16 +18,15 @@ export const steps = [
     {
         title: 'Test your recovery codes',
         mustSucceed: true,
-        component: ({ params, onNextStep, onPreviousStep }) => (<TestCode
-            params={params}
+        component: ({ onNextStep, onPreviousStep }) => (<TestCode
             onSubmit={onNextStep}
             onCancel={onPreviousStep}
         />)
     }
 ];
 
-export const beforeClose = () => {
-    beforeCloseScopeModal();
+export const beforeDismiss = () => {
+    beforeDismissScopeModal();
     const { resetStoreAction } = actions(store);
 
     resetStoreAction(store.getState(), ['reset2FARecoveryCodes']);

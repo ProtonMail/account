@@ -7,6 +7,7 @@ import ModalStyles from './index.css';
  * @param {string} title - Title of the modal.
  * @param {Component} children
  * @param {Function} onRequestClose - called after the modal is closed.
+ * @param {Function} onBeforeClose - called after the modal is closed.
  * @param {Function} onAfterOpen - called after the modal is opened.
  * @param {String} [contentLabel=null]- the content label. If not given, title is used.
  * @return {ReactModal} the modal component.

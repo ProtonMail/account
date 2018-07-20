@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Content, Footer, Wrapper } from './Modal';
 import SteppedModal from './SteppedModal';
-import { steps as scopeModalSteps, beforeClose as beforeCloseScopeModal } from '../auth/ScopeModal';
+import { steps as scopeModalSteps, beforeDismiss as beforeDismissScopeModal } from '../auth/ScopeModal';
 
 export default class ConfirmModal extends Component {
     // for some reason, using stateless component produces a Build error...
@@ -20,7 +20,7 @@ export default class ConfirmModal extends Component {
         const steps = [
             {
                 title,
-                component: ({ params, onNextStep, onPreviousStep }) => (<Wrapper
+                component: ({ onNextStep, onPreviousStep }) => (<Wrapper
                     onSubmit={(e) => {
                         e.preventDefault();
                         onNextStep();
@@ -51,20 +51,20 @@ export default class ConfirmModal extends Component {
             steps.push(...scopeModalSteps(scope));
         }
 
-        const beforeClose = async (success) => {
+        const beforeDismiss = async (success) => {
             if (success) {
                 await onConfirm();
             }
             if (scope) {
-                beforeCloseScopeModal();
+                beforeDismissScopeModal();
             }
         };
 
         return (<SteppedModal
                 isOpen={isOpen}
-                handleCloseModal={onAfterClose}
+                onRequestClose={onAfterClose}
                 steps={steps}
-                beforeClose={beforeClose}/>
+                beforeDismiss={beforeDismiss}/>
         );
     }
 }

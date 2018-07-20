@@ -4,13 +4,13 @@ import { connect } from 'unistore/full/preact';
 import style from './style.css';
 
 import U2FKeyList from './U2FKeyList/U2FKeyList';
-import { steps as SaveRecoveryCodesSteps, beforeClose as SaveRecoveryCodesBeforeClose } from './SaveRecoveryCodeModal';
+import { steps as SaveRecoveryCodesSteps, beforeDismiss as SaveRecoveryCodesBeforeClose } from './SaveRecoveryCodeModal';
 import SteppedModal from '../../../ui/SteppedModal';
 import ConfirmModal from '../../../ui/ConfirmModal';
 import TextButton from '../../../ui/TextButton';
 
 import settingsAction from '../../../../actions/settings';
-import { beforeClose as AddU2FModalBeforeClose, steps as AddU2FModalSteps } from './AddU2FModal';
+import { beforeDismiss as AddU2FModalBeforeClose, steps as AddU2FModalSteps } from './AddU2FModal';
 
 class TwoFactorSettings extends Component {
 
@@ -82,17 +82,17 @@ class TwoFactorSettings extends Component {
     renderAddU2FModal() {
         return (<SteppedModal
             isOpen={this.state.modal === 'AddU2FKey'}
-            handleCloseModal={() => this.closeModal()}
+            onRequestClose={() => this.closeModal()}
             steps={AddU2FModalSteps}
-            beforeClose={AddU2FModalBeforeClose}
+            beforeDismiss={AddU2FModalBeforeClose}
         />);
     }
 
     renderSaveRecoveryCodesModal() {
         return (<SteppedModal
             isOpen={this.state.modal === 'SaveRecoveryCodes'}
-            handleCloseModal={() => this.closeModal()}
-            beforeClose={SaveRecoveryCodesBeforeClose}
+            onRequestClose={() => this.closeModal()}
+            beforeDismiss={SaveRecoveryCodesBeforeClose}
             steps={SaveRecoveryCodesSteps}
         />);
     }

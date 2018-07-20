@@ -1,31 +1,29 @@
 import Presentation from './presentation';
 import FormName from './formName';
 import RegisterKeyForm from './formRegisterKey';
-import { steps as RecoveryCodeSteps, beforeClose as beforeCloseRecoveryCodeModal } from '../SaveRecoveryCodeModal';
-import { steps as ScopeModal, beforeClose as beforeCloseScopeModal } from '../../../../auth/ScopeModal/index';
+import { steps as RecoveryCodeSteps, beforeDismiss as beforeDismissRecoveryCodeModal } from '../SaveRecoveryCodeModal';
+import { steps as ScopeModal, beforeDismiss as beforeDismissScopeModal } from '../../../../auth/ScopeModal/index';
 import store from '../../../../../helpers/store';
 import actions from '../../../../../actions/settings';
 
 export const steps = [
     {
         title: 'Register new U2F Key',
-        component: ({ params, onNextStep, onPreviousStep, message }) => (
-            <Presentation params={params} onSubmit={onNextStep} onCancel={onPreviousStep} message={message}/>
+        component: ({  onNextStep, onPreviousStep, message }) => (
+            <Presentation  onSubmit={onNextStep} onCancel={onPreviousStep} message={message}/>
         )
     },
     ...ScopeModal('password'),
     {
         title: 'Name your U2F Key',
-        component: ({ params, onNextStep, onPreviousStep }) => (<FormName
-            params={params}
+        component: ({ onNextStep, onPreviousStep }) => (<FormName
             onSubmit={onNextStep}
             onCancel={onPreviousStep}
         />)
     },
     {
         title: 'Register new U2F Key',
-        component: ({ params, onNextStep, onPreviousStep, forbidCancel, onReset }) => (<RegisterKeyForm
-            params={params}
+        component: ({ onNextStep, onPreviousStep, forbidCancel, onReset }) => (<RegisterKeyForm
             onSubmit={onNextStep}
             onCancel={onPreviousStep}
             forbidCancel={forbidCancel}
@@ -35,9 +33,9 @@ export const steps = [
     ...RecoveryCodeSteps
 ];
 
-export const beforeClose = () => {
-    beforeCloseScopeModal();
-    beforeCloseRecoveryCodeModal();
+export const beforeDismiss = () => {
+    beforeDismissScopeModal();
+    beforeDismissRecoveryCodeModal();
     const { resetStoreAction } = actions(store);
     resetStoreAction(store.getState(), ['addU2FKey']);
 };
