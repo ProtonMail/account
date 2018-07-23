@@ -10,7 +10,7 @@ import ModalStyles from './index.css';
  * @param {Function} onBeforeClose - called after the modal is closed.
  * @param {Function} onAfterOpen - called after the modal is opened.
  * @param {String} [contentLabel=null]- the content label. If not given, title is used.
- * @return {ReactModal} the modal component.
+ * @return {ReactModal} the modal components.
  * @function
  */
 const Modal = ( { isOpen, title, children, onRequestClose, onAfterOpen, contentLabel = null } ) => {

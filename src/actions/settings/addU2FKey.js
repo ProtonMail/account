@@ -34,6 +34,11 @@ export default (store) => {
         store.setState(extended(state, 'settings.addU2FKey', { response: { name } }));
     }
 
+    /**
+     * Fetches the challenge for the registration of a new key. If a response is already stored, using this one instead.
+     * @return {Promise<void>}
+     * @private
+     */
     async function fetchU2FRegisterChallenge() {
         const state = store.getState();
         const {
@@ -54,6 +59,11 @@ export default (store) => {
         }
     }
 
+    /**
+     * Sends the request to the U2F API.
+     * @return {Promise<void>}
+     * @private
+     */
     async function callU2FRegisterAPI() {
         const state = store.getState();
 
@@ -69,6 +79,11 @@ export default (store) => {
         return u2fResponse;
     }
 
+    /**
+     * post the U2F response to the API.
+     * @return {Promise<void>}
+     * @private
+     */
     async function postResponse() {
         const state = store.getState();
 

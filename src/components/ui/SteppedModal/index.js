@@ -110,7 +110,7 @@ export default class SteppedModal extends Component {
      * @constructor
      * @param props.isOpen - whether the step modal should be opened or not.
      * @param {Object[]} props.steps - the different steps to be proceeded.
-     * @param {Component} props.steps[].component - the component of the current step.
+     * @param {Component} props.steps[].components - the components of the current step.
      * @param {Function} props.onRequestClose - to be called when the callback is closed.
      * @param {?Function} props.onAfterOpen - to be called after the modal is opened.
      */

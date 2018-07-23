@@ -4,7 +4,7 @@ import SteppedModal from './SteppedModal';
 import { steps as scopeModalSteps, beforeDismiss as beforeDismissScopeModal } from '../auth/ScopeModal';
 
 export default class ConfirmModal extends Component {
-    // for some reason, using stateless component produces a Build error...
+    // for some reason, using stateless components produces a Build error...
     render() {
         const {
             children,
