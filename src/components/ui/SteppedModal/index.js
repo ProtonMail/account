@@ -89,9 +89,9 @@ export default class SteppedModal extends Component {
     }
 
     /**
-     * if triggered, it will no longer be possible to cancel the current step.
+     * if triggered, it will no longer be possible to close the modal during the current step.
      */
-    forbidCancel() {
+    forbidClosure() {
         this.setState({ mustSucceed: true });
     }
 
@@ -111,7 +111,6 @@ export default class SteppedModal extends Component {
      * @param props.isOpen - whether the step modal should be opened or not.
      * @param {Object[]} props.steps - the different steps to be proceeded.
      * @param {Component} props.steps[].component - the component of the current step.
-     * @param {Boolean} [props.steps[].mustSucceed=false] - If the whole process must succeed. If true, the only possibility to close the modal is to click on the final submit button.
      * @param {Function} props.onRequestClose - to be called when the callback is closed.
      * @param {?Function} props.onAfterOpen - to be called after the modal is opened.
      */
@@ -137,7 +136,7 @@ export default class SteppedModal extends Component {
             onPreviousStep: () => this.onPreviousStep(),
             onSkipStep: () => this.onSkipStep(),
             onReset: (message) => this.onReset(message),
-            forbidCancel: () => this.forbidCancel(),
+            forbidClosure: () => this.forbidClosure(),
             message: this.state.message
         });
     }

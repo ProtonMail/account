@@ -40,7 +40,7 @@ class FormRegisterKey extends Component {
         } = this.props;
 
         if (newStatus !== status && newStatus === 'finished') {
-            this.props.forbidCancel();
+            this.props.forbidClosure();
         }
     }
 

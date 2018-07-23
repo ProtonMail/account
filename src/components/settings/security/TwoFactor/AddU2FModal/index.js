@@ -23,10 +23,10 @@ export const steps = [
     },
     {
         title: 'Register new U2F Key',
-        component: ({ onNextStep, onPreviousStep, forbidCancel, onReset }) => (<RegisterKeyForm
+        component: ({ onNextStep, onPreviousStep, forbidClosure, onReset }) => (<RegisterKeyForm
             onSubmit={onNextStep}
             onCancel={onPreviousStep}
-            forbidCancel={forbidCancel}
+            forbidClosure={forbidClosure}
             onReset={onReset}
         />)
     },
