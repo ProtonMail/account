@@ -62,5 +62,5 @@ export const extended = (state, extendedKey, value) => {
     }
 
     const [firstKey, ...rest] = extendedKey;
-    return toState(state, firstKey, extended(state[firstKey], rest, value));
+    return toState(state, firstKey, extended(state[firstKey] || {}, rest, value));
 };
