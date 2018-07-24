@@ -13,7 +13,16 @@
 
 > You must have the lib **frontend-commons**. As it's not available yet, install it via npm link ;)
 
+> You must also set up the file `src/config.js`. 
 ### U2F
+
+First add in `src/config.js` the `u2f` object, with value: 
+```json
+{
+    "appID": "the url of the current app",
+    "timeout": 1 // timeout value
+}
+```
 
 Testing U2F can be complicated: the server must accept a U2F binding on the localhost domain. 
 For that, the domain  must use the app id https://localhost.

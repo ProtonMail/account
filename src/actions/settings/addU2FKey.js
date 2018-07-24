@@ -145,6 +145,7 @@ export default (store) => {
             await callU2FRegisterAPI();
             await postResponse();
         } catch (e) {
+            console.error(e);
             return await updateAddU2FKeyState(store.getState(), { status: 'failure', error: e });
         }
     }

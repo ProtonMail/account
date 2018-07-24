@@ -134,7 +134,7 @@ class TwoFactorSettings extends Component {
                         </i>
                     </div>)}
                 </div>
-                <div id="u2f" class={u2fClasses.join(' ')}>
+                <div class={u2fClasses.join(' ')}>
                     <div class={style.description}>2FA via Security Key</div>
                     <button class={style.action} onClick={() => this.openModal('AddU2FKey')}>
                         {U2FKeys.length ? 'Add another key' : 'Enable'}
