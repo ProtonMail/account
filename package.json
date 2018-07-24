@@ -9,7 +9,7 @@
     "serve": "preact build && preact serve",
     "dev": "preact watch -p 3000 --no-prerender",
     "lint": "eslint src",
-    "test": "jest ./tests",
+    "test": "cross-env NODE_ENV=test jest ./tests",
     "precommit": "lint-staged",
     "pretty": "prettier -c --write $(find src -type f -name '*.js')"
   },
@@ -44,6 +44,7 @@
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
     "jest": "^21.2.1",
+    "jest-localstorage-mock": "^2.2.0",
     "jest-serializer-html-string": "^1.0.1",
     "lint-staged": "^7.2.0",
     "preact-cli": "^2.1.0",
@@ -55,6 +56,7 @@
   "dependencies": {
     "babel-plugin-lodash": "^3.3.2",
     "c-3po": "^0.8.1",
+    "cross-env": "^5.2.0",
     "file-saver": "^1.3.8",
     "preact": "^8.2.6",
     "preact-cli-lodash": "^1.1.0",
@@ -69,17 +71,22 @@
     "snapshotSerializers": [
       "jest-serializer-html-string"
     ],
-    "verbose": true,
     "setupFiles": [
-      "<rootDir>/src/tests/__mocks__/browserMocks.js"
+      "<rootDir>/src/tests/__mocks__/browserMocks.js",
+      "jest-localstorage-mock"
     ],
     "testURL": "http://localhost:8080",
     "moduleFileExtensions": [
       "js",
       "jsx"
     ],
-    "moduleDirectories": [
-      "node_modules"
+    "transform": {
+      "^.+\\.jsx$": "babel-jest",
+      "^.+\\.js$": "babel-jest"
+    },
+    "testPathIgnorePatterns": [],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!frontend-commons|u2f|u2f-ref-code).+\\.js$"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
@@ -90,6 +97,9 @@
       "^react-dom$": "preact-compat",
       "^create-react-class$": "preact-compat/lib/create-react-class",
       "^react-addons-css-transition-group$": "preact-css-transition-group"
+    },
+    "globals": {
+      "window": {}
     }
   }
 }

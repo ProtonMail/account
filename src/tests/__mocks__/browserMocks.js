@@ -19,3 +19,7 @@ const localStorageMock = (function() {
 Object.defineProperty(window, 'localStorage', {
 	value: localStorageMock
 }); */
+window.addEventListener = jest.fn();
+window.sessionStorage = {
+    clear: jest.fn()
+}

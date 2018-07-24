@@ -1,10 +1,8 @@
 import { route } from 'preact-router';
 import { c, addLocale, useLocale } from 'c-3po';
-import { verify } from 'frontend-commons/src/api/paymentsApi';
 import { loadExtendedConfig } from 'frontend-commons/src/user/model';
 import * as userConnector from 'frontend-commons/src/auth/userConnector';
 import appProvider from 'frontend-commons/src/appProvider';
-import { isVPN } from 'frontend-commons/src/utils/appType';
 import { signU2F } from '../helpers/u2f';
 
 import toActions from '../helpers/toActions';

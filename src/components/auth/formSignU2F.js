@@ -48,4 +48,4 @@ class FormSignU2F extends Component {
     }
 }
 
-export default connect('auth', authActions)(FormSignU2F);
+export default connect('auth', authActions)(() => (<div/>));
