@@ -19,7 +19,7 @@
 First add in `src/config.js` the `u2f` object, with value: 
 ```json
 {
-    "appID": "the url of the current app",
+    "appId": "the url of the current app",
     "timeout": 1 // timeout value
 }
 ```

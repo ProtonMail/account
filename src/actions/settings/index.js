@@ -11,7 +11,6 @@ import {
 
 import toActions from '../../helpers/toActions';
 import { error, success } from '../../helpers/notification';
-import { register } from 'u2f';
 import { toState, extended } from '../../helpers/stateFormatter';
 
 

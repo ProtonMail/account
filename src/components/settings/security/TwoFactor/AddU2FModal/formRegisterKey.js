@@ -66,9 +66,10 @@ class FormRegisterKey extends Component {
             </div>);
 
         }
-        if (error.ErrorCode) {
+        const { metaData: { code } = {} } = error;
+        if (code) {
             return (<div class={styles.status}>
-                <span>{getErrorMessage(error, true)}</span>
+                <span>{getErrorMessage(code, true)}</span>
                 <TextButton onClick={() => this.props.addU2FKeyRegisterAction()}>Retry</TextButton>
             </div>);
         }

@@ -4,8 +4,8 @@ import {
     getAddU2FChallenge
 } from 'frontend-commons/src/settings/security';
 
-import { register } from 'u2f';
 import { toState, extended } from '../../helpers/stateFormatter';
+import { registerU2F } from '../../helpers/u2f';
 
 
 /**
@@ -27,11 +27,11 @@ export default (store) => {
     /**
      * Stores a name for a new U2F key. Erases any ongoing registration on the same browser.
      * @param state
-     * @param {String} name
+     * @param {String} label
      */
-    async function addU2FKeyName(state, name) {
+    async function addU2FKeyLabel(state, label) {
         // erases any registering key. Not an issue, because the registration is supposed to be after the name setup.
-        store.setState(extended(state, 'settings.addU2FKey', { response: { name } }));
+        store.setState(extended(state, 'settings.addU2FKey', { response: { label } }));
     }
 
     /**
@@ -67,14 +67,13 @@ export default (store) => {
     async function callU2FRegisterAPI() {
         const state = store.getState();
 
-        const u2fConfig = appProvider.getConfig('u2f');
         const request = state.settings.addU2FKey.request;
 
-        const u2fResponse = await register(request, u2fConfig.appID, u2fConfig.timeout);
+        const u2fResponse = await registerU2F(request);
 
         await updateAddU2FKeyState(state, {
             u2fResponse,
-            status: u2fResponse ? 'success' : 'failure'
+            status: (u2fResponse && !u2fResponse.errorCode) ? 'success' : 'failure'
         });
         return u2fResponse;
     }
@@ -88,23 +87,17 @@ export default (store) => {
         const state = store.getState();
 
         const {
-            response: { name: Label },
-            u2fResponse: { KeyHandle, ClientData, RegistrationData, Version }
+            response,
+            u2fResponse
         } = state.settings.addU2FKey;
 
-        console.log(
-            state.scope.creds,
-            state.scope.response
-        );
+        const data = {
+            ...response,
+            ...u2fResponse
+        };
 
         const { data: { TwoFactorRecoveryCodes, UserSettings } } = await addU2FKey(
-            {
-                Label,
-                KeyHandle,
-                ClientData,
-                RegistrationData,
-                Version
-            },
+            data,
             state.scope.creds,
             state.scope.response
         );
@@ -145,13 +138,12 @@ export default (store) => {
             await callU2FRegisterAPI();
             await postResponse();
         } catch (e) {
-            console.error(e);
             return await updateAddU2FKeyState(store.getState(), { status: 'failure', error: e });
         }
     }
 
     return {
-        addU2FKeyName,
+        addU2FKeyLabel,
         addU2FKeyRegister
     };
 };

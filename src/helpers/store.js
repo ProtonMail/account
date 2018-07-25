@@ -1,10 +1,11 @@
 import { createStore } from 'unistore/full/preact';
+import devtools from 'unistore/devtools';
 
 import authActions from '../actions/authentication';
 import settingsActions from '../actions/settings';
 import scopeActions from '../actions/scope';
 
-const store = createStore({
+const initialState = {
     auth: {
         isLoggedIn: false,
         user: {},
@@ -19,7 +20,9 @@ const store = createStore({
         addU2FKey: {},
         reset2FARecoveryCodes: {}
     }
-});
+};
+const store = process.env.NODE_ENV === 'production' ? createStore(initialState) : devtools(createStore(initialState));
+
 
 export const actions = (store) => ({
     ...authActions(store),

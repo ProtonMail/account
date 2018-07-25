@@ -7,12 +7,12 @@ import { connect } from 'unistore/full/preact';
 /**
  * Label form for the U2F key.
  */
-const FormName = ({ onSubmit, onCancel, addU2FKeyNameAction, settings: { addU2FKey: addU2FKeyStore } }) => {
-    const model = { name: (addU2FKeyStore.response ? addU2FKeyStore.response.name : '') };
+const FormName = ({ onSubmit, onCancel, addU2FKeyLabelAction, settings: { addU2FKey: addU2FKeyStore } }) => {
+    const model = { label: (addU2FKeyStore.response ? addU2FKeyStore.response.label : '') };
     return (<ModalWrapper
         onSubmit={(e) => {
             e.preventDefault();
-            addU2FKeyNameAction(model.name);
+            addU2FKeyLabelAction(model.label);
             onSubmit();
         }}
         onReset={(e) => {
@@ -27,9 +27,9 @@ const FormName = ({ onSubmit, onCancel, addU2FKeyNameAction, settings: { addU2FK
                 <div class={styles.nameInputContainer}>
                     <input
                         onInput={({ target: { value } }) => {
-                            model.name = value;
+                            model.label = value;
                         }}
-                        value={model.name}
+                        value={model.label}
                         type="name"
                         id="inputName"
                         required
