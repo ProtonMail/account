@@ -43,12 +43,12 @@ export default (store) => {
             store.setState(extended(state, 'scope.creds', { U2F: response }));
         }
         catch (e) {
-            if (!e.ErrorCode) {
+            const {metaData: {code} = {}} = e;
+            if (!code) {
                 throw  e;
             }
             store.setState(toState(state, 'scope', { U2FRequest: { status: 'failure', error: e } }));
         }
-        // the state from the params is used, it discards U2FRequest, which now is useless.
     }
 
     /**

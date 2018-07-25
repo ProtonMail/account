@@ -1,4 +1,4 @@
-import { sign } from 'u2f';
+import { sign, register } from 'u2f-api';
 import appProvider from 'frontend-commons/src/appProvider';
 
 export const ERROR_CODE = {
@@ -18,16 +18,44 @@ const ERROR_MAP = {
     [ERROR_CODE.BAD_REQUEST]: () => 'An internal error occurred.',
     [ERROR_CODE.CONFIGURATION_UNSUPPORTED]: () => 'This security key is not supported.',
     [ERROR_CODE.DEVICE_INELIGIBLE]: (register) =>
-        register ? 'This security key is already registered for your account!' : 'This security key is not recognized.'
-
+        register ? 'This security key is already registered for your account!' : 'This security key is not recognized.',
+    [ERROR_CODE.TIMEOUT]: () => 'Looks like you are taking too long to respond, please try again with a bit of motivation.'
 };
 
-export async function signU2F(U2FRequest) {
-    const u2fConfig = appProvider.getConfig('u2f');
-    return await sign(U2FRequest, u2fConfig.appID, u2fConfig.timeout);
+export async function signU2F({ RegisteredKeys: registeredKeys, Challenge: challenge }) {
+    const { appId, timeout } = appProvider.getConfig('u2f');
+
+    const signRequest = registeredKeys.map(({ Version: version, KeyHandle: keyHandle }) => ({
+        version,
+        keyHandle,
+        appId,
+        challenge
+    }));
+
+    return await sign(signRequest, timeout);
 }
 
-export function getErrorMessage({ ErrorCode: errorCode }, register = false) {
+
+export async function registerU2F(
+    { RegisteredKeys: registeredKeys, Challenge: challenge, Versions: versions }
+) {
+    const { appId, timeout } = appProvider.getConfig('u2f');
+    const signRequest = registeredKeys.map(({ Version: version, KeyHandle: keyHandle }) => ({
+        version,
+        keyHandle
+    }));
+
+    const registerRequests = versions.map((version) => ({
+        version,
+        challenge,
+        appId
+    }));
+
+    return await register(registerRequests, signRequest, timeout);
+
+}
+
+export function getErrorMessage(errorCode, register = false) {
     if (ERROR_MAP[errorCode]) {
         return ERROR_MAP[errorCode](register);
     }

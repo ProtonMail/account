@@ -8,13 +8,14 @@ import { ERROR_CODE, getErrorMessage } from '../../helpers/u2f';
  */
 class FormSignU2F extends Component {
     sendSignRequest () {
-        const { success, U2FResponse: { ErrorCode } = {} } = this.props.auth.twoFactorResponse;
+        const { success, U2FResponse: { metaData: { code } = {} } = {} } = this.props.auth.twoFactorResponse;
 
-        if (!success && ErrorCode) {
+        if (!success && code) {
 
-            if (ErrorCode === ERROR_CODE.TIMEOUT) {
+            if (code === ERROR_CODE.TIMEOUT) {
                 // we need an updated auth/info
-                // the timeout is 1 minute on the client side, it's better to redo the whole process.
+                // the timeout is 1 minute on the client side, it's better
+                // to redo the whole process because the challenge expire after 2 minutes.
                 // funny thing, firefox uses the errorno OTHER_ERROR (1)
                 return this.props.abortLoginAction();
             }
@@ -30,14 +31,17 @@ class FormSignU2F extends Component {
     render () {
         const { success, U2FResponse = {} } = this.props.auth.twoFactorResponse;
 
-        if (success && !U2FResponse.ErrorCode) {
+        if (success && !U2FResponse.metaData) {
             return <div><p>Success</p></div>;
         }
 
+        const { metaData: { code } = {} } = U2FResponse;
+
+        console.debug({ code });
         return (<div id={this.props.id} class={this.props.class}>
             <p>Activate your security key...</p>
-            {!success && !!U2FResponse.ErrorCode && <p>
-                <span>{getErrorMessage(U2FResponse, false)}. </span>
+            {!success && !!code && <p>
+                <span>{getErrorMessage(code)}. </span>
                 <button onClick={() => this.sendSignRequest()} type='button'>Retry</button>
             </p>}
         </div>);

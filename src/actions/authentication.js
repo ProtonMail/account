@@ -8,7 +8,7 @@ import { isVPN } from 'frontend-commons/src/utils/appType';
 import { signU2F } from '../helpers/u2f';
 
 import toActions from '../helpers/toActions';
-import { toState } from '../helpers/stateFormatter';
+import { extended, toState } from '../helpers/stateFormatter';
 
 
 /**
@@ -55,9 +55,13 @@ const actions = (store) => {
     async function loginU2F(state) {
         let result;
         try {
+            store.setState(extended(state, 'auth.twoFactorResponse', { U2FResponse: {} }));
             result = await signU2F(state.auth.twoFactorData.U2F);
         } catch (e) {
-            if (!e.ErrorCode == null) throw e;
+            const { metaData: { code } = {} } = e;
+            if (!code) {
+                throw e;
+            }
             return store.setState(toState(state, 'auth', {
                 twoFactorResponse: {
                     success: false,
@@ -125,13 +129,16 @@ const actions = (store) => {
     }
 
     async function abortLogin(state) {
-        const data = toState(state, 'auth', {
-            user: {},
-            isLoggedIn: false,
-            step: 'login'
+        store.setState({
+            auth: {
+                isLoggedIn: false,
+                user: {},
+                step: 'login',
+                twoFactorResponse: {},
+                twoFactorData: undefined
+            },
+            config: null
         });
-        store.setState({ config: null });
-        store.setState(data);
         route('/', data);
     }
 

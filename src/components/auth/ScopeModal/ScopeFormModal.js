@@ -81,8 +81,9 @@ class ScopeFormModal extends Component {
         }
 
         if (status === 'failure') {
+            const errorMessage = error.metaData && error.metaData.code ? getErrorMessage(error.metaData.code) : error.message;
             return (<div class={style.scopeFormModal}><p>
-                <span>{getErrorMessage(error)} You can </span>
+                <span>{errorMessage} You can </span>
                 <TextButton onClick={this.props.unscopeU2FAction}>
                     Try again
                 </TextButton>
