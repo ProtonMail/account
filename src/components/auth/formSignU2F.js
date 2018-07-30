@@ -6,7 +6,7 @@ import { ERROR_CODE, getErrorMessage } from '../../helpers/u2f';
 /**
  * Form for the login 2FA action.
  */
-class FormSignU2F extends Component {
+export class FormSignU2F extends Component {
     sendSignRequest () {
         const { success, U2FResponse: { metaData: { code } = {} } = {} } = this.props.auth.twoFactorResponse;
 
@@ -25,6 +25,7 @@ class FormSignU2F extends Component {
     }
 
     componentDidMount () {
+        console.error('COMPONENT DID MOUNT');
         this.sendSignRequest();
     }
 
@@ -37,7 +38,6 @@ class FormSignU2F extends Component {
 
         const { metaData: { code } = {} } = U2FResponse;
 
-        console.debug({ code });
         return (<div id={this.props.id} class={this.props.class}>
             <p>Activate your security key...</p>
             {!success && !!code && <p>
@@ -48,4 +48,4 @@ class FormSignU2F extends Component {
     }
 }
 
-export default connect('auth', authActions)(() => (<div/>));
+export default connect('auth', authActions)(FormSignU2F);

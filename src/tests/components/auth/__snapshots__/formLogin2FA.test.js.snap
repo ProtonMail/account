@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing FromLogin2FA with U2F 1`] = `
+<form>
+  <fieldset>
+    <legend>Choose one of the following 2FA methods</legend>
+    <div>
+      <label htmlFor="password2FA">2FA code</label>
+      <div class="twoFactorOption">
+        <input type="text" name="password2FA" id="password2FA" autocapitalize="off"
+        autocorrect="off" autocomplete="off" minlength="6" maxlength="8" required
+        />
+      </div>
+    </div>
+    <div>
+      <label htmlFor="u2fKey">Security key</label>
+      <div id="u2fKey" class="twoFactorOption">
+        <p>Activate your security key...</p>
+      </div>
+    </div>
+  </fieldset>
+  <button>Login</button>
+</form>
+`;
+
+exports[`Testing FromLogin2FA without U2F 1`] = `
+<form>
+  <fieldset>
+    <legend>Choose one of the following 2FA methods</legend>
+    <div>
+      <label htmlFor="password2FA">2FA code</label>
+      <div class="twoFactorOption">
+        <input type="text" name="password2FA" id="password2FA" autocapitalize="off"
+        autocorrect="off" autocomplete="off" minlength="6" maxlength="8" required
+        />
+      </div>
+    </div>
+  </fieldset>
+  <button>Login</button>
+</form>
+`;

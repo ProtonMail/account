@@ -23,3 +23,6 @@ window.addEventListener = jest.fn();
 window.sessionStorage = {
     clear: jest.fn()
 }
+
+
+

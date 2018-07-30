@@ -5,7 +5,7 @@ import authActions from '../actions/authentication';
 import settingsActions from '../actions/settings';
 import scopeActions from '../actions/scope';
 
-const initialState = {
+export const initialState = {
     auth: {
         isLoggedIn: false,
         user: {},
@@ -21,7 +21,7 @@ const initialState = {
         reset2FARecoveryCodes: {}
     }
 };
-const store = process.env.NODE_ENV === 'production' ? createStore(initialState) : devtools(createStore(initialState));
+const store = createStore(initialState);
 
 
 export const actions = (store) => ({

@@ -22,7 +22,7 @@ const renderInfo = (result) => {
  * @param {Function} props.onCancel - triggers the previous step.
  * @returns {ModalWrapper}
  */
-const FormTestCode = ({
+export const FormTestCode = ({
     onSubmit,
     onCancel,
     settings: { reset2FARecoveryCodes: { result, response = {} } },

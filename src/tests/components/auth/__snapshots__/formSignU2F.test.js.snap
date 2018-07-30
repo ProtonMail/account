@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing FormSignU2F component... correct state 1`] = `
+<div>
+  <p>Activate your security key...</p>
+</div>
+`;
+
+exports[`testing FormSignU2F component... error state 1`] = `
+<div>
+  <p>Activate your security key...</p>
+  <p>
+    <span>An error occurred.</span>
+    <button type="button">Retry</button>
+  </p>
+</div>
+`;
+
+exports[`testing FormSignU2F component... success state 1`] = `
+<div>
+  <p>Success</p>
+</div>
+`;

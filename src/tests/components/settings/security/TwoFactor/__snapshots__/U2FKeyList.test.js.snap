@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`U2FKeyList test with keys 1`] = `
+<ul class="list">
+  <li class="listElement">
+    <div class="listElementHeader">First key</div>
+    <button>Delete</button>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader">Second key</div>
+    <button>Delete</button>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader listElementHeaderCompromised">Compromised key</div>
+    <div class="badge badge-danger">Compromised</div>
+    <button>Delete</button>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader">Last key</div>
+    <button>Delete</button>
+  </li>
+</ul>
+`;
+
+exports[`U2FKeyList test with no key 1`] = `<ul class="list"></ul>`;

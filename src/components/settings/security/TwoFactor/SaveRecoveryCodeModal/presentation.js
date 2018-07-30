@@ -3,14 +3,14 @@ import { connect } from 'unistore/full/preact';
 import settingsActions from '../../../../../actions/settings';
 
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
+import TextButton from '../../../../ui/TextButton';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import styles from './index.css';
 import { saveAs } from 'file-saver';
 
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-
-class Presentation extends Component {
+export class Presentation extends Component {
 
     componentDidMount() {
         this.props.reset2FARecoveryCodesInitAction();
@@ -55,12 +55,12 @@ class Presentation extends Component {
                         </li>
                     ))}
                 </ol>,
-                < div class={styles.actions}>
-                    <a href="#" onClick={() => this.downloadClicked()}>
+                <div class={styles.actions}>
+                    <TextButton onClick={() => this.downloadClicked()}>
                         DOWNLOAD CODES
-                    </a>
+                    </TextButton>
                     <CopyToClipboard text={codes.join('\n')}>
-                        <a href={'#'}>COPY CODES </a>
+                        <TextButton>COPY CODES </TextButton>
                     </CopyToClipboard>
                 </div>
             ] || <p>Loading... </p>}

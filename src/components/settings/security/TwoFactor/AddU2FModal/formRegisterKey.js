@@ -15,7 +15,7 @@ import { getErrorMessage } from '../../../../../helpers/u2f';
  *
  * Fetches the challenge from the server, forward it to U2F API, and sends back the answer to the API.
  */
-class FormRegisterKey extends Component {
+export class FormRegisterKey extends Component {
 
     /**
      * when next button is pressed.
@@ -79,7 +79,7 @@ class FormRegisterKey extends Component {
 
     render () {
         const {
-            settings: { addU2FKey: { response: { name } = {}, status } },
+            settings: { addU2FKey: { status } }
         } = this.props;
 
         return (

@@ -4,7 +4,7 @@ exports[`Initial Test of the Header Header renders 3 nav items 1`] = `
 <header class="header">
   <h1>Proton Account</h1>
   <nav>
-    <a href="/" class>Login</a>
+    <a href="/" class="active">Login</a>
   </nav>
 </header>
 `;

@@ -5,7 +5,6 @@ import { route } from 'preact-router';
 import style from './style';
 
 export default class Header extends Component {
-
     render ( { isLoggedIn, logout } ) {
         return (
             <header class={style.header}>

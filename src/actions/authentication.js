@@ -51,10 +51,12 @@ const actions = (store) => {
      * @returns {Promise<*>} calls @link{login2FA}
      */
     async function loginU2F(state) {
-        let result;
+        console.debug('loginU2F');
         try {
             store.setState(extended(state, 'auth.twoFactorResponse', { U2FResponse: {} }));
-            result = await signU2F(state.auth.twoFactorData.U2F);
+            const result = await signU2F(state.auth.twoFactorData.U2F);
+            return login2FA(state, { U2FResponse: result });
+
         } catch (e) {
             const { metaData: { code } = {} } = e;
             if (!code) {
@@ -67,7 +69,6 @@ const actions = (store) => {
                 }
             }));
         }
-        return login2FA(state, { U2FResponse: result });
     }
 
     async function login2FA(state, opt) {

@@ -11,7 +11,7 @@ import { getErrorMessage } from '../../../helpers/u2f';
 /**
  * Modal Form to asks credentials information (password and 2FA).
  */
-class ScopeFormModal extends Component {
+export class ScopeFormModal extends Component {
 
     componentWillMount() {
         if (this.props.scope.used) {
@@ -81,7 +81,9 @@ class ScopeFormModal extends Component {
         }
 
         if (status === 'failure') {
-            const errorMessage = error.metaData && error.metaData.code ? getErrorMessage(error.metaData.code) : error.message;
+            const errorMessage = error.metaData && error.metaData.code
+                ? getErrorMessage(error.metaData.code)
+                : error.message + '.';
             return (<div class={style.scopeFormModal}><p>
                 <span>{errorMessage} You can </span>
                 <TextButton onClick={this.props.unscopeU2FAction}>

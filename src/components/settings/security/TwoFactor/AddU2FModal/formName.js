@@ -7,7 +7,7 @@ import { connect } from 'unistore/full/preact';
 /**
  * Label form for the U2F key.
  */
-const FormName = ({ onSubmit, onCancel, addU2FKeyLabelAction, settings: { addU2FKey: addU2FKeyStore } }) => {
+export const FormName = ({ onSubmit, onCancel, addU2FKeyLabelAction, settings: { addU2FKey: addU2FKeyStore } }) => {
     const model = { label: (addU2FKeyStore.response ? addU2FKeyStore.response.label : '') };
     return (<ModalWrapper
         onSubmit={(e) => {

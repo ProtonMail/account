@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test for SaveRecoveryCodeModal SaveCode step failure display 1`] = `
+<form class="wrapper">
+  <div class="content ">
+    <p class="description">Test your recovery codes by entering one of your codes below. If you did
+      not save your recovery codes, go back and save them.</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input class="codeInput" required value="945dc945dc" type="code" id="verifyCode"
+        placeholder="Code" autoFocus />
+      </div>
+    </div>
+    <div class="result">
+      <p>⚠ Please test your recovery code to proceed</p>
+    </div>
+  </div>
+  <div class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit" disabled>Finish</button>
+  </div>
+</form>
+`;
+
+exports[`test for SaveRecoveryCodeModal SaveCode step initial display 1`] = `
+<form class="wrapper">
+  <div class="content ">
+    <p class="description">Test your recovery codes by entering one of your codes below. If you did
+      not save your recovery codes, go back and save them.</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input class="codeInput" required type="code" id="verifyCode" placeholder="Code"
+        autoFocus />
+      </div>
+    </div>
+    <div class="result">
+      <p>Your recovery code will not be erased</p>
+    </div>
+  </div>
+  <div class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit" disabled>Finish</button>
+  </div>
+</form>
+`;
+
+exports[`test for SaveRecoveryCodeModal SaveCode step ongoing display 1`] = `
+<form class="wrapper">
+  <div class="content ">
+    <p class="description">Test your recovery codes by entering one of your codes below. If you did
+      not save your recovery codes, go back and save them.</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input class="codeInput" required value="945dc" type="code" id="verifyCode"
+        placeholder="Code" autoFocus />
+      </div>
+    </div>
+    <div class="result">
+      <p>Your recovery code will not be erased</p>
+    </div>
+  </div>
+  <div class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit" disabled>Finish</button>
+  </div>
+</form>
+`;
+
+exports[`test for SaveRecoveryCodeModal SaveCode step success display 1`] = `
+<form class="wrapper">
+  <div class="content ">
+    <p class="description">Test your recovery codes by entering one of your codes below. If you did
+      not save your recovery codes, go back and save them.</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input class="codeInput" required type="code" id="verifyCode" placeholder="Code"
+        disabled autoFocus />
+      </div>
+    </div>
+    <div class="result">
+      <p>✓ Test succeeded</p>
+    </div>
+  </div>
+  <div class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit">Finish</button>
+  </div>
+</form>
+`;

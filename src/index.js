@@ -1,6 +1,6 @@
 import './style';
 import App from './components/app';
-import { createStore, Provider } from 'unistore/full/preact';
+import { Provider } from 'unistore/full/preact';
 import hookErrorActions from './lib/hookErrorActions';
 
 import store from './helpers/store';

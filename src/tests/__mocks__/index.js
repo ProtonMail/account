@@ -1,0 +1,2 @@
+import './ReactModalMocks';
+import 'browserMocks';
