@@ -8,8 +8,8 @@ exports[`test for SaveRecoveryCodeModal SaveCode step failure display 1`] = `
     <div class="form-row">
       <label htmlFor="verifyCode">Input your code</label>
       <div>
-        <input class="codeInput" required value="945dc945dc" type="code" id="verifyCode"
-        placeholder="Code" autoFocus />
+        <input required value="945dc945dc" type="code" id="verifyCode" placeholder="Code"
+        autoFocus />
       </div>
     </div>
     <div class="result">
@@ -31,8 +31,8 @@ exports[`test for SaveRecoveryCodeModal SaveCode step initial display 1`] = `
     <div class="form-row">
       <label htmlFor="verifyCode">Input your code</label>
       <div>
-        <input class="codeInput" required type="code" id="verifyCode" placeholder="Code"
-        autoFocus />
+        <input required type="code" id="verifyCode" placeholder="Code" autoFocus
+        />
       </div>
     </div>
     <div class="result">
@@ -54,8 +54,8 @@ exports[`test for SaveRecoveryCodeModal SaveCode step ongoing display 1`] = `
     <div class="form-row">
       <label htmlFor="verifyCode">Input your code</label>
       <div>
-        <input class="codeInput" required value="945dc" type="code" id="verifyCode"
-        placeholder="Code" autoFocus />
+        <input required value="945dc" type="code" id="verifyCode" placeholder="Code"
+        autoFocus />
       </div>
     </div>
     <div class="result">
@@ -77,8 +77,8 @@ exports[`test for SaveRecoveryCodeModal SaveCode step success display 1`] = `
     <div class="form-row">
       <label htmlFor="verifyCode">Input your code</label>
       <div>
-        <input class="codeInput" required type="code" id="verifyCode" placeholder="Code"
-        disabled autoFocus />
+        <input required type="code" id="verifyCode" placeholder="Code" disabled
+        autoFocus />
       </div>
     </div>
     <div class="result">

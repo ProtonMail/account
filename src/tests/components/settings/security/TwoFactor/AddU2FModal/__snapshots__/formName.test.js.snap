@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddU2FModal FormName step display 1`] = `
+exports[`AddU2FModal SharedSecret step display 1`] = `
 <form class="wrapper">
   <div class="content ">
     <div class="name">
@@ -18,7 +18,7 @@ exports[`AddU2FModal FormName step display 1`] = `
 </form>
 `;
 
-exports[`AddU2FModal FormName step display 2`] = `
+exports[`AddU2FModal SharedSecret step display 2`] = `
 <form class="wrapper">
   <div class="content ">
     <div class="name">

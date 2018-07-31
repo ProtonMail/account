@@ -4,13 +4,14 @@ import { connect } from 'unistore/full/preact';
 import style from './style.css';
 
 import U2FKeyList from './U2FKeyList/U2FKeyList';
-import { steps as SaveRecoveryCodesSteps, beforeDismiss as SaveRecoveryCodesBeforeDismiss } from './SaveRecoveryCodeModal';
 import SteppedModal from '../../../ui/SteppedModal';
 import ConfirmModal from '../../../ui/ConfirmModal';
 import TextButton from '../../../ui/TextButton';
 
 import settingsAction from '../../../../actions/settings';
+import { steps as SaveRecoveryCodesSteps, beforeDismiss as SaveRecoveryCodesBeforeDismiss } from './SaveRecoveryCodeModal';
 import { beforeDismiss as AddU2FModalBeforeDismiss, steps as AddU2FModalSteps } from './AddU2FModal';
+import { beforeDismiss as SetupTOTPModalBeforeDismiss, steps as SetupTOTPModalSteps } from './SetupTOTPModal';
 
 class TwoFactorSettings extends Component {
 
@@ -88,6 +89,16 @@ class TwoFactorSettings extends Component {
         />);
     }
 
+
+    renderSetupTOTPModal() {
+        return (<SteppedModal
+            isOpen={this.state.modal === 'SetupTOTP'}
+            onRequestClose={() => this.closeModal()}
+            steps={SetupTOTPModalSteps}
+            beforeDismiss={SetupTOTPModalBeforeDismiss}
+        />);
+    }
+
     renderSaveRecoveryCodesModal() {
         return (<SteppedModal
             isOpen={this.state.modal === 'SaveRecoveryCodes'}
@@ -107,8 +118,9 @@ class TwoFactorSettings extends Component {
 
         return (
             <div class={style.twoFactor}>
-                {this.renderDisableTOTPModal()}
                 {this.renderDisableTwoFactorModal()}
+                {this.renderSetupTOTPModal()}
+                {this.renderDisableTOTPModal()}
                 {this.renderAddU2FModal()}
                 {this.renderSaveRecoveryCodesModal()}
                 <h2>Two-Factor Authentication</h2>
@@ -118,7 +130,7 @@ class TwoFactorSettings extends Component {
                 </div>
                 <div id="totp" class={style.item}>
                     <div class={style.description}>2FA via Application</div>
-                    <button class={style.action} onClick={() => TOTP && this.openModal('DisableTOTP')}>
+                    <button class={style.action} onClick={() => this.openModal(TOTP ? 'DisableTOTP' : 'SetupTOTP')}>
                         {TOTP ? 'Disable' : 'Enable'}
                     </button>
                     {!!TwoFactor && (<div class={style.description}>

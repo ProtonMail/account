@@ -14,6 +14,9 @@ export default (store) => {
      * @returns {Promise<void>}
      */
     async function unscopeInit(state) {
+        if (state.scope.used) {
+            return;
+        }
         if (!state.scope.response) {
             const authData = await authInfo(state.auth.Name);
             store.setState(toState(state, 'scope', { response: authData, creds: {} }));

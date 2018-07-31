@@ -50,7 +50,6 @@ export const FormTestCode = ({
                     <label htmlFor="verifyCode">Input your code</label>
                     <div>
                         <input
-                            class={styles.codeInput}
                             onInput={({ target: { value: code } }) => {
                                 model.code = code;
                                 if (code.length === 8) {

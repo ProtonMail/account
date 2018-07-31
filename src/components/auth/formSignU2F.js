@@ -25,7 +25,6 @@ export class FormSignU2F extends Component {
     }
 
     componentDidMount () {
-        console.error('COMPONENT DID MOUNT');
         this.sendSignRequest();
     }
 

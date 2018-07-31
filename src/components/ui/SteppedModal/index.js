@@ -78,7 +78,7 @@ export default class SteppedModal extends Component {
 
     onReset(message = undefined) {
         if (this.props.beforeDismiss) {
-            this.props.beforeDismiss();
+            this.props.beforeDismiss(false, true);
         }
         this.setState({
             message,

@@ -3,7 +3,7 @@ import { deep } from 'preact-render-spy';
 
 import { FormName } from '../../../../../../components/settings/security/TwoFactor/AddU2FModal/formName';
 
-describe('AddU2FModal FormName step', () => {
+describe('AddU2FModal SharedSecret step', () => {
     test('display', () => {
         expect(render(<FormName settings={{ addU2FKey: {} }}/>)).toMatchSnapshot();
         expect(render(<FormName settings={{ addU2FKey: { response: { label: 'Test for key' } } }}/>)).toMatchSnapshot();

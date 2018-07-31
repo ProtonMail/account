@@ -1,0 +1,497 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SetupTOTPModal confirmCode step change code 1`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={424242}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step initial display 1`] = `
+<form class="wrapper">
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input required type="code" id="verifyCode" placeholder="Code" minLength="6"
+        maxLength="6" autoFocus />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit">Finish</button>
+  </div>
+</form>
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving props without status 1`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={true}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={true}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={true}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving status failure and no error 1`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={true}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={true}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={true}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving status failure and no error 2`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={false}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={false}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={false}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving status failure and text error 1`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={true}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={true}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={true}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving status failure and text error 2`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={false}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={false}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={false}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving status failure native error 1`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={true}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={true}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={true}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving status failure native error 2`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={false}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={false}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={false}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving status success 1`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={true}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={true}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={true}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;
+
+exports[`SetupTOTPModal confirmCode step receiving status success 2`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content ">
+    <p class="description">Test your new 2FA method:</p>
+    <div class="form-row">
+      <label htmlFor="verifyCode">Input your code</label>
+      <div>
+        <input
+          onInput={[Function onInput]}
+          required={true}
+          value={425697}
+          disabled={false}
+          type="code"
+          id="verifyCode"
+          placeholder="Code"
+          minLength="6"
+          maxLength="6"
+          autoFocus={true}
+         />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={false}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={false}
+    >
+      Finish
+    </button>
+  </div>
+</form>
+
+`;

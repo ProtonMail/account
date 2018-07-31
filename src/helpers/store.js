@@ -18,10 +18,11 @@ export const initialState = {
     },
     settings: {
         addU2FKey: {},
-        reset2FARecoveryCodes: {}
+        reset2FARecoveryCodes: {},
+        setupTOTP: {}
     }
 };
-const store = createStore(initialState);
+const store = process.env.NODE_ENV === 'production' ? createStore(initialState) : devtools(createStore(initialState));
 
 
 export const actions = (store) => ({
