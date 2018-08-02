@@ -30,8 +30,13 @@ export default (store) => {
      * @param {string} opt.password - the password
      * @param {?string} twoFactorCode - the 2FA code (TOTP or recovery code).
      */
-    async function unscopePassword(state, { password, twoFactorCode = null }) {
-        store.setState(extended(state, 'scope.creds', { password, twoFactorCode }));
+    async function unscopePassword(state, { password, twoFactorCode = undefined }) {
+        const creds = { password };
+        if (twoFactorCode !== undefined) {
+            creds.twoFactorCode = twoFactorCode;
+        }
+
+        store.setState(extended(state, 'scope.creds', creds));
     }
 
     /**
@@ -50,7 +55,7 @@ export default (store) => {
             if (!code) {
                 throw  e;
             }
-            store.setState(toState(state, 'scope', { U2FRequest: { status: 'failure', error: e } }));
+            store.setState(toState(store.getState(), 'scope', { U2FRequest: { status: 'failure', error: e } }));
         }
     }
 

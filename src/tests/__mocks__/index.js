@@ -1,2 +1,3 @@
 import './ReactModalMocks';
-import 'browserMocks';
+import './browserMocks';
+import './devtools';

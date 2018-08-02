@@ -3,7 +3,7 @@ import { renderProvided } from '../../../../testsHelpers/storeTools';
 
 describe('TwoFactorSettings', () => {
     test('2FA disabled', () => {
-        expect(renderProvided(<TwoFactorSettings TwoFactor={0} TOTP={0} U2FKeys={[]}/>)).toMatchSnapshot();
+        expect(renderProvided(<TwoFactorSettings TwoFactor={0} TOTP={0}/>)).toMatchSnapshot();
     });
 
     test('TOTP only enable', () => {

@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`U2FKeyList test opening modal 1`] = `
+preact-render-spy (1 nodes)
+-------
+<ul class="list">
+  <li class="listElement">
+    <div class="listElementHeader">First key</div>
+    <button onClick={[Function onClick]}>Delete</button>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader">Second key</div>
+    <button onClick={[Function onClick]}>Delete</button>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader listElementHeaderCompromised">Compromised key</div>
+    <div class="badge badge-danger">Compromised</div>
+    <button onClick={[Function onClick]}>Delete</button>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader">Last key</div>
+    <button onClick={[Function onClick]}>Delete</button>
+  </li>
+</ul>
+
+`;
+
 exports[`U2FKeyList test with keys 1`] = `
 <ul class="list">
   <li class="listElement">

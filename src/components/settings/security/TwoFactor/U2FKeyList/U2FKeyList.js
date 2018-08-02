@@ -7,7 +7,7 @@ import settingsActions from '../../../../../actions/settings';
 import { connect } from 'unistore/full/preact';
 
 
-class U2FKeyList extends Component {
+export class U2FKeyList extends Component {
     /**
      * renders an U2F Key.
      * @param {Object} u2fKey - the U2F Key to render.
