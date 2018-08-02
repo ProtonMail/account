@@ -5,7 +5,6 @@ import scopeActions from '../../actions/scope';
 import { waitForNewState } from '../testsHelpers/storeTools';
 
 jest.mock('frontend-commons/src/crypto/srp');
-
 jest.mock('../../helpers/u2f');
 
 describe('scope unit tests', () => {

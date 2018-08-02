@@ -46,12 +46,11 @@ const actions = (store) => {
     }
 
     /**
-     * Logins using a U2F key.
+     * Login using a U2F key.
      * @param state
      * @returns {Promise<*>} calls @link{login2FA}
      */
     async function loginU2F(state) {
-        console.debug('loginU2F');
         try {
             store.setState(extended(state, 'auth.twoFactorResponse', { U2FResponse: {} }));
             const result = await signU2F(state.auth.twoFactorData.U2F);
