@@ -2,9 +2,7 @@ import store, { initialState } from '../../helpers/store';
 import { ERROR_CODE, signU2F } from '../../helpers/u2f';
 import authenticationActions from '../../actions/authentication';
 
-import { loadExtendedConfig } from 'frontend-commons/src/user/model';
 import * as userConnector from 'frontend-commons/src/auth/userConnector';
-import appProvider from 'frontend-commons/src/appProvider';
 import { waitForNewState } from '../testsHelpers/storeTools';
 
 jest.mock('../../helpers/u2f');

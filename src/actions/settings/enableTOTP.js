@@ -6,6 +6,11 @@ import { enableTOTP as enableTOTPApi } from 'frontend-commons/src/settings/secur
 
 export default (store) => {
 
+    /**
+     * Creates a shared secret for TOTP.
+     * @param {Object} state
+     * @return {Promise<void>}
+     */
     async function createSharedSecret(state) {
         if (state.settings.setupTOTP && state.settings.setupTOTP.request && state.settings.setupTOTP.request.qrURI) {
             return;
@@ -51,6 +56,12 @@ export default (store) => {
         return true;
     }
 
+    /**
+     * Enables TOTP on the backend side.
+     * @param state
+     * @param code
+     * @return {Promise<void>}
+     */
     async function enableTOTP(state, code) {
         if (!await verifyParamsBeforeEnabling(state, code)) {
             return;

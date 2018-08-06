@@ -10,7 +10,7 @@ export default (store) => {
 
     /**
      * initializate the unscope process.
-     * @param state
+     * @param {Object} state
      * @returns {Promise<void>}
      */
     async function unscopeInit(state) {
@@ -25,7 +25,7 @@ export default (store) => {
 
     /**
      * Sets the password (and the twoFactorCode, if given)
-     * @param state
+     * @param {Object} state
      * @param {Object} opt
      * @param {string} opt.password - the password
      * @param {?string} twoFactorCode - the 2FA code (TOTP or recovery code).
@@ -41,7 +41,7 @@ export default (store) => {
 
     /**
      * sends and store a sign request to the U2F API.
-     * @param state
+     * @param {Object} state
      * @returns {Promise<void>}
      */
     async function unscopeU2F(state) {
@@ -61,7 +61,7 @@ export default (store) => {
 
     /**
      * reset the two factor data (code and U2F).
-     * @param state
+     * @param {Object} state
      */
     async function unscopeResetTwoFactor(state) {
         return store.setState(toState(state, 'scope', {
@@ -74,7 +74,7 @@ export default (store) => {
 
     /**
      * reset the state for the scope
-     * @param state
+     * @param {Object} state
      */
     async function resetScopeState(state) {
         store.setState({ scope: {} });

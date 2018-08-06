@@ -20,7 +20,7 @@ const actions = (store) => {
 
     /**
      * Resets the state for the actions
-     * @param state
+     * @param {Object} state
      * @param {string[]} actions - the actions to reset (for the settings store only)
      * @returns {Promise<void>}
      */
@@ -47,7 +47,7 @@ const actions = (store) => {
      * Initializes the reset2FARecoveryCodes procedure.
      *
      * Fetches new codes if none are already in the state.
-     * @param state
+     * @param {Object} state
      * @returns {Promise<void>}
      */
     async function reset2FARecoveryCodesInit(state) {
@@ -67,7 +67,7 @@ const actions = (store) => {
 
     /**
      * Verifies a given code is in the new codes.
-     * @param state
+     * @param {Object} state
      * @param {string} code - the code to verify.
      * @returns {Promise<void>}
      */
@@ -82,8 +82,10 @@ const actions = (store) => {
 
     /**
      * Updates the settings from the store.
-     * @param state
-     * @param result
+     * @param {Object} state
+     * @param {Object} result
+     * @param {Object} result.data
+     * @param {Object} result.data.UserSettings - the new UserSettings
      * @private
      */
     function updateUserSettingsFromResponse(state, result) {
@@ -92,7 +94,7 @@ const actions = (store) => {
 
     /**
      * Sends a delete request to the API.
-     * @param state
+     * @param {Object} state
      * @param {Object} u2fKey - the U2F Key to delete.
      * @param {String} u2fKey.KeyHandle - the key handle of the U2F Key.
      * @returns {Promise<void>}
@@ -109,6 +111,11 @@ const actions = (store) => {
         }
     }
 
+    /**
+     * Sends a delete request for TOTP to the API
+     * @param {Object} state
+     * @return {Promise<void>}
+     */
     async function disableTOTP(state) {
         try {
             updateUserSettingsFromResponse(
@@ -123,7 +130,7 @@ const actions = (store) => {
 
     /**
      * Disables Two Factor
-     * @param state
+     * @param {Object} state
      * @returns {Promise<void>}
      */
     async function disableTwoFactor(state) {

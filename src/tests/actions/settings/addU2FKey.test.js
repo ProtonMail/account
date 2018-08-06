@@ -10,11 +10,141 @@ import { ERROR_CODE, registerU2F } from '../../../helpers/u2f';
 jest.mock('frontend-commons/src/settings/security');
 jest.mock('../../../helpers/u2f');
 
+const begin = new Promise((resolve) => {
+    resolve({
+        state: {
+            response: {
+                label: 'name of the new key'
+            }
+        }, steps: []
+    });
+});
+
+const end = (store, actions, done) => {
+    return ({ state, steps, scope }) => {
+        store.setState({
+            ...store.getState(),
+            settings: {
+                addU2FKey: state
+            },
+            scope
+        });
+        waitForNewState(done, ...steps);
+        return actions.addU2FKeyRegister(store.getState());
+    };
+};
+
+
+const normalFetchingPromise = (addU2FKeyState = {}) => ({ state, steps }) => {
+    const request = {
+        someRequest: 'balabalabal'
+    };
+    getAddU2FChallenge.mockImplementation(() => request);
+
+    return {
+        state: {
+            ...state,
+            ...addU2FKeyState
+        },
+        steps: [
+            ...steps,
+            (state) => {
+                expect(getAddU2FChallenge).not.toBeCalled();
+                expect(state.settings.addU2FKey.status).toBe('fetching');
+            },
+            (state) => {
+                expect(getAddU2FChallenge).toHaveBeenCalledTimes(1);
+                expect(state.settings.addU2FKey).toMatchObject({
+                    request,
+                    status: 'pending'
+                });
+            }
+        ]
+    };
+};
+
+
+const normalCallU2FRegisterAPIPromise = ({ state, steps }) => {
+    const U2FResponse = {
+        KeyHandle: 'some KeyHandle'
+
+    };
+    registerU2F.mockImplementation(() => U2FResponse);
+    return {
+        state,
+        steps: [
+            ...steps,
+            (state) => {
+                expect(registerU2F).toBeCalled();
+                expect(registerU2F).toHaveBeenCalledWith(state.settings.addU2FKey.request);
+                expect(state.settings.addU2FKey).toMatchObject({
+                    u2fResponse: U2FResponse,
+                    status: 'success'
+                });
+            }
+        ]
+    };
+};
+
+const normalPostResponsePromise = ({ state, steps }) => {
+    const data = {
+        data: {
+            TwoFactorRecoveryCodes: ['12345678', '09ABCDEF'],
+            UserSettings: {
+                something: 'somethat'
+            }
+        }
+    };
+    const scope = {
+        creds: {
+            someCreds: 'that creds'
+        },
+        response: {
+            someResponse: 'that response'
+        }
+    };
+
+    addU2FKey.mockImplementation(() => data);
+    return {
+        state,
+        scope,
+        steps: [
+            ...steps,
+            (state) => {
+                expect(addU2FKey).toHaveBeenCalledTimes(1);
+                expect(addU2FKey).toHaveBeenCalledWith(expect.objectContaining(state.settings.addU2FKey.u2fResponse), scope.creds, scope.response);
+                expect(state).toMatchObject({
+                    settings: {
+                        addU2FKey: {
+                            status: 'finished'
+                        },
+                        reset2FARecoveryCodes: {
+                            request: {
+                                codes: data.data.TwoFactorRecoveryCodes
+                            }
+                        }
+                    },
+                    config: {
+                        settings: {
+                            user: data.data.UserSettings
+                        }
+                    },
+                    scope: {
+                        used: true
+                    }
+                });
+            }
+        ]
+    };
+};
+
+
 describe('test for addU2FKey action', () => {
     beforeEach(() => {
         store.setState(initialState, true);
     });
     const actions = addU2FKeyAction(store);
+
     describe('set label', () => {
         test('normal behavior', async () => {
             const label = '!Labelo';
@@ -36,7 +166,6 @@ describe('test for addU2FKey action', () => {
             expect(store.getState().settings.addU2FKey.response).toEqual({ label });
         });
     });
-
     describe('addU2FKeyRegister actions', () => {
         afterAll(() => {
             getAddU2FChallenge.mockRestore();
@@ -47,133 +176,8 @@ describe('test for addU2FKey action', () => {
             getAddU2FChallenge.mockClear();
             addU2FKey.mockClear();
             registerU2F.mockClear();
+
         });
-
-        const begin = new Promise((resolve) => {
-            resolve({
-                state: {
-                    response: {
-                        label: 'name of the new key'
-                    }
-                }, steps: []
-            });
-        });
-
-        const end = (done) => {
-            return ({ state, steps, scope }) => {
-                store.setState({
-                    ...store.getState(),
-                    settings: {
-                        addU2FKey: state
-                    },
-                    scope
-                });
-                waitForNewState(done, ...steps);
-                return actions.addU2FKeyRegister(store.getState());
-            };
-        };
-
-        const normalFetchingPromise = (addU2FKeyState = {}) => ({ state, steps }) => {
-            const request = {
-                someRequest: 'balabalabal'
-            };
-            getAddU2FChallenge.mockImplementation(() => request);
-
-            return {
-                state: {
-                    ...state,
-                    ...addU2FKeyState
-                },
-                steps: [
-                    ...steps,
-                    (state) => {
-                        expect(getAddU2FChallenge).not.toBeCalled();
-                        expect(state.settings.addU2FKey.status).toBe('fetching');
-                    },
-                    (state) => {
-                        expect(getAddU2FChallenge).toHaveBeenCalledTimes(1);
-                        expect(state.settings.addU2FKey).toMatchObject({
-                            request,
-                            status: 'pending'
-                        });
-                    }
-                ]
-            };
-        };
-
-        const normalCallU2FRegisterAPIPromise = ({ state, steps }) => {
-            const U2FResponse = {
-                KeyHandle: 'some KeyHandle'
-
-            };
-            registerU2F.mockImplementation(() => U2FResponse);
-            return {
-                state,
-                steps: [
-                    ...steps,
-                    (state) => {
-                        expect(registerU2F).toBeCalled();
-                        expect(registerU2F).toHaveBeenCalledWith(state.settings.addU2FKey.request);
-                        expect(state.settings.addU2FKey).toMatchObject({
-                            u2fResponse: U2FResponse,
-                            status: 'success'
-                        });
-                    }
-                ]
-            };
-        };
-
-        const normalPostResponsePromise = ({ state, steps }) => {
-            const data = {
-                data: {
-                    TwoFactorRecoveryCodes: ['12345678', '09ABCDEF'],
-                    UserSettings: {
-                        something: 'somethat'
-                    }
-                }
-            };
-            const scope = {
-                creds: {
-                    someCreds: 'that creds'
-                },
-                response: {
-                    someResponse: 'that response'
-                }
-            };
-
-            addU2FKey.mockImplementation(() => data);
-            return {
-                state,
-                scope,
-                steps: [
-                    ...steps,
-                    (state) => {
-                        expect(addU2FKey).toHaveBeenCalledTimes(1);
-                        expect(addU2FKey).toHaveBeenCalledWith(expect.objectContaining(state.settings.addU2FKey.u2fResponse), scope.creds, scope.response);
-                        expect(state).toMatchObject({
-                            settings: {
-                                addU2FKey: {
-                                    status: 'finished'
-                                },
-                                reset2FARecoveryCodes: {
-                                    request: {
-                                        codes: data.data.TwoFactorRecoveryCodes
-                                    }
-                                }
-                            },
-                            config: {
-                                settings: {
-                                    user: data.data.UserSettings
-                                }
-                            },
-                            scope: {
-                                used: true
-                            }
-                        });
-                    }
-                ]
-            };
-        };
 
 
         test('full behaviour', async (done) => {
@@ -181,7 +185,7 @@ describe('test for addU2FKey action', () => {
                 .then(normalFetchingPromise())
                 .then(normalCallU2FRegisterAPIPromise)
                 .then(normalPostResponsePromise)
-                .then(end(done));
+                .then(end(store, actions, done));
         });
 
         describe('different fetching possibilities', () => {
@@ -192,7 +196,7 @@ describe('test for addU2FKey action', () => {
                     }))
                     .then(normalCallU2FRegisterAPIPromise)
                     .then(normalPostResponsePromise)
-                    .then(end(done));
+                    .then(end(store, actions, done));
             });
 
             test('full behaviour after failure and empty request', async (done) => {
@@ -203,7 +207,7 @@ describe('test for addU2FKey action', () => {
                     }))
                     .then(normalCallU2FRegisterAPIPromise)
                     .then(normalPostResponsePromise)
-                    .then(end(done));
+                    .then(end(store, actions, done));
             });
 
 
@@ -230,7 +234,7 @@ describe('test for addU2FKey action', () => {
                     }))
                     .then(normalCallU2FRegisterAPIPromise)
                     .then(normalPostResponsePromise)
-                    .then(end(done));
+                    .then(end(store, actions, done));
             });
 
         });
@@ -259,7 +263,7 @@ describe('test for addU2FKey action', () => {
                         ]
                     };
                 })
-                .then(end(done));
+                .then(end(store, actions, done));
 
 
             test('failure of post message', async (done) => {
@@ -296,7 +300,7 @@ describe('test for addU2FKey action', () => {
                         };
 
                     })
-                    .then(end(done));
+                    .then(end(store, actions, done));
             });
         });
     });

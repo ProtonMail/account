@@ -38,7 +38,7 @@ export default (store) => {
      * @return {Promise<void>}
      * @private
      */
-    async function fetchU2FRegisterChallenge() {
+        async function fetchU2FRegisterChallenge() {
         const state = store.getState();
         const {
             errorCode,

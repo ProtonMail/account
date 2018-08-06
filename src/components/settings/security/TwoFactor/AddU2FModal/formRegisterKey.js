@@ -44,7 +44,10 @@ export class FormRegisterKey extends Component {
         }
     }
 
-
+    /**
+     * Renders the status field.
+     * @return {*}
+     */
     renderStatus() {
         const {
             settings: { addU2FKey: { response: { name } = {}, status, request, error } }
