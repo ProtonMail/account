@@ -8,6 +8,7 @@ import { shallow } from 'preact-render-spy';
 import { renderProvided, shallowProvider } from '../../testsHelpers/storeTools';
 
 import actions from '../../../actions/authentication';
+import { isSupported } from 'u2f-api';
 
 jest.mock('../../../actions/authentication');
 
@@ -26,6 +27,16 @@ describe('testing FormSignU2F component...', () => {
                     }
                 }
             }
+        };
+        store.setState({ auth });
+        expect(renderProvided(<ConnectedFormSignU2F/>, store)).toMatchSnapshot();
+
+    });
+
+    test('U2F not available on this browser', () => {
+        isSupported.mockReturnValueOnce(false);
+        const auth = {
+            twoFactorResponse: {}
         };
         store.setState({ auth });
         expect(renderProvided(<ConnectedFormSignU2F/>, store)).toMatchSnapshot();

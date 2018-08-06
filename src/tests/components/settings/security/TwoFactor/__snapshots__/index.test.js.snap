@@ -80,6 +80,38 @@ exports[`TwoFactorSettings TOTP only enable 1`] = `
 </div>
 `;
 
+exports[`TwoFactorSettings U2F not supported 1`] = `
+<div class="twoFactor">
+  <h2>Two-Factor Authentication</h2>
+  <div class="alert alert-info">Two-factor authentication is currently on.
+    <button type="button" class="button">Turn off</button>
+  </div>
+  <div id="totp" class="item">
+    <div class="description">2FA via Application</div>
+    <button class="action">Disable</button>
+    <div class="description">
+      <button type="button" class="button">Regenerate recovery codes</button>
+      <i data-toggle="tooltip" data-placement="top"
+      title="Regenerate recovery codes will invalidate existing recovery codes">i</i>
+    </div>
+  </div>
+  <div class="item lastItem">
+    <div class="description">2FA via Security Key</div>
+    <button class="action" disabled>Add another key</button>
+  </div>
+  <ul class="list">
+    <li class="listElement">
+      <div class="listElementHeader">First key</div>
+      <button>Delete</button>
+    </li>
+    <li class="listElement">
+      <div class="listElementHeader">Second key</div>
+      <button>Delete</button>
+    </li>
+  </ul>
+</div>
+`;
+
 exports[`TwoFactorSettings U2F only enable 1`] = `
 <div class="twoFactor">
   <h2>Two-Factor Authentication</h2>

@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing FormSignU2F component... U2F not available on this browser 1`] = `
+<div>
+  <p>Your browser is not supported, please use another 2FA method instead</p>
+</div>
+`;
+
 exports[`testing FormSignU2F component... correct state 1`] = `
 <div>
   <p>Activate your security key...</p>

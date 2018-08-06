@@ -12,6 +12,7 @@ import settingsAction from '../../../../actions/settings';
 import { steps as SaveRecoveryCodesSteps, beforeDismiss as SaveRecoveryCodesBeforeDismiss } from './SaveRecoveryCodeModal';
 import { beforeDismiss as AddU2FModalBeforeDismiss, steps as AddU2FModalSteps } from './AddU2FModal';
 import { beforeDismiss as SetupTOTPModalBeforeDismiss, steps as SetupTOTPModalSteps } from './SetupTOTPModal';
+import { isSupported } from 'u2f-api';
 
 class TwoFactorSettings extends Component {
 
@@ -148,7 +149,7 @@ class TwoFactorSettings extends Component {
                 </div>
                 <div class={u2fClasses.join(' ')}>
                     <div class={style.description}>2FA via Security Key</div>
-                    <button class={style.action} onClick={() => this.openModal('AddU2FKey')}>
+                    <button class={style.action} onClick={() => this.openModal('AddU2FKey')} disabled={!isSupported()}>
                         {U2FKeys.length ? 'Add another key' : 'Enable'}
                     </button>
                 </div>

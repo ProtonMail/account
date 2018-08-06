@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import authActions from './../../actions/authentication';
 import { connect } from 'unistore/full/preact';
 import { ERROR_CODE, getErrorMessage } from '../../helpers/u2f';
+import { isSupported } from 'u2f-api';
 
 /**
  * Form for the login 2FA action.
@@ -29,6 +30,10 @@ export class FormSignU2F extends Component {
     }
 
     render () {
+        if (!isSupported()) {
+            return <div><p>Your browser is not supported, please use another 2FA method instead</p></div>;
+        }
+
         const { success, U2FResponse = {} } = this.props.auth.twoFactorResponse;
 
         if (success && !U2FResponse.metaData) {

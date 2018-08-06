@@ -1,5 +1,6 @@
 import TwoFactorSettings from '../../../../../components/settings/security/TwoFactor';
 import { renderProvided } from '../../../../testsHelpers/storeTools';
+import { isSupported } from 'u2f-api';
 
 describe('TwoFactorSettings', () => {
     test('2FA disabled', () => {
@@ -28,6 +29,17 @@ describe('TwoFactorSettings', () => {
             { KeyHandle: '3', Compromised: true, Label: 'Compromised key' },
             { KeyHandle: '4', Compromised: false, Label: 'Last key' }
         ];
+
+        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={1} U2FKeys={keys}/>)).toMatchSnapshot();
+    });
+
+    test('U2F not supported', () => {
+        const keys = [
+            { KeyHandle: '1', Compromised: false, Label: 'First key' },
+            { KeyHandle: '2', Compromised: false, Label: 'Second key' }
+        ];
+
+        isSupported.mockReturnValueOnce(false);
 
         expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={1} U2FKeys={keys}/>)).toMatchSnapshot();
     });
