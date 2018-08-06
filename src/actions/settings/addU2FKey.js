@@ -1,4 +1,3 @@
-import appProvider from 'frontend-commons/src/appProvider';
 import {
     addU2FKey,
     getAddU2FChallenge
@@ -73,7 +72,7 @@ export default (store) => {
 
         await updateAddU2FKeyState(state, {
             u2fResponse,
-            status: (u2fResponse && !u2fResponse.errorCode) ? 'success' : 'failure'
+            status: 'success'
         });
         return u2fResponse;
     }

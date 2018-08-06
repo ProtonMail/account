@@ -7,6 +7,7 @@ import { signU2F } from '../helpers/u2f';
 
 import toActions from '../helpers/toActions';
 import { extended, toState } from '../helpers/stateFormatter';
+import { initialState } from '../helpers/store';
 
 
 /**
@@ -127,17 +128,8 @@ const actions = (store) => {
     }
 
     async function abortLogin(state) {
-        store.setState({
-            auth: {
-                isLoggedIn: false,
-                user: {},
-                step: 'login',
-                twoFactorResponse: {},
-                twoFactorData: undefined
-            },
-            config: null
-        });
-        route('/', data);
+        store.setState(initialState, true);
+        route('/', initialState);
     }
 
     async function loadAuthUser(state) {

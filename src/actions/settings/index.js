@@ -1,15 +1,11 @@
-import appProvider from 'frontend-commons/src/appProvider';
-import webcrypto from 'frontend-commons/src/crypto/webcrypto';
-import base32 from 'hi-base32';
-
 import addU2FKeyActions from './addU2FKey';
+import enableTOTPActions from './enableTOTP';
 
 import {
     disableTOTP as disableTOTPApi,
     disableTwoFactor as disableTwoFactorApi,
     removeU2FKey,
-    resetRecoveryCodes,
-    enableTOTP as enableTOTPApi
+    resetRecoveryCodes
 } from 'frontend-commons/src/settings/security';
 
 import toActions from '../../helpers/toActions';
@@ -28,7 +24,7 @@ const actions = (store) => {
      * @param {string[]} actions - the actions to reset (for the settings store only)
      * @returns {Promise<void>}
      */
-    async function resetActionsInStore(state, actions) {
+    async function resetStore(state, actions) {
         const newState = actions.reduce((acc, action) => {
             if (state.settings[action]) {
                 return {
@@ -76,7 +72,7 @@ const actions = (store) => {
      * @returns {Promise<void>}
      */
     async function reset2FARecoveryCodesCheckNewCode(state, code) {
-        const { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = state;
+        const { settings: { reset2FARecoveryCodes: { request: { codes = [] } = {} } } } = state;
 
         return store.setState(extended(state, 'settings.reset2FARecoveryCodes', {
             result: codes.indexOf(code) >= 0,
@@ -141,88 +137,15 @@ const actions = (store) => {
         }
     }
 
-    async function createSharedSecret(state) {
-        if (state.settings.setupTOTP && state.settings.setupTOTP.request && state.settings.setupTOTP.request.qrURI) {
-            return;
-        }
-        const randomBytes = webcrypto.getRandomValues(new Uint8Array(20));
-        const sharedSecret = base32.encode(randomBytes);
-
-        const primaryAddress = state.auth.user.Addresses && state.auth.user.Addresses.find(({Keys}) => !!Keys);
-        const identifier = primaryAddress ? primaryAddress.Email : state.auth.user.Name + '@protonmail';
-
-        const interval = 30;
-        const digits = 6;
-        const qrURI = `otpauth://totp/${identifier}?secret=${sharedSecret}&issuer=ProtonMail&algorithm=SHA1&digits=${digits}&period=${interval}`;
-
-        store.setState(extended(state, 'settings.setupTOTP', {
-            request: {
-                qrURI,
-                interval,
-                digits,
-                secret: sharedSecret
-            },
-            status: 'init'
-        }));
-    }
-
-    async function enableTOTP(state, code) {
-        if (!state.settings.setupTOTP | !state.settings.setupTOTP.request || !state.settings.setupTOTP.request.secret) {
-            throw new Error('Please create a secret before enabling TOTP'); // this happens when enableTOTP is called before createSharedSecret
-        }
-        if (!code || code.length !== 6) {
-            return store.setState(extended(state, 'settings.setupTOTP', {
-                status: 'failure',
-                error: 'The code is not valid'
-            }));
-        }
-
-        const data = {
-            TOTPConfirmation: code,
-            TOTPSharedSecret: state.settings.setupTOTP.request.secret
-        };
-
-        store.setState(extended(state, 'settings.setupTOTP', { status: 'fetching' }));
-        try {
-            const { data: { TwoFactorRecoveryCodes, UserSettings } } = await enableTOTPApi(data, state.scope.creds, state.scope.response);
-
-            const newState = {
-                settings: {
-                    reset2FARecoveryCodes: {
-                        request: {
-                            codes: TwoFactorRecoveryCodes
-                        }
-                    },
-                    setupTOTP: {
-                        status: 'success',
-                        request: {
-                            ...state.settings.setupTOTP.request,
-                            TOTPConfirmation: code
-                        }
-                    }
-                },
-                ...extended(state, 'config.settings.user', { ...UserSettings }),
-                ...toState(state, 'scope', { used: true })
-            };
-            store.setState(newState);
-        } catch (e) {
-            return store.setState(extended(state, 'settings.setupTOTP', {
-                status: 'failure',
-                error: e
-            }));
-
-        }
-    }
 
     return toActions({
         reset2FARecoveryCodesCheckNewCode,
         reset2FARecoveryCodesInit,
-        resetStore: resetActionsInStore,
+        resetStore,
         deleteU2FKey,
         disableTOTP,
         disableTwoFactor,
-        createSharedSecret,
-        enableTOTP,
+        ...enableTOTPActions(store),
         ...addU2FKeyActions(store)
     });
 };

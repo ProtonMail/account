@@ -1,4 +1,4 @@
-import store from '../../helpers/store';
+import store, { initialState } from '../../helpers/store';
 import { ERROR_CODE, signU2F } from '../../helpers/u2f';
 import authenticationActions from '../../actions/authentication';
 
@@ -110,4 +110,17 @@ describe('authentication actions test', () => {
         });
     });
 
+    test('abortLogin test', async () => {
+        await actions.abortLoginAction({
+            ...store.getState(),
+            auth: {
+                twoFactorData: {
+                    U2F: {
+                        something: 'somethat'
+                    }
+                }
+            }
+        });
+        expect(store.getState()).toEqual(initialState);
+    });
 });

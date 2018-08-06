@@ -4,7 +4,6 @@ import { deep } from 'preact-render-spy';
 import store from '../../helpers/store';
 import { Provider } from 'unistore/full/preact';
 
-
 import defaultStore from '../../helpers/store';
 
 export const shallowProvider = (component, store = defaultStore, depth = 2) => {
