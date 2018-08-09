@@ -19,16 +19,18 @@ describe('SetupTOTP SharedSecret step', () => {
     test('raw display', () => {
         const createSharedSecretAction = jest.fn();
 
-        const tree = deep(<SharedSecret settings={{
-            setupTOTP: {
-                request: {
-                    interval: 60,
-                    digits: 25.3,
-                    secret: 'THIS_IS_SECRET',
-                    qrURI: 'otp://it does not really care'
+        const tree = deep(<SharedSecret
+            settings={{
+                setupTOTP: {
+                    request: {
+                        interval: 60,
+                        digits: 25.3,
+                        secret: 'THIS_IS_SECRET',
+                        qrURI: 'otp://it does not really care'
+                    }
                 }
-            }
-        }} createSharedSecretAction={createSharedSecretAction}/>);
+            }}
+            createSharedSecretAction={createSharedSecretAction}/>);
         tree.find('button').first().simulate('click');
         expect(tree).toMatchSnapshot();
         expect(createSharedSecretAction).toHaveBeenCalledTimes(1);
@@ -44,10 +46,11 @@ describe('SetupTOTP SharedSecret step', () => {
 
         const onSubmit = jest.fn();
         const onCancel = jest.fn();
-        const context = deep(<SharedSecret settings={{}}
-                                           onSubmit={onSubmit}
-                                           onCancel={onCancel}
-                                           createSharedSecretAction={createSharedSecretAction}/>);
+        const context = deep(<SharedSecret
+            settings={{}}
+            onSubmit={onSubmit}
+            onCancel={onCancel}
+            createSharedSecretAction={createSharedSecretAction}/>);
 
         const event = { preventDefault: () => undefined };
 

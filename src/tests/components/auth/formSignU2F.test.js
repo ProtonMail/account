@@ -98,9 +98,10 @@ describe('testing FormSignU2F component...', () => {
         const loginU2FAction = jest.fn();
         const abortLoginAction = jest.fn();
 
-        const component = shallow(<FormSignU2F auth={auth}
-                                               loginU2FAction={loginU2FAction}
-                                               abortLoginAction={abortLoginAction}/>);
+        const component = shallow(<FormSignU2F
+            auth={auth}
+            loginU2FAction={loginU2FAction}
+            abortLoginAction={abortLoginAction}/>);
 
         component.find('[onClick]').simulate('click');
         expect(loginU2FAction).toHaveBeenCalledTimes(0);
@@ -117,9 +118,10 @@ describe('testing FormSignU2F component...', () => {
         const loginU2FAction = jest.fn();
         const abortLoginAction = jest.fn();
 
-        const component = shallow(<FormSignU2F auth={auth}
-                                               loginU2FAction={loginU2FAction}
-                                               abortLoginAction={abortLoginAction}/>);
+        const component = shallow(<FormSignU2F
+            auth={auth}
+            loginU2FAction={loginU2FAction}
+            abortLoginAction={abortLoginAction}/>);
 
         expect(loginU2FAction).toHaveBeenCalledTimes(1);
         expect(abortLoginAction).toHaveBeenCalledTimes(0);

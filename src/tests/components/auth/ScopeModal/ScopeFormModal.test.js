@@ -10,8 +10,10 @@ describe('ScopeModal step ScopeFormModal', () => {
         });
 
         test('with a message', () => {
-            expect(render(<ScopeFormModal message="This is a simple message"
-                                          scope={{ response: {} }}/>)).toMatchSnapshot();
+            expect(render(<ScopeFormModal
+                message="This is a simple message"
+                scope={{ response: {} }}/>)
+            ).toMatchSnapshot();
         });
 
         test('without 2FA', () => {
