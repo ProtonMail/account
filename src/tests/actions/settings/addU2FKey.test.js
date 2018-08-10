@@ -1,10 +1,11 @@
-import addU2FKeyAction from '../../../actions/settings/addU2FKey';
-import store, { initialState } from '../../../helpers/store';
-import { waitForNewState } from '../../testsHelpers/storeTools';
 import {
     addU2FKey,
     getAddU2FChallenge
 } from 'frontend-commons/src/settings/security';
+
+import addU2FKeyAction from '../../../actions/settings/addU2FKey';
+import store, { initialState } from '../../../helpers/store';
+import { waitForNewState } from '../../testsHelpers/storeTools';
 import { ERROR_CODE, registerU2F } from '../../../helpers/u2f';
 
 jest.mock('frontend-commons/src/settings/security');

@@ -1,6 +1,7 @@
-import { ConfirmCode } from '../../../../../../components/settings/security/TwoFactor/SetupTOTPModal/confirmCode';
 import render from 'preact-render-to-string';
 import { deep } from 'preact-render-spy';
+
+import { ConfirmCode } from '../../../../../../components/settings/security/TwoFactor/SetupTOTPModal/confirmCode';
 
 const updateTreeStatus = (props) => {
     const code = 425697;

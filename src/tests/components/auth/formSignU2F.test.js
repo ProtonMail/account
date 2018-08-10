@@ -1,17 +1,12 @@
+import { isSupported } from 'u2f-api';
+
 import ConnectedFormSignU2F, { FormSignU2F } from '../../../components/auth/formSignU2F';
 import { ERROR_CODE } from '../../../helpers/u2f';
-
 import store, { initialState } from '../../../helpers/store';
-import toActions from '../../../helpers/toActions';
-
 import { shallow } from 'preact-render-spy';
 import { renderProvided, shallowProvider } from '../../testsHelpers/storeTools';
 
-import actions from '../../../actions/authentication';
-import { isSupported } from 'u2f-api';
-
 jest.mock('../../../actions/authentication');
-
 
 describe('testing FormSignU2F component...', () => {
     afterEach(() => {

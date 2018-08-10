@@ -1,6 +1,7 @@
+import { isSupported } from 'u2f-api';
+
 import TwoFactorSettings from '../../../../../components/settings/security/TwoFactor';
 import { renderProvided } from '../../../../testsHelpers/storeTools';
-import { isSupported } from 'u2f-api';
 
 describe('TwoFactorSettings', () => {
     test('2FA disabled', () => {

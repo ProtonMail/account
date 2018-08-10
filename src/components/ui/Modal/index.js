@@ -1,4 +1,5 @@
 import ReactModal from 'react-modal';
+
 import ModalStyles from './index.css';
 
 /**
@@ -22,7 +23,7 @@ const Modal = ( { isOpen, title, children, onRequestClose, onAfterOpen, contentL
         contentLabel={contentLabel || title}
         className={ModalStyles.modal}
     >
-        <header class={ModalStyles.header}><h3>{title}</h3></header>
+        <header className={ModalStyles.header}><h3>{title}</h3></header>
         {children}
 
     </ReactModal>);

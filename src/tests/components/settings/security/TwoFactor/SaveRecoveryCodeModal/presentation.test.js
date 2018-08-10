@@ -1,9 +1,8 @@
-import { Presentation } from '../../../../../../components/settings/security/TwoFactor/SaveRecoveryCodeModal/presentation';
-
 import render from 'preact-render-to-string';
 import { deep } from 'preact-render-spy';
-
 import { saveAs } from 'file-saver';
+
+import { Presentation } from '../../../../../../components/settings/security/TwoFactor/SaveRecoveryCodeModal/presentation';
 
 jest.mock('file-saver');
 
@@ -46,7 +45,7 @@ describe('SaveRecoveryCodeModal presentation', () => {
         saveAs.mockImplementation(saveAsAction);
 
         const context = deep(renderPresentation());
-        context.find('button').first().simulate('click');
+        context.find('a').first().simulate('click');
         expect(saveAsAction).toBeCalled();
     });
 

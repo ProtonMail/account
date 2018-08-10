@@ -1,5 +1,6 @@
 import render from 'preact-render-to-string';
 import { deep } from 'preact-render-spy';
+
 import Presentation from '../../../../../../components/settings/security/TwoFactor/SetupTOTPModal/presentation';
 
 describe('SetupTOTPModal Presentation step', () => {

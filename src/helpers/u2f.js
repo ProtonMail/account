@@ -22,6 +22,13 @@ const ERROR_MAP = {
     [ERROR_CODE.TIMEOUT]: () => 'Looks like you are taking too long to respond, please try again with a bit of motivation.'
 };
 
+/**
+ * Sends a SIGN request to the U2F device
+ * @param {Object} U2FRequest - the U2FRequest
+ * @param {Object[]} U2FRequest.RegisteredKeys - the registered keys
+ * @param {String} U2FRequest.Challenge - the challenge
+ * @return {Promise<SignResponse>}
+ */
 export async function signU2F({ RegisteredKeys: registeredKeys, Challenge: challenge }) {
     const { appId, timeout } = appProvider.getConfig('u2f');
 
@@ -35,7 +42,14 @@ export async function signU2F({ RegisteredKeys: registeredKeys, Challenge: chall
     return await sign(signRequest, timeout);
 }
 
-
+/**
+ * Sends a REGISTER request to the U2F device.
+ * @param {Object} U2FRequest - the U2FRequest
+ * @param {Object[]} U2FRequest.RegisteredKeys - the registered keys
+ * @param {String} U2FRequest.Challenge - the challenge
+ * @param {String[]} U2FRequest.Versions - the different versions accepted by the server
+ * @return {Promise<RegisterResponse>}
+ */
 export async function registerU2F(
     { RegisteredKeys: registeredKeys, Challenge: challenge, Versions: versions }
 ) {
@@ -55,6 +69,12 @@ export async function registerU2F(
 
 }
 
+/**
+ * Computes an error message from a U2F error code.
+ * @param {number} errorCode - an error code.
+ * @param register
+ * @return {*}
+ */
 export function getErrorMessage(errorCode, register = false) {
     if (ERROR_MAP[errorCode]) {
         return ERROR_MAP[errorCode](register);

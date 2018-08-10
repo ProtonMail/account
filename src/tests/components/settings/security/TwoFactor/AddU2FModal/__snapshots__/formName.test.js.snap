@@ -11,10 +11,10 @@ exports[`AddU2FModal SharedSecret step display 1`] = `
       </div>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit">Next</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -29,9 +29,9 @@ exports[`AddU2FModal SharedSecret step display 2`] = `
       </div>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit">Next</button>
-  </div>
+  </footer>
 </form>
 `;

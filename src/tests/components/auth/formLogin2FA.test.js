@@ -1,6 +1,6 @@
-import FormLogin2FA from '../../../components/auth/formLogin2FA';
-
 import render from 'preact-render-to-string';
+
+import FormLogin2FA from '../../../components/auth/formLogin2FA';
 import { renderProvided } from '../../testsHelpers/storeTools';
 
 

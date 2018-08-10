@@ -1,5 +1,6 @@
 import render from 'preact-render-to-string';
 import { deep } from 'preact-render-spy';
+
 import Presentation from '../../../../../../components/settings/security/TwoFactor/AddU2FModal/presentation';
 
 describe('AddU2FModal Presentation step', () => {

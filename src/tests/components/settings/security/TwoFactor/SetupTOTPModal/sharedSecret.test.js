@@ -1,5 +1,6 @@
 import render from 'preact-render-to-string';
 import { deep } from 'preact-render-spy';
+
 import { SharedSecret } from '../../../../../../components/settings/security/TwoFactor/SetupTOTPModal/sharedSecret';
 
 describe('SetupTOTP SharedSecret step', () => {
@@ -31,12 +32,12 @@ describe('SetupTOTP SharedSecret step', () => {
                 }
             }}
             createSharedSecretAction={createSharedSecretAction}/>);
-        tree.find('button').first().simulate('click');
+        tree.find('a').first().simulate('click');
         expect(tree).toMatchSnapshot();
         expect(createSharedSecretAction).toHaveBeenCalledTimes(1);
 
         const groot = deep(<SharedSecret settings={{}} createSharedSecretAction={createSharedSecretAction}/>);
-        groot.find('button').first().simulate('click');
+        groot.find('a').first().simulate('click');
         expect(groot).toMatchSnapshot();
         expect(createSharedSecretAction).toHaveBeenCalledTimes(2);
     });

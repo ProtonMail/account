@@ -1,8 +1,9 @@
-import webcrypto from 'frontend-commons/src/crypto/webcrypto';
 import base32 from 'hi-base32';
+import webcrypto from 'frontend-commons/src/crypto/webcrypto';
+import { enableTOTP as enableTOTPApi } from 'frontend-commons/src/settings/security';
+
 import { extended, toState } from '../../helpers/stateFormatter';
 
-import { enableTOTP as enableTOTPApi } from 'frontend-commons/src/settings/security';
 
 export default (store) => {
 

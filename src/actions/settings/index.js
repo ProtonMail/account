@@ -1,6 +1,3 @@
-import addU2FKeyActions from './addU2FKey';
-import enableTOTPActions from './enableTOTP';
-
 import {
     disableTOTP as disableTOTPApi,
     disableTwoFactor as disableTwoFactorApi,
@@ -8,6 +5,8 @@ import {
     resetRecoveryCodes
 } from 'frontend-commons/src/settings/security';
 
+import addU2FKeyActions from './addU2FKey';
+import enableTOTPActions from './enableTOTP';
 import toActions from '../../helpers/toActions';
 import { error, success } from '../../helpers/notification';
 import { toState, extended } from '../../helpers/stateFormatter';

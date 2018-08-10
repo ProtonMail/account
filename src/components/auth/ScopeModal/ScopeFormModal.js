@@ -1,12 +1,12 @@
 import { Component } from 'preact';
-import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../ui/Modal/index';
 import { connect } from 'unistore/full/preact';
 
+import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../ui/Modal/index';
 import scopeActions from '../../../actions/scope';
 import TextButton from '../../ui/TextButton';
+import { getErrorMessage } from '../../../helpers/u2f';
 
 import style from './index.css';
-import { getErrorMessage } from '../../../helpers/u2f';
 
 /**
  * Modal Form to asks credentials information (password and 2FA).
@@ -49,11 +49,11 @@ export class ScopeFormModal extends Component {
     renderTwoFactor() {
         const info = this.props.scope.response;
         if (!info) {
-            return <div class={style.scopeFormModal}>Requesting authorization...</div>;
+            return <div className={style.scopeFormModal}>Requesting authorization...</div>;
         }
         if (!info.TwoFactor) {
             // returning empty div, to keep the place
-            return <div class={style.scopeFormModal}/>;
+            return <div className={style.scopeFormModal}/>;
         }
 
         const {
@@ -62,7 +62,7 @@ export class ScopeFormModal extends Component {
         } = this.props.scope;
 
         if (U2F) {
-            return (<div class={style.scopeFormModal}>
+            return (<div className={style.scopeFormModal}>
                 <span>Your security key was used. </span>
                 <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
                     Undo
@@ -71,7 +71,7 @@ export class ScopeFormModal extends Component {
         }
 
         if (status === 'pending') {
-            return (<div class={style.scopeFormModal}>
+            return (<div className={style.scopeFormModal}>
                 <p>
                     <span>Please activate your security key... </span>
                     <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
@@ -84,7 +84,7 @@ export class ScopeFormModal extends Component {
             const errorMessage = error.metaData && error.metaData.code
                 ? getErrorMessage(error.metaData.code)
                 : error.message + '.';
-            return (<div class={style.scopeFormModal}><p>
+            return (<div className={style.scopeFormModal}><p>
                 <span>{errorMessage} You can </span>
                 <TextButton onClick={this.props.unscopeU2FAction}>
                     Try again
@@ -98,11 +98,11 @@ export class ScopeFormModal extends Component {
             </div>);
         }
 
-        const components = [<div class={[style.scopeFormModal, 'form-row'].join(' ')}>
-            <label htmlFor="twoFactorCode" class={style.label}>2FA code</label>
+        const components = [<div className={[style.scopeFormModal, 'form-row'].join(' ')}>
+            <label htmlFor="twoFactorCode" className={style.label}>2FA code</label>
             <div>
                 <input
-                    class={style.input}
+                    className={style.input}
                     type="text"
                     name="twoFactorCode"
                     id="twoFactorCode"
@@ -117,7 +117,7 @@ export class ScopeFormModal extends Component {
             </div>
         </div>];
         if (info['2FA'].U2F) {
-            components.push((<div class={style.scopeFormModal}>
+            components.push((<div className={style.scopeFormModal}>
                 <p>
                     <TextButton onClick={() => this.props.unscopeU2FAction()}>
                         Or use your security key
@@ -146,11 +146,11 @@ export class ScopeFormModal extends Component {
                     {!!this.props.message && (
                         <div>{this.props.message}</div>
                     )}
-                    <div class={[style.scopeFormModal, 'form-row'].join(' ')}>
-                        <label htmlFor="password" class={style.label}>password</label>
+                    <div className={[style.scopeFormModal, 'form-row'].join(' ')}>
+                        <label htmlFor="password" className={style.label}>password</label>
                         <div>
                             <input
-                                class={style.input}
+                                className={style.input}
                                 type="password"
                                 name="password"
                                 id="password"

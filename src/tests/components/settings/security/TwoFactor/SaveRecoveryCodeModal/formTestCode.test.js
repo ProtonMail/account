@@ -1,7 +1,7 @@
-import { FormTestCode } from '../../../../../../components/settings/security/TwoFactor/SaveRecoveryCodeModal/formTestCode';
+import { deep } from 'preact-render-spy';
 import render from 'preact-render-to-string';
 
-import { deep } from 'preact-render-spy';
+import { FormTestCode } from '../../../../../../components/settings/security/TwoFactor/SaveRecoveryCodeModal/formTestCode';
 
 const renderFormTestCode = (props = {}, { code = '', result = undefined } = {}) => {
     const response = code ? { code } : undefined;

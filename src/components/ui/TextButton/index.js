@@ -7,5 +7,5 @@ import style from './style.css';
  * @returns {preact.Component}
  */
 export default ({ onClick, children }) => (
-    <button type="button" onClick={onClick} class={style.button}>{children}</button>
+    <a onClick={onClick} className={style.a} href="#">{children}</a>
 );

@@ -6,20 +6,44 @@ preact-render-spy (1 nodes)
 <ul class="list">
   <li class="listElement">
     <div class="listElementHeader">First key</div>
-    <button onClick={[Function onClick]}>Delete</button>
+    <a
+      onClick={[Function onClick]}
+      class="a"
+      href="#"
+    >
+      Delete
+    </a>
   </li>
   <li class="listElement">
     <div class="listElementHeader">Second key</div>
-    <button onClick={[Function onClick]}>Delete</button>
+    <a
+      onClick={[Function onClick]}
+      class="a"
+      href="#"
+    >
+      Delete
+    </a>
   </li>
   <li class="listElement">
     <div class="listElementHeader listElementHeaderCompromised">Compromised key</div>
     <div class="badge badge-danger">Compromised</div>
-    <button onClick={[Function onClick]}>Delete</button>
+    <a
+      onClick={[Function onClick]}
+      class="a"
+      href="#"
+    >
+      Delete
+    </a>
   </li>
   <li class="listElement">
     <div class="listElementHeader">Last key</div>
-    <button onClick={[Function onClick]}>Delete</button>
+    <a
+      onClick={[Function onClick]}
+      class="a"
+      href="#"
+    >
+      Delete
+    </a>
   </li>
 </ul>
 
@@ -29,20 +53,20 @@ exports[`U2FKeyList test with keys 1`] = `
 <ul class="list">
   <li class="listElement">
     <div class="listElementHeader">First key</div>
-    <button>Delete</button>
+    <a class="a" href="#">Delete</a>
   </li>
   <li class="listElement">
     <div class="listElementHeader">Second key</div>
-    <button>Delete</button>
+    <a class="a" href="#">Delete</a>
   </li>
   <li class="listElement">
     <div class="listElementHeader listElementHeaderCompromised">Compromised key</div>
     <div class="badge badge-danger">Compromised</div>
-    <button>Delete</button>
+    <a class="a" href="#">Delete</a>
   </li>
   <li class="listElement">
     <div class="listElementHeader">Last key</div>
-    <button>Delete</button>
+    <a class="a" href="#">Delete</a>
   </li>
 </ul>
 `;

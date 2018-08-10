@@ -1,5 +1,6 @@
 import render from 'preact-render-to-string';
 import { deep } from 'preact-render-spy';
+
 import { ScopeFormModal } from '../../../../components/auth/ScopeModal/ScopeFormModal';
 import { ERROR_CODE } from '../../../../helpers/u2f';
 
@@ -168,7 +169,7 @@ describe('ScopeModal step ScopeFormModal', () => {
             };
 
             const tree = deep(<ScopeFormModal scope={scope} {...actions}/>);
-            tree.find('button').first().simulate('click');
+            tree.find('a').first().simulate('click');
             expect(actions.unscopeInitAction).toHaveBeenCalledTimes(1);
             expect(actions.unscopeU2FAction).toHaveBeenCalledTimes(1);
         });

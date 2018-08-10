@@ -1,4 +1,5 @@
 import { authInfo } from 'frontend-commons/src/crypto/srp';
+
 import { ERROR_CODE, signU2F } from '../../helpers/u2f';
 import store, { initialState } from '../../helpers/store';
 import scopeActions from '../../actions/scope';
@@ -137,9 +138,7 @@ describe('scope unit tests', () => {
 
             signU2F.mockImplementation(() => U2FResponse);
             waitForNewState(done,
-                (state) => expect(state.scope).toMatchObject({
-                    U2FRequest: { status: 'pending', error: undefined }
-                }),
+                (state) => expect(state.scope.U2FRequest).toEqual({ status: 'pending' }),
                 (state) => expect(state.scope).toEqual({
                     ...scope,
                     creds: {

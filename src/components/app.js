@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
 import { Router, route } from 'preact-router';
 import { connect } from 'unistore/full/preact';
-
 import appProvider from 'frontend-commons/src/appProvider';
 import appDispatcher from 'frontend-commons/src/utils/appDispatcher';
+import { isLoggedIn as isAuthenticated } from 'frontend-commons/src/user/model';
 
 import config from '../config';
 import Header from './header';
@@ -11,8 +11,6 @@ import Home from '../routes/home';
 import Settings from '../routes/settings';
 import Dashboard from '../routes/dashboard';
 import authActions from '../actions/authentication';
-import { isLoggedIn as isAuthenticated } from 'frontend-commons/src/user/model';
-
 import NotificationStack from './ui/NotificationStack';
 
 appProvider.setConfig(config);

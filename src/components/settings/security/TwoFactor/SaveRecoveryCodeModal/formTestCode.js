@@ -1,4 +1,5 @@
 import { connect } from 'unistore/full/preact';
+
 import settingsActions from '../../../../../actions/settings';
 
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
@@ -42,11 +43,11 @@ export const FormTestCode = ({
             }}
         >
             <ModalContent>
-                <p class={styles.description}>
+                <p className={styles.description}>
                     Test your recovery codes by entering one of your codes below. If you did not save your recovery
                     codes, go back and save them.
                 </p>
-                <div class="form-row">
+                <div className="form-row">
                     <label htmlFor="verifyCode">Input your code</label>
                     <div>
                         <input
@@ -66,7 +67,7 @@ export const FormTestCode = ({
                         />
                     </div>
                 </div>
-                <div class={styles.result}>
+                <div className={styles.result}>
                     {renderInfo(result)}
                 </div>
             </ModalContent>

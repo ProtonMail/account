@@ -1,11 +1,11 @@
 import { h, Component } from 'preact';
-
-import style from './style.css';
-import ConfirmModal from '../../../../ui/ConfirmModal';
-import TextButton from '../../../../ui/TextButton';
-import settingsActions from '../../../../../actions/settings';
 import { connect } from 'unistore/full/preact';
 
+import settingsActions from '../../../../../actions/settings';
+import ConfirmModal from '../../../../ui/ConfirmModal';
+import TextButton from '../../../../ui/TextButton';
+
+import style from './style.css';
 
 export class U2FKeyList extends Component {
     /**
@@ -23,15 +23,15 @@ export class U2FKeyList extends Component {
         }
 
         return (
-            <li key={u2fKey.KeyHandle} class={style.listElement}>
-                <div class={headerClasses.join(' ')}>
+            <li key={u2fKey.KeyHandle} className={style.listElement}>
+                <div className={headerClasses.join(' ')}>
                     {u2fKey.Label}
                 </div>
                 {!!u2fKey.Compromised && <div class='badge badge-danger'>Compromised</div>}
-                <button onClick={() => this.setState({
+                <TextButton onClick={() => this.setState({
                     confirmDeleteModal: u2fKey
                 })}>Delete
-                </button>
+                </TextButton>
             </li>
         );
     }
@@ -43,7 +43,7 @@ export class U2FKeyList extends Component {
             this.setState({ confirmDeleteModal: ''});
         };
         return (
-            <ul class={style.list}>
+            <ul className={style.list}>
                 <ConfirmModal
                     title="Confirm Security Key Deletion"
                     scope="password"

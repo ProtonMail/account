@@ -5,10 +5,10 @@ exports[`SetupTOTPModal Presentation step display with message 1`] = `
   <div class="content ">
     <div>This is a message</div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Cancel</button>
     <button type="submit" value="Submit">Next</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -23,13 +23,13 @@ exports[`SetupTOTPModal Presentation step regular display 1`] = `
         2FA Guide first.</strong>
     </p>
     <div>
-      <a class="button" href="https://protonmail.com/support/knowledge-base/two-factor-authentication/"
+      <a class="a" href="https://protonmail.com/support/knowledge-base/two-factor-authentication/"
       target="_blank" rel="noopener noreferrer">2FA GUIDE</a>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Cancel</button>
     <button type="submit" value="Submit">Next</button>
-  </div>
+  </footer>
 </form>
 `;

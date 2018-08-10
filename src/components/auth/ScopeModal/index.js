@@ -1,5 +1,4 @@
 import ScopeFormModal from './ScopeFormModal';
-
 import store from '../../../helpers/store';
 import actions from '../../../actions/scope';
 

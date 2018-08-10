@@ -1,5 +1,6 @@
 import appProvider from 'frontend-commons/src/appProvider';
 import { sign, register } from 'u2f-api';
+
 import { ERROR_CODE, getErrorMessage, registerU2F, signU2F } from '../../helpers/u2f';
 
 jest.mock('frontend-commons/src/appProvider');

@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+
 import { Content, Footer, Wrapper } from './Modal';
 import SteppedModal from './SteppedModal';
 import { steps as scopeModalSteps, beforeDismiss as beforeDismissScopeModal } from '../auth/ScopeModal';
@@ -12,8 +13,8 @@ export default class ConfirmModal extends Component {
             isOpen,
             onConfirm,
             onAfterClose,
-            scope = undefined,
-            onCancel = undefined,
+            scope = noop,
+            onCancel = noop,
             cancelText = 'Cancel',
             confirmText = 'Confirm'
         } = this.props;

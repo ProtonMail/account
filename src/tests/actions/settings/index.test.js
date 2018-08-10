@@ -4,6 +4,7 @@ import {
     removeU2FKey,
     resetRecoveryCodes,
 } from 'frontend-commons/src/settings/security';
+
 import store, { initialState } from '../../../helpers/store';
 import settingsAction from '../../../actions/settings';
 import { error, success } from '../../../helpers/notification';

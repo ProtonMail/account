@@ -1,6 +1,7 @@
+import { authInfo } from 'frontend-commons/src/crypto/srp';
+
 import { signU2F } from '../helpers/u2f';
 import toActions from '../helpers/toActions';
-import { authInfo } from 'frontend-commons/src/crypto/srp';
 import { toState, extended } from '../helpers/stateFormatter';
 
 /**
@@ -45,17 +46,17 @@ export default (store) => {
      * @returns {Promise<void>}
      */
     async function unscopeU2F(state) {
-        store.setState(toState(state, 'scope', { U2FRequest: { status: 'pending', error: undefined } }));
+        store.setState(toState(state, 'scope', { U2FRequest: { status: 'pending'} }));
         try {
             const response = await signU2F(state.scope.response['2FA'].U2F);
             store.setState(extended(state, 'scope.creds', { U2F: response }));
         }
-        catch (e) {
-            const {metaData: {code} = {}} = e;
+        catch (error) {
+            const {metaData: {code} = {}} = error;
             if (!code) {
-                throw  e;
+                throw  error;
             }
-            store.setState(toState(store.getState(), 'scope', { U2FRequest: { status: 'failure', error: e } }));
+            store.setState(toState(store.getState(), 'scope', { U2FRequest: { status: 'failure', error} }));
         }
     }
 

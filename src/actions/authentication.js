@@ -3,8 +3,8 @@ import { c, addLocale, useLocale } from 'c-3po';
 import { loadExtendedConfig } from 'frontend-commons/src/user/model';
 import * as userConnector from 'frontend-commons/src/auth/userConnector';
 import appProvider from 'frontend-commons/src/appProvider';
-import { signU2F } from '../helpers/u2f';
 
+import { signU2F } from '../helpers/u2f';
 import toActions from '../helpers/toActions';
 import { extended, toState } from '../helpers/stateFormatter';
 import { initialState } from '../helpers/store';

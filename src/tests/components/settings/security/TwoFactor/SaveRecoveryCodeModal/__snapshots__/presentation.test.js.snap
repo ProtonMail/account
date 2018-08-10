@@ -45,14 +45,14 @@ exports[`SaveRecoveryCodeModal presentation display 1`] = `
       </li>
     </ol>
     <div class="actions">
-      <button type="button" class="button">DOWNLOAD CODES</button>
-      <button type="button" class="button">COPY CODES</button>
+      <a class="a" href="#">DOWNLOAD CODES</a>
+      <a class="a" href="#">COPY CODES</a>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset" disabled>Back</button>
     <button type="submit" value="Submit">Next</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -64,9 +64,9 @@ exports[`SaveRecoveryCodeModal presentation loading display 1`] = `
     <p>Each recovery code can only be used once</p>
     <p>Loading...</p>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset" disabled>Back</button>
     <button type="submit" value="Submit">Next</button>
-  </div>
+  </footer>
 </form>
 `;

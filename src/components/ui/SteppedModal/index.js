@@ -1,10 +1,21 @@
 import { h, Component } from 'preact';
+
 import Modal from '../Modal';
 
 /**
  * Modal in several steps.
+ * @param props.isOpen - whether the step modal should be opened or not.
+ * @param {Object[]} props.steps - the different steps to be proceeded.
+ * @param {Component} props.steps[].components - the components of the current step.
+ * @param {Function} props.onRequestClose - to be called when the callback is closed.
+ * @param {?Function} props.onAfterOpen - to be called after the modal is opened.
  */
 export default class SteppedModal extends Component {
+    state = {
+        step: -1,
+        previousAction: 'enter',
+        mustSucceed: false
+    };
 
     /**
      * called after the SteppedModal is opened.
@@ -33,13 +44,13 @@ export default class SteppedModal extends Component {
         }
     }
 
+
     onSkipStep() {
         if (this.state.previousAction === 'next' || this.state.previousAction === 'enter') {
             return this.onNextStep();
         }
         return this.onPreviousStep();
     }
-
 
     /**
      * Triggers the next step. If the last step is reached, closes the modal.
@@ -104,23 +115,6 @@ export default class SteppedModal extends Component {
             return 'Loading';
         }
         return this.props.steps[this.state.step].title;
-    }
-
-    /**
-     * @constructor
-     * @param props.isOpen - whether the step modal should be opened or not.
-     * @param {Object[]} props.steps - the different steps to be proceeded.
-     * @param {Component} props.steps[].components - the components of the current step.
-     * @param {Function} props.onRequestClose - to be called when the callback is closed.
-     * @param {?Function} props.onAfterOpen - to be called after the modal is opened.
-     */
-    constructor(props) {
-        super(props);
-        this.state = {
-            step: -1,
-            previousAction: 'enter',
-            mustSucceed: false
-        };
     }
 
     /**

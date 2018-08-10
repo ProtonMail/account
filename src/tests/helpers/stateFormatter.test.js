@@ -1,5 +1,4 @@
 import { extended } from '../../helpers/stateFormatter';
-import { shallow } from 'preact-render-spy/index';
 
 const state = {
     a: {

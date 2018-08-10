@@ -1,24 +1,18 @@
 import { Component } from 'preact';
+import QRCode from 'qrcode.react';
+import { connect } from 'unistore/full/preact';
+
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
 import TextButton from '../../../../ui/TextButton';
-import QRCode from 'qrcode.react';
-
-import { connect } from 'unistore/full/preact';
 import settingsActions from '../../../../../actions/settings';
 
 import styles from './index.css';
 
 export class SharedSecret extends Component {
+    state = { showingQRCode: true };
 
     componentDidMount() {
         this.props.createSharedSecretAction();
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            showingQRCode: true
-        };
     }
 
     renderSwitchModeButton() {
@@ -52,18 +46,18 @@ export class SharedSecret extends Component {
             {this.renderSwitchModeButton()}
 
             {secret ?
-                (<div class={styles.grid}>
-                    <div class={styles.row}>
-                        <label class={styles.label}>KEY</label>
-                        <span class={styles.value}><pre>{secret}</pre></span>
+                (<div className={styles.grid}>
+                    <div className={styles.row}>
+                        <label className={styles.label}>KEY</label>
+                        <span className={styles.value}><pre>{secret}</pre></span>
                     </div>
-                    <div class={styles.row}>
-                        <label class={styles.label}>INTERVAL</label>
-                        <span class={styles.value}><pre>{interval} seconds</pre></span>
+                    <div className={styles.row}>
+                        <label className={styles.label}>INTERVAL</label>
+                        <span className={styles.value}><pre>{interval} seconds</pre></span>
                     </div>
-                    <div class={styles.row}>
-                        <label class={styles.label}>LENGTH</label>
-                        <span class={styles.value}><pre>{digits} digits</pre></span>
+                    <div className={styles.row}>
+                        <label className={styles.label}>LENGTH</label>
+                        <span className={styles.value}><pre>{digits} digits</pre></span>
                     </div>
                 </div>)
                 : <p>Loading...</p>

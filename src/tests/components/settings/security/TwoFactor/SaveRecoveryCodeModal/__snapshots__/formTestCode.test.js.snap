@@ -16,10 +16,10 @@ exports[`test for SaveRecoveryCodeModal SaveCode step failure display 1`] = `
       <p>⚠ Please test your recovery code to proceed</p>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit" disabled>Finish</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -39,10 +39,10 @@ exports[`test for SaveRecoveryCodeModal SaveCode step initial display 1`] = `
       <p>Your recovery code will not be erased</p>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit" disabled>Finish</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -62,10 +62,10 @@ exports[`test for SaveRecoveryCodeModal SaveCode step ongoing display 1`] = `
       <p>Your recovery code will not be erased</p>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit" disabled>Finish</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -85,9 +85,9 @@ exports[`test for SaveRecoveryCodeModal SaveCode step success display 1`] = `
       <p>✓ Test succeeded</p>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit">Finish</button>
-  </div>
+  </footer>
 </form>
 `;

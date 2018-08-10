@@ -1,4 +1,5 @@
 import Presentation from './presentation';
+
 import SharedSecret from './sharedSecret';
 import { steps as RecoveryCodeSteps, beforeDismiss as beforeDismissRecoveryCodeModal } from '../SaveRecoveryCodeModal';
 import { steps as ScopeModal, beforeDismiss as beforeDismissScopeModal } from '../../../../auth/ScopeModal/index';

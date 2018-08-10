@@ -1,6 +1,8 @@
 import { Component } from 'preact';
-import styles from './index.css';
+
 import { onInput } from '../../../helpers/notification';
+
+import styles from './index.css';
 
 const EXPIRATION_TIME = 5000;
 const MAX_STACK_SIZE = 5;
@@ -47,7 +49,7 @@ export default class NotificationStack extends Component {
 
         const notifications = this.state.stack;
         if (notifications && notifications.length) {
-            return (<ul class={styles.notificationStack}>
+            return (<ul className={styles.notificationStack}>
                 {notifications.map(NotificationStack.renderNotification)}
             </ul>);
 
@@ -60,8 +62,8 @@ export default class NotificationStack extends Component {
         if (styles[type]) {
             classes.push(styles[type]);
         }
-        return (<li class={classes.join(' ')}>
-            <h3>{message}</h3>
+        return (<li className={classes.join(' ')}>
+            <p>{message}</p>
         </li>);
     }
 }

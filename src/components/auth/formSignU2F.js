@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
-import authActions from './../../actions/authentication';
 import { connect } from 'unistore/full/preact';
-import { ERROR_CODE, getErrorMessage } from '../../helpers/u2f';
 import { isSupported } from 'u2f-api';
+
+import authActions from './../../actions/authentication';
+import { ERROR_CODE, getErrorMessage } from '../../helpers/u2f';
 
 /**
  * Form for the login 2FA action.
@@ -42,7 +43,7 @@ export class FormSignU2F extends Component {
 
         const { metaData: { code } = {} } = U2FResponse;
 
-        return (<div id={this.props.id} class={this.props.class}>
+        return (<div id={this.props.id} className={this.props.className}>
             <p>Activate your security key...</p>
             {!success && !!code && <p>
                 <span>{getErrorMessage(code)}. </span>

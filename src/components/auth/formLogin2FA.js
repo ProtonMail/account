@@ -1,5 +1,7 @@
 import { h } from 'preact';
+
 import FormSignU2F from './formSignU2F';
+
 import style from './style.css';
 
 const formLogin2FA = ({ login2FA, twoFactorData: { isTOTP = true, U2F: U2FRequest } }) => {
@@ -9,7 +11,7 @@ const formLogin2FA = ({ login2FA, twoFactorData: { isTOTP = true, U2F: U2FReques
             <legend> Choose one of the following 2FA methods</legend>
             <div>
                 <label htmlFor="password2FA">2FA code</label>
-                <div class={style.twoFactorOption}>
+                <div className={style.twoFactorOption}>
                     <input
                         type="text"
                         name="password2FA"
@@ -28,7 +30,7 @@ const formLogin2FA = ({ login2FA, twoFactorData: { isTOTP = true, U2F: U2FReques
             </div>
             {U2FRequest && (<div>
                 <label htmlFor="u2fKey">Security key</label>
-                <FormSignU2F id="u2fKey" class={style.twoFactorOption}  />
+                <FormSignU2F id="u2fKey" className={style.twoFactorOption}/>
             </div>)}
         </fieldset>
 

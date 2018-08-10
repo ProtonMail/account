@@ -1,9 +1,9 @@
 import webcrypto from 'frontend-commons/src/crypto/webcrypto';
+import { enableTOTP as enableTOTPApi } from 'frontend-commons/src/settings/security';
 
 import enableTOTPAction from '../../../actions/settings/enableTOTP';
 import store, { initialState } from '../../../helpers/store';
 import { waitForNewState } from '../../testsHelpers/storeTools';
-import { enableTOTP as enableTOTPApi } from 'frontend-commons/src/settings/security';
 
 jest.mock('frontend-commons/src/crypto/webcrypto');
 jest.mock('frontend-commons/src/settings/security');

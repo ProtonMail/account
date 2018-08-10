@@ -1,7 +1,7 @@
-import { U2FKeyList } from '../../../../../components/settings/security/TwoFactor/U2FKeyList/U2FKeyList';
-
 import render from 'preact-render-to-string';
 import { deep } from 'preact-render-spy';
+
+import { U2FKeyList } from '../../../../../components/settings/security/TwoFactor/U2FKeyList/U2FKeyList';
 
 jest.mock('../../../../../actions/settings');
 
@@ -33,7 +33,7 @@ describe('U2FKeyList test', () => {
         ];
         const context = deep(<U2FKeyList U2FKeys={keys}/>);
         expect(context.state('confirmDeleteModal')).toBeFalsy();
-        context.find('button').first().simulate('click');
+        context.find('a').first().simulate('click');
         expect(context).toMatchSnapshot();
         expect(context.state('confirmDeleteModal')).toMatchObject(expect.objectContaining({
             KeyHandle: expect.any(String),

@@ -38,7 +38,7 @@ export default (store) => {
      * @return {Promise<void>}
      * @private
      */
-        async function fetchU2FRegisterChallenge() {
+    async function fetchU2FRegisterChallenge() {
         const state = store.getState();
         const {
             errorCode,
@@ -65,9 +65,7 @@ export default (store) => {
      */
     async function callU2FRegisterAPI() {
         const state = store.getState();
-
         const request = state.settings.addU2FKey.request;
-
         const u2fResponse = await registerU2F(request);
 
         await updateAddU2FKeyState(state, {

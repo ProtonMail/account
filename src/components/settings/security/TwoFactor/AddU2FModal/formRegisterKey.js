@@ -1,14 +1,14 @@
 import { Component } from 'preact';
 import { connect } from 'unistore/full/preact';
-import settingsActions from '../../../../../actions/settings';
 
+import settingsActions from '../../../../../actions/settings';
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
 import TextButton from '../../../../ui/TextButton';
+import { getErrorMessage } from '../../../../../helpers/u2f';
 
 import styles from './index.css';
-
 import image from './sign-u2f.png';
-import { getErrorMessage } from '../../../../../helpers/u2f';
+
 
 /**
  * Modal Form to register a new U2F Key.
@@ -54,24 +54,24 @@ export class FormRegisterKey extends Component {
         } = this.props;
 
         if (status !== 'failure') {
-            return (<div class={styles.status}>
-                <div class={styles.row}>
-                    <span class={styles.text}>Activate your key</span>
-                    <span class={styles.text}>
+            return (<div className={styles.status}>
+                <div className={styles.row}>
+                    <span className={styles.text}>Activate your key</span>
+                    <span className={styles.text}>
                             {status || 'fetching'}...
                         </span>
                 </div>
 
-                <div class={styles.row}>
-                    <span class={styles.text}>Name</span>
-                    <span class={[styles.text, styles.nameLabel].join(' ')}>{name}</span>
+                <div className={styles.row}>
+                    <span className={styles.text}>Name</span>
+                    <span className={[styles.text, styles.nameLabel].join(' ')}>{name}</span>
                 </div>
             </div>);
 
         }
         const { metaData: { code } = {} } = error;
         if (code) {
-            return (<div class={styles.status}>
+            return (<div className={styles.status}>
                 <span>{getErrorMessage(code, true)}</span>
                 <TextButton onClick={() => this.props.addU2FKeyRegisterAction()}>Retry</TextButton>
             </div>);
@@ -93,7 +93,7 @@ export class FormRegisterKey extends Component {
                     this.props.onCancel();
                 }}
             >
-                <ModalContent class={styles.container}>
+                <ModalContent className={styles.container}>
                     <img src={image}/>
 
                     {this.renderStatus()}

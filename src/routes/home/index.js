@@ -10,7 +10,7 @@ import FormLogin2FA from '../../components/auth/formLogin2FA';
 export default connect(['auth'], authActions)(({ auth, loginAction, login2FAAction }) => {
   console.log('LOGIN', auth);
   return (
-    <div class={style.home}>
+    <div className={style.home}>
       { auth.step === 'login' && <FormLogin login={loginAction} />}
         {auth.step === '2fa' && <FormLogin2FA login2FA={login2FAAction} twoFactorData={auth.twoFactorData}/>}
     </div>

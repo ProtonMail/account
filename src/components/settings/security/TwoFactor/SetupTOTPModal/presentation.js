@@ -1,3 +1,5 @@
+import Link from '../../../../ui/Link';
+
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
 
 /**
@@ -29,9 +31,7 @@ export default ({ onSubmit, onCancel, message }) => (
                     </strong>
                 </p>
                 <div>
-                    <a class="button" href="https://protonmail.com/support/knowledge-base/two-factor-authentication/" target="_blank" rel="noopener noreferrer">
-                        2FA GUIDE
-                    </a>
+                    <Link href="https://protonmail.com/support/knowledge-base/two-factor-authentication/">2FA GUIDE</Link>
                 </div>
             </ModalContent>)}
         <ModalFooter>

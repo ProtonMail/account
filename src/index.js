@@ -1,9 +1,9 @@
-import './style';
 import App from './components/app';
 import { Provider } from 'unistore/full/preact';
 import hookErrorActions from './lib/hookErrorActions';
-
 import store from './helpers/store';
+
+import './style';
 
 hookErrorActions(store, (e) => {
   console.log('-------- ¯\\_(ツ)_/¯ -------');

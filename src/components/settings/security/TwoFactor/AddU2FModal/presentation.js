@@ -1,5 +1,5 @@
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
-
+import Link from '../../../../ui/Link';
 
 /**
  * Shows information about the U2F Key usage.
@@ -34,9 +34,7 @@ export default ({ onSubmit, onCancel, message }) => (
                     </strong>
                 </p>
                 <div>
-                    <a class="button" href="https://protonmail.com/blog/" target="_blank" rel="noopener noreferrer">
-                        READ 2FA GUIDE
-                    </a>
+                    <Link href="https://protonmail.com/blog/">READ U2F GUIDE </Link>
                 </div>
             </ModalContent>)}
         <ModalFooter>

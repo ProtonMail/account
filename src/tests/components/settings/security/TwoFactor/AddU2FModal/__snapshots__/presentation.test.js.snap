@@ -5,10 +5,10 @@ exports[`AddU2FModal Presentation step display with message 1`] = `
   <div class="content ">
     <div>This is a message</div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit">Next</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -24,13 +24,12 @@ exports[`AddU2FModal Presentation step regular display 1`] = `
         2FA Guide first.</strong>
     </p>
     <div>
-      <a class="button" href="https://protonmail.com/blog/" target="_blank"
-      rel="noopener noreferrer">READ 2FA GUIDE</a>
+      <a class="a" href="https://protonmail.com/blog/" target="_blank" rel="noopener noreferrer">READ U2F GUIDE</a>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit">Next</button>
-  </div>
+  </footer>
 </form>
 `;

@@ -1,13 +1,13 @@
 import { Component } from 'preact';
 import { connect } from 'unistore/full/preact';
-import settingsActions from '../../../../../actions/settings';
 
+import settingsActions from '../../../../../actions/settings';
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
 import TextButton from '../../../../ui/TextButton';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { downloadAsFile } from '../../../../../helpers/text';
 
 import styles from './index.css';
-import { saveAs } from 'file-saver';
 
 
 export class Presentation extends Component {
@@ -30,8 +30,7 @@ export class Presentation extends Component {
     downloadClicked() {
         const { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = this.props;
 
-        const blob = new Blob([codes.join('\r\n')], { type: 'text/plain;charset=utf-8' });
-        saveAs(blob, 'proton-recovery-codes.txt');
+        downloadAsFile('proton-recovery-codes.txt', codes);
     }
 
     /**
@@ -48,14 +47,14 @@ export class Presentation extends Component {
             </p>
             <p>Each recovery code can only be used once</p>
             {codes && codes.length && [
-                <ol class={styles.list}>
+                <ol className={styles.list}>
                     {codes.map((code) => (
-                        <li class={styles.item}>
-                            <pre class={styles.code}>{code}</pre>
+                        <li className={styles.item}>
+                            <pre className={styles.code}>{code}</pre>
                         </li>
                     ))}
                 </ol>,
-                <div class={styles.actions}>
+                <div className={styles.actions}>
                     <TextButton onClick={() => this.downloadClicked()}>
                         DOWNLOAD CODES
                     </TextButton>

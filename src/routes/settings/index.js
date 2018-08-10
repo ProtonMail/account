@@ -1,8 +1,11 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router';
-import Security from '../../components/settings/security';
 import { connect } from 'unistore/full/preact';
+
+import Security from '../../components/settings/security';
+
 import styles from './index.css';
+
 /**
  * Renders the content of the selected setting (using the URI).
  * @param {String} setting - the route of the setting to render
@@ -26,8 +29,8 @@ export default connect(['auth', 'config'])(({ side, config }) => {
     console.log('SETTINGS', user);
     if (!Object.keys(user).length) return null;
     return (
-        <div class={styles.security}>
-            <div class={styles.nav}>
+        <div className={styles.security}>
+            <div className={styles.nav}>
                 <ul>
                     <li>
                         <Link activeClassName={styles.selected} href="/settings"> Home </Link>
@@ -37,7 +40,7 @@ export default connect(['auth', 'config'])(({ side, config }) => {
                     </li>
                 </ul>
             </div>
-            <div id="settings" class={styles.content}>
+            <div id="settings" className={styles.content}>
                 {renderContent(side, user)}
             </div>
         </div>

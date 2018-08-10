@@ -1,5 +1,6 @@
 import render from 'preact-render-to-string';
 import { deep } from 'preact-render-spy';
+
 import { FormRegisterKey } from '../../../../../../components/settings/security/TwoFactor/AddU2FModal/formRegisterKey';
 import { ERROR_CODE } from '../../../../../../helpers/u2f';
 
@@ -51,7 +52,7 @@ describe('AddU2FModal step FormRegisterKey', () => {
         />);
         expect(addU2FKeyRegisterAction).toHaveBeenCalledTimes(1);
 
-        context.find('button').first().simulate('click');
+        context.find('a').first().simulate('click');
         expect(addU2FKeyRegisterAction).toHaveBeenCalledTimes(2);
     });
 

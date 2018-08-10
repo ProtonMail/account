@@ -6,13 +6,13 @@ exports[`AddU2FModal step FormRegisterKey failure display with U2F error 1`] = `
     <img src="test-file-stub" />
     <div class="status">
       <span>An error occurred</span>
-      <button type="button" class="button">Retry</button>
+      <a class="a" href="#">Retry</a>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit" disabled>Next</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -31,10 +31,10 @@ exports[`AddU2FModal step FormRegisterKey initial display 1`] = `
       </div>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit" disabled>Next</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -53,10 +53,10 @@ exports[`AddU2FModal step FormRegisterKey initial display 2`] = `
       </div>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button type="reset" value="Reset">Back</button>
     <button type="submit" value="Submit" disabled>Next</button>
-  </div>
+  </footer>
 </form>
 `;
 
@@ -81,7 +81,7 @@ preact-render-spy (1 nodes)
       </div>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button
       type="reset"
       value="Reset"
@@ -96,7 +96,7 @@ preact-render-spy (1 nodes)
     >
       Next
     </button>
-  </div>
+  </footer>
 </form>
 
 `;
@@ -122,7 +122,7 @@ preact-render-spy (1 nodes)
       </div>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button
       type="reset"
       value="Reset"
@@ -137,7 +137,7 @@ preact-render-spy (1 nodes)
     >
       Next
     </button>
-  </div>
+  </footer>
 </form>
 
 `;
@@ -163,7 +163,7 @@ preact-render-spy (1 nodes)
       </div>
     </div>
   </div>
-  <div class="footer">
+  <footer class="footer">
     <button
       type="reset"
       value="Reset"
@@ -178,7 +178,7 @@ preact-render-spy (1 nodes)
     >
       Next
     </button>
-  </div>
+  </footer>
 </form>
 
 `;

@@ -1,9 +1,8 @@
 import { Component } from 'preact';
 import { connect } from 'unistore/full/preact';
+
 import settingsActions from '../../../../../actions/settings';
-
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
-
 
 import styles from './index.css';
 
@@ -53,10 +52,10 @@ export class ConfirmCode extends Component {
                 }}
             >
                 <ModalContent>
-                    <p class={styles.description}>
+                    <p className={styles.description}>
                         Test your new 2FA method:
                     </p>
-                    <div class="form-row">
+                    <div className="form-row">
                         <label htmlFor="verifyCode">Input your code</label>
                         <div>
                             <input

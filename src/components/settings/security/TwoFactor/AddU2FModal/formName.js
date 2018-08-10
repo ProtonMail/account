@@ -1,8 +1,9 @@
+import { connect } from 'unistore/full/preact';
+
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
+import settingsActions from '../../../../../actions/settings';
 
 import styles from './index.css';
-import settingsActions from '../../../../../actions/settings';
-import { connect } from 'unistore/full/preact';
 
 /**
  * Label form for the U2F key.
@@ -20,11 +21,11 @@ export const FormName = ({ onSubmit, onCancel, addU2FKeyLabelAction, settings: {
             onCancel();
         }}>
         <ModalContent>
-            <div class={styles.name}>
-                <label class={styles.nameLabel} htmlFor="name">
+            <div className={styles.name}>
+                <label className={styles.nameLabel} htmlFor="name">
                     Name
                 </label>
-                <div class={styles.nameInputContainer}>
+                <div className={styles.nameInputContainer}>
                     <input
                         onInput={({ target: { value } }) => {
                             model.label = value;
@@ -34,7 +35,7 @@ export const FormName = ({ onSubmit, onCancel, addU2FKeyLabelAction, settings: {
                         id="inputName"
                         required
                         placeholder="Name"
-                        class={styles.nameTextInput}
+                        className={styles.nameTextInput}
                         ref={input => input && input.focus()}
                     />
                 </div>
