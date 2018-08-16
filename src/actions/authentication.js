@@ -1,26 +1,19 @@
 import { route } from 'preact-router';
 import { c, addLocale, useLocale } from 'c-3po';
-import { verify } from 'frontend-commons/src/api/paymentsApi';
 import { loadExtendedConfig } from 'frontend-commons/src/user/model';
 import * as userConnector from 'frontend-commons/src/auth/userConnector';
 import appProvider from 'frontend-commons/src/appProvider';
-import { isVPN } from 'frontend-commons/src/utils/appType';
 
-import toActions from '../lib/toActions';
+import { signU2F } from '../helpers/u2f';
+import toActions from '../helpers/toActions';
+import { extended, toState } from '../helpers/stateFormatter';
+import { initialState } from '../helpers/store';
+
 
 /**
  * @link { https://github.com/developit/unistore#usage }
  */
 const actions = (store) => {
-    /**
-     * Format the state and extend it as it's not recursive with unistore
-     * @param  {Oject} state
-     * @param  {String} key
-     * @param  {Object} value
-     * @return {Object}       new state
-     */
-    const toState = (state, key, value) => ({ [key]: { ...state[key], ...value } });
-
     async function loadUserConfig(state, user) {
         const { organization, payment, settings } = await loadExtendedConfig(user);
         appProvider.loadI18n(settings.user.Locale);
@@ -51,6 +44,31 @@ const actions = (store) => {
         });
         store.setState(data);
         route('/', data);
+    }
+
+    /**
+     * Login using a U2F key.
+     * @param state
+     * @returns {Promise<*>} calls @link{login2FA}
+     */
+    async function loginU2F(state) {
+        try {
+            store.setState(extended(state, 'auth.twoFactorResponse', { U2FResponse: {} }));
+            const result = await signU2F(state.auth.twoFactorData.U2F);
+            return login2FA(state, { U2FResponse: result });
+
+        } catch (e) {
+            const { metaData: { code } = {} } = e;
+            if (!code) {
+                throw e;
+            }
+            return store.setState(toState(state, 'auth', {
+                twoFactorResponse: {
+                    success: false,
+                    U2FResponse: e
+                }
+            }));
+        }
     }
 
     async function login2FA(state, opt) {
@@ -88,6 +106,7 @@ const actions = (store) => {
 
             if (config.is2FA) {
                 data.step = '2fa';
+                data.twoFactorData = { ...config.twoFactorData };
             }
 
             if (config.isUnlockable) {
@@ -106,6 +125,11 @@ const actions = (store) => {
 
         !opt.raw && (await loadUserConfig(state, user));
         route('/dashboard', store.getState());
+    }
+
+    async function abortLogin(state) {
+        store.setState(initialState, true);
+        route('/', initialState);
     }
 
     async function loadAuthUser(state) {
@@ -128,7 +152,9 @@ const actions = (store) => {
         logout,
         unlock,
         login2FA,
-        loadAuthUser
+        abortLogin,
+        loadAuthUser,
+        loginU2F
     });
 };
 

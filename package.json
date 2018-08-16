@@ -9,7 +9,7 @@
     "serve": "preact build && preact serve",
     "dev": "preact watch -p 3000 --no-prerender",
     "lint": "eslint src",
-    "test": "jest ./tests",
+    "test": "cross-env NODE_ENV=test jest ./tests",
     "precommit": "lint-staged",
     "pretty": "prettier -c --write $(find src -type f -name '*.js')"
   },
@@ -36,41 +36,63 @@
     "build/*"
   ],
   "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "eslint": "^4.9.0",
     "eslint-config-synacor": "^2.0.2",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
-    "jest": "^21.2.1",
+    "jest": "^23.4.1",
+    "jest-localstorage-mock": "^2.2.0",
+    "jest-serializer-html-string": "^1.0.1",
     "lint-staged": "^7.2.0",
     "preact-cli": "^2.1.0",
     "preact-render-spy": "^1.2.1",
-    "prettier": "^1.13.5"
+    "preact-render-to-string": "^3.7.0",
+    "prettier": "^1.13.5",
+    "react-modal": "^3.4.5"
   },
   "dependencies": {
     "babel-plugin-lodash": "^3.3.2",
     "c-3po": "^0.8.1",
+    "cross-env": "^5.2.0",
+    "file-saver": "^1.3.8",
+    "hi-base32": "^0.5.0",
     "preact": "^8.2.6",
     "preact-cli-lodash": "^1.1.0",
     "preact-compat": "^3.17.0",
     "preact-router": "^2.5.7",
+    "qrcode.react": "^0.8.0",
+    "react-copy-to-clipboard": "^5.0.1",
+    "u2f-api": "^1.0.6",
     "unistore": "^3.0.6"
   },
   "jest": {
-    "verbose": true,
+    "snapshotSerializers": [
+      "preact-render-spy/snapshot",
+      "jest-serializer-html-string"
+    ],
     "setupFiles": [
-      "<rootDir>/src/tests/__mocks__/browserMocks.js"
+      "<rootDir>/src/tests/__mocks__",
+      "jest-localstorage-mock"
     ],
     "testURL": "http://localhost:8080",
     "moduleFileExtensions": [
       "js",
       "jsx"
     ],
-    "moduleDirectories": [
-      "node_modules"
+    "transform": {
+      "^.+\\.jsx$": "babel-jest",
+      "^.+\\.js$": "babel-jest"
+    },
+    "testPathIgnorePatterns": [],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!frontend-commons).+\\.js$"
     ],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMocks.js",
       "\\.(css|less|scss)$": "identity-obj-proxy",
       "^./style$": "identity-obj-proxy",
       "^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
@@ -78,6 +100,9 @@
       "^react-dom$": "preact-compat",
       "^create-react-class$": "preact-compat/lib/create-react-class",
       "^react-addons-css-transition-group$": "preact-css-transition-group"
+    },
+    "globals": {
+      "window": {}
     }
   }
 }

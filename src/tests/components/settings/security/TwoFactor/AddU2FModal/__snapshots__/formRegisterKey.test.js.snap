@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddU2FModal step FormRegisterKey failure display with U2F error 1`] = `
+<form class="wrapper">
+  <div class="content container">
+    <img src="test-file-stub" />
+    <div class="status">
+      <span>An error occurred</span>
+      <a class="a" href="#">Retry</a>
+    </div>
+  </div>
+  <footer class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit" disabled>Next</button>
+  </footer>
+</form>
+`;
+
+exports[`AddU2FModal step FormRegisterKey initial display 1`] = `
+<form class="wrapper">
+  <div class="content container">
+    <img src="test-file-stub" />
+    <div class="status">
+      <div class="row">
+        <span class="text">Activate your key</span>
+        <span class="text">fetching...</span>
+      </div>
+      <div class="row">
+        <span class="text">Name</span>
+        <span class="text nameLabel"></span>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit" disabled>Next</button>
+  </footer>
+</form>
+`;
+
+exports[`AddU2FModal step FormRegisterKey initial display 2`] = `
+<form class="wrapper">
+  <div class="content container">
+    <img src="test-file-stub" />
+    <div class="status">
+      <div class="row">
+        <span class="text">Activate your key</span>
+        <span class="text">fetching...</span>
+      </div>
+      <div class="row">
+        <span class="text">Name</span>
+        <span class="text nameLabel">Test name</span>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit" disabled>Next</button>
+  </footer>
+</form>
+`;
+
+exports[`AddU2FModal step FormRegisterKey updating status 1`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content container">
+    <img src="test-file-stub" />
+    <div class="status">
+      <div class="row">
+        <span class="text">Activate your key</span>
+        <span class="text">fetching...</span>
+      </div>
+      <div class="row">
+        <span class="text">Name</span>
+        <span class="text nameLabel"></span>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={false}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={true}
+    >
+      Next
+    </button>
+  </footer>
+</form>
+
+`;
+
+exports[`AddU2FModal step FormRegisterKey updating status 2`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content container">
+    <img src="test-file-stub" />
+    <div class="status">
+      <div class="row">
+        <span class="text">Activate your key</span>
+        <span class="text">pending...</span>
+      </div>
+      <div class="row">
+        <span class="text">Name</span>
+        <span class="text nameLabel"></span>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={false}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={true}
+    >
+      Next
+    </button>
+  </footer>
+</form>
+
+`;
+
+exports[`AddU2FModal step FormRegisterKey updating status 3`] = `
+preact-render-spy (1 nodes)
+-------
+<form
+  class="wrapper"
+  onSubmit={[Function onSubmit]}
+  onReset={[Function onReset]}
+>
+  <div class="content container">
+    <img src="test-file-stub" />
+    <div class="status">
+      <div class="row">
+        <span class="text">Activate your key</span>
+        <span class="text">finished...</span>
+      </div>
+      <div class="row">
+        <span class="text">Name</span>
+        <span class="text nameLabel"></span>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <button
+      type="reset"
+      value="Reset"
+      disabled={true}
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      value="Submit"
+      disabled={false}
+    >
+      Next
+    </button>
+  </footer>
+</form>
+
+`;

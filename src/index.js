@@ -1,15 +1,9 @@
-import './style';
 import App from './components/app';
-import { createStore, Provider } from 'unistore/full/preact';
+import { Provider } from 'unistore/full/preact';
 import hookErrorActions from './lib/hookErrorActions';
+import store from './helpers/store';
 
-const store = createStore({
-  auth: {
-    isLoggedIn: false,
-    user: {},
-    step: 'login'
-  }
-});
+import './style';
 
 hookErrorActions(store, (e) => {
   console.log('-------- ¯\\_(ツ)_/¯ -------');

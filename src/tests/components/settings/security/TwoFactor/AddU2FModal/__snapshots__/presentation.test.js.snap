@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddU2FModal Presentation step display with message 1`] = `
+<form class="wrapper">
+  <div class="content ">
+    <div>This is a message</div>
+  </div>
+  <footer class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit">Next</button>
+  </footer>
+</form>
+`;
+
+exports[`AddU2FModal Presentation step regular display 1`] = `
+<form class="wrapper">
+  <div class="content ">
+    <p>This wizard will add a new security key to your Proton Account.</p>
+    <p>Please note that you will not be able to access your account if you loose
+      your U2F device and your recovery codes. We recommend setting up a second
+      2FA method as a backup.</p>
+    <p>
+      <strong>If you have never used 2FA before, we strongly recommend you reading our
+        2FA Guide first.</strong>
+    </p>
+    <div>
+      <a class="a" href="https://protonmail.com/blog/" target="_blank" rel="noopener noreferrer">READ U2F GUIDE</a>
+    </div>
+  </div>
+  <footer class="footer">
+    <button type="reset" value="Reset">Back</button>
+    <button type="submit" value="Submit">Next</button>
+  </footer>
+</form>
+`;

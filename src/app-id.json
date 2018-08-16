@@ -1,0 +1,13 @@
+{
+    "trustedFacets": [
+        {
+            "version": {
+                "major": 1,
+                "minor": 0
+            },
+            "ids": [
+                "https://localhost:3000"
+            ]
+        }
+    ]
+}

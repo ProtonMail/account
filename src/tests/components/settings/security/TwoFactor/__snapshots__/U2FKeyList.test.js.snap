@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`U2FKeyList test opening modal 1`] = `
+preact-render-spy (1 nodes)
+-------
+<ul class="list">
+  <li class="listElement">
+    <div class="listElementHeader">First key</div>
+    <a
+      onClick={[Function onClick]}
+      class="a"
+      href="#"
+    >
+      Delete
+    </a>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader">Second key</div>
+    <a
+      onClick={[Function onClick]}
+      class="a"
+      href="#"
+    >
+      Delete
+    </a>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader listElementHeaderCompromised">Compromised key</div>
+    <div class="badge badge-danger">Compromised</div>
+    <a
+      onClick={[Function onClick]}
+      class="a"
+      href="#"
+    >
+      Delete
+    </a>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader">Last key</div>
+    <a
+      onClick={[Function onClick]}
+      class="a"
+      href="#"
+    >
+      Delete
+    </a>
+  </li>
+</ul>
+
+`;
+
+exports[`U2FKeyList test with keys 1`] = `
+<ul class="list">
+  <li class="listElement">
+    <div class="listElementHeader">First key</div>
+    <a class="a" href="#">Delete</a>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader">Second key</div>
+    <a class="a" href="#">Delete</a>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader listElementHeaderCompromised">Compromised key</div>
+    <div class="badge badge-danger">Compromised</div>
+    <a class="a" href="#">Delete</a>
+  </li>
+  <li class="listElement">
+    <div class="listElementHeader">Last key</div>
+    <a class="a" href="#">Delete</a>
+  </li>
+</ul>
+`;
+
+exports[`U2FKeyList test with no key 1`] = `<ul class="list"></ul>`;

@@ -1,0 +1,25 @@
+.twoFactor {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.lastItem:after {
+    content: "";
+    flex: 2;
+}
+
+.description {
+    flex: 2;
+}
+
+.action {
+    flex: 1;
+}

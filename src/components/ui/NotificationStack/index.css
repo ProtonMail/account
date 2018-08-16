@@ -1,0 +1,31 @@
+.notificationStack {
+    position: fixed;
+    width: 40%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 20px;
+    z-index: 51;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.notification {
+    flex: 1;
+    margin: 1px 0;
+    list-style-type: none;
+}
+
+.success {
+    background-color: #52ff49;
+}
+
+.error {
+    background-color: #ff4646;
+}
+
+.info {
+    background-color: #a7cfff;
+
+}

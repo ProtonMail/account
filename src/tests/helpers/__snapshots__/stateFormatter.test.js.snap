@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`"extended" tests for stateFormatter correctly behave when array is given 1`] = `
+Object {
+  "b.d": Object {
+    "f": Object {
+      "n": -1,
+    },
+  },
+}
+`;
+
+exports[`"extended" tests for stateFormatter correctly updates element 1`] = `
+Object {
+  "b": Object {
+    "d": Object {
+      "f": -1,
+    },
+    "h": 256,
+  },
+}
+`;
+
+exports[`"extended" tests for stateFormatter includes all non root element 1`] = `
+Object {
+  "b": Object {
+    "d": Object {
+      "f": 2,
+    },
+    "h": 256,
+  },
+}
+`;
+
+exports[`"extended" tests for stateFormatter only includes root element 1`] = `
+Object {
+  "a": Object {
+    "c": Object {
+      "e": 1,
+      "g": "arabica",
+    },
+    "d": 1,
+  },
+}
+`;
