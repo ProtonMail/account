@@ -104,7 +104,7 @@ const getTasks = (branch, { isCI, flowType = 'single' }) => {
                 return execa('tasks/setupConfig.js', process.argv.slice(2));
             }
         },
-      {
+        {
             title: `Pull dist branch ${branch}`,
             enabled: () => !isCI,
             task: () => pullDist(branch)
@@ -113,10 +113,13 @@ const getTasks = (branch, { isCI, flowType = 'single' }) => {
             title: 'Build the application',
             task() {
                 const args = process.argv.slice(2);
-                return execa.shell([
-                    ['npm run build', ...args, '-- --no-clean --dest dist'].join(' '),
-                    'cp src/app-id.json dist/app-id.json'
-                ].join(' && '), { shell: '/bin/bash' });
+                return execa('npm', ['run', 'build', ...args, '--', '--no-clean', '--dest', 'dist']);
+            }
+        },
+        {
+            title: 'Move static files to root',
+            task() {
+                return execa.shell('cp src/app-id.json dist/app-id.json', { shell: '/bin/bash' });
             }
         },
         {

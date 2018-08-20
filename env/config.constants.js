@@ -56,10 +56,10 @@ const HOST_STAT_MACHINE = {
 const NO_STAT_MACHINE = { isEnabled: false };
 
 const STATS_CONFIG = {
-    beta: PROD_STAT_MACHINE,
-    prod: PROD_STAT_MACHINE,
-    dev: PROD_STAT_MACHINE,
-    host: HOST_STAT_MACHINE
+    beta: NO_STAT_MACHINE,
+    prod: NO_STAT_MACHINE,
+    dev: NO_STAT_MACHINE,
+    host: NO_STAT_MACHINE
 };
 
 const TOR_URL = 'https://protonirockerxow.onion/';

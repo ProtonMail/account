@@ -137,14 +137,9 @@ const getHostURL = (encoded) => {
     return url;
 };
 
-/**
- * for now, statically return U2F parameters.
- * @param {string} branch - not used (yet)
- * @return {{appId: string, timeout: number}}
- */
-const getU2FConfig = (branch) => {
+const getU2FConfig = () => {
     return {
-        appId: 'https://localhost:3000',
+        appId: 'https://account.protonmail.red/app-id.json',
         timeout: 60
     };
 };
