@@ -20083,7 +20083,10 @@ var model = __webpack_require__("ydVQ");
     "clientID": "WebVPN",
     "clientSecret": "e601ca139540a6e55a25071c3a5b9557",
     "articleLink": "https://protonmail.com/blog/protonmail-v3-14-release-notes/",
-    "changelogPath": "assets/changelog.tpl.html",
+    "changelogPath": "",
+    "url": "https://account.protonmail.red",
+    "loadI18n": false,
+    "translations": [],
     "debug": false,
     "apiUrl": "https://protonmail.blue/api",
     "statsConfig": {
@@ -20091,7 +20094,7 @@ var model = __webpack_require__("ydVQ");
         "abSiteId": 8
     },
     "u2f": {
-        "appId": "https://localhost:3000",
+        "appId": "https://account.protonmail.red/app-id.json",
         "timeout": 60
     }
 });
@@ -80003,4 +80006,4 @@ module.exports = modes
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.f467f.js.map
+//# sourceMappingURL=bundle.26fbc.js.map
