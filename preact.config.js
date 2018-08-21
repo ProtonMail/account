@@ -11,6 +11,6 @@ module.exports = function (config, env, helpers) {
   const babelLoader = loaders.find(loader => loader.loader === 'babel-loader');
   babelLoader.exclude = /node_modules/;
 
-  const { index } = helpers.getPluginsByName(config, 'UglifyJsPlugin')[0];
-  config.plugins.splice(index, 1)
+  const [ { index = null } = {} ] = helpers.getPluginsByName(config, 'UglifyJsPlugin');
+  (index !== null) && config.plugins.splice(index, 1);
 };
