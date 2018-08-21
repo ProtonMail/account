@@ -8607,13 +8607,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
  * @param  {String} Username
  * @param  {String} Password      [description]
  * @param  {String} TwoFactorCode [description]
- * @param  {Object} U2FResponse
+ * @param  {Object} U2F
  * @return {Promise}
  */
 var loginUser = function () {
     var _ref = authProcess__asyncToGenerator(function* (Username, Password) {
         var TwoFactorCode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-        var U2FResponse = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+        var U2F = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
 
         var config = {
             Username: Username,
@@ -8622,7 +8622,7 @@ var loginUser = function () {
         };
 
         var _ref2 = yield srp["b" /* default */].post(requestURL(), config, {
-            creds: { Username: Username, Password: Password, TwoFactorCode: TwoFactorCode, U2F: _extends({}, U2FResponse) },
+            creds: { Username: Username, Password: Password, TwoFactorCode: TwoFactorCode, U2F: U2F },
             response: authProcess_get('SRP')
         }),
             data = _ref2.data,
@@ -20078,7 +20078,7 @@ var model = __webpack_require__("ydVQ");
 /* harmony default export */ var config = ({
     "app_version": "0.0.0",
     "api_version": "3",
-    "date_version": "Mon Aug 20 2018",
+    "date_version": "Tue Aug 21 2018",
     "year": 2018,
     "clientID": "WebVPN",
     "clientSecret": "e601ca139540a6e55a25071c3a5b9557",
@@ -80006,4 +80006,4 @@ module.exports = modes
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.26fbc.js.map
+//# sourceMappingURL=bundle.ff5f5.js.map

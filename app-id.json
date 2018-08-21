@@ -6,7 +6,7 @@
                 "minor": 0
             },
             "ids": [
-                "https://account.protonmail.red"
+                "https://localhost:3000"
             ]
         }
     ]
