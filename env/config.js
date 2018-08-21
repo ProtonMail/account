@@ -2,7 +2,6 @@ const extend = require('lodash/extend');
 const { execSync } = require('child_process');
 const argv = require('minimist')(process.argv.slice(2));
 const CONFIG_DEFAULT = require('./configDefault');
-// const i18nLoader = require('../tasks/translationsLoader');
 
 const {
     STATS_CONFIG,
@@ -11,17 +10,9 @@ const {
     API_TARGETS,
     AUTOPREFIXER_CONFIG,
     SENTRY_CONFIG,
-    TOR_URL
+    TOR_,
+    U2F_CONFIG
 } = require('./config.constants');
-
-const isWebClient = () => {
-    try {
-        const origin = execSync('git remote get-url origin');
-        return !/ProtonMail\/A/.test((origin || '').toString());
-    } catch (e) {
-        return true;
-    }
-};
 
 const hasEnv = () => Object.keys(SENTRY_CONFIG).length;
 const isProdBranch = (branch = process.env.NODE_ENV_BRANCH) => /-prod/.test(branch);
@@ -52,7 +43,7 @@ const getStatsConfig = (deployBranch = '') => {
 };
 
 const getDefaultApiTarget = (defaultType = 'dev') => {
-    if (isWebClient() || !hasEnv()) {
+    if (!hasEnv()) {
         return 'prod';
     }
 
@@ -137,13 +128,6 @@ const getHostURL = (encoded) => {
     return url;
 };
 
-const getU2FConfig = () => {
-    return {
-        appId: 'https://account.protonmail.red/app-id.json',
-        timeout: 60
-    };
-};
-
 const getConfig = (env = process.env.NODE_ENV) => {
     const CONFIG = extend({}, CONFIG_DEFAULT, {
         debug: env === 'dist' ? false : 'debug-app' in argv ? argv['debug-app'] : true,
@@ -153,7 +137,7 @@ const getConfig = (env = process.env.NODE_ENV) => {
         api_version: `${argv['api-version'] || CONFIG_DEFAULT.api_version}`,
         articleLink: argv.article || CONFIG_DEFAULT.articleLink,
         statsConfig: getStatsConfig(argv.branch),
-        u2f: getU2FConfig(argv.branch)
+        u2f: U2F_CONFIG
     });
     return extend({ CONFIG }, { branch: argv.branch });
 };
@@ -166,6 +150,5 @@ module.exports = {
     getStatsConfig,
     argv,
     getEnv,
-    hasEnv,
-    isWebClient
+    hasEnv
 };

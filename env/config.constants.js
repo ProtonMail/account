@@ -62,6 +62,16 @@ const STATS_CONFIG = {
     host: NO_STAT_MACHINE
 };
 
+/**
+ * The configuration for U2F.
+ * FIXME Do not modify this value once used in production! See README.md, section app_id for more information.
+ * @type {{appId: string, timeout: number}}
+ */
+const U2F_CONFIG = {
+    appId: 'https://account.protonmail.red/app-id.json',
+    timeout: 60
+};
+
 const TOR_URL = 'https://protonirockerxow.onion/';
 
 module.exports = {
@@ -73,5 +83,6 @@ module.exports = {
     HOST_STAT_MACHINE,
     NO_STAT_MACHINE,
     STATS_CONFIG,
-    SENTRY_CONFIG
+    SENTRY_CONFIG,
+    U2F_CONFIG
 };
