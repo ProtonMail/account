@@ -8665,7 +8665,7 @@ var loginUser = function () {
 var loginProcess = function () {
     var _ref3 = authProcess__asyncToGenerator(function* (username, password) {
         var TwoFactorCode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-        var U2FResponse = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+        var U2FResponse = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
 
         try {
             var data = yield loginUser(username, password, TwoFactorCode, U2FResponse);
@@ -8884,10 +8884,10 @@ var login = function () {
 
 /**
  * validate the data for u2f response
- * @param {String} ClientData
- * @param {Number} ErrorCode
- * @param {String} KeyHandle
- * @param SignatureData
+ * @param {String} ClientData - ClientData, computed by the U2F device.
+ * @param {Number} ErrorCode - The error code. Default to 0 (not an error).
+ * @param {String} KeyHandle - The KeyHandle, computed by the U2F device.
+ * @param {String} SignatureData - The SignatureData, computed by the U2F device.
  * @return {Object|null} returns the object only if valid.
  */
 function validateU2FResponse() {
@@ -20078,7 +20078,7 @@ var model = __webpack_require__("ydVQ");
 /* harmony default export */ var config = ({
     "app_version": "0.0.0",
     "api_version": "3",
-    "date_version": "Tue Aug 21 2018",
+    "date_version": "Wed Aug 22 2018",
     "year": 2018,
     "clientID": "WebVPN",
     "clientSecret": "e601ca139540a6e55a25071c3a5b9557",
@@ -69326,6 +69326,20 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 /**
+ * Normalize the credential format.
+ * @param {Object} creds
+ * @param {Object} creds.U2F - U2F credentials.
+ * @return {Object}
+ */
+function normalizeCredentials(creds) {
+    var credentials = Object(string["a" /* ucFirstObject */])(creds);
+    if (credentials.U2F) {
+        credentials.U2F = Object(string["a" /* ucFirstObject */])(credentials.U2F);
+    }
+    return credentials;
+}
+
+/**
  * retrieves a U2F register challenge from the API.
  * @param {Boolean} [updateCache=false] - if the request should overpass the cache.
  * @returns {Promise<*>}
@@ -69358,11 +69372,7 @@ var addU2FKey = function () {
     var _ref2 = _asyncToGenerator(function* (data, creds) {
         var response = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
 
-        var credentials = Object(string["a" /* ucFirstObject */])(creds);
-        if (credentials.U2F) {
-            credentials.U2F = Object(string["a" /* ucFirstObject */])(credentials.U2F);
-        }
-        return Object(settingsApi["a" /* addU2FKeyConfirm */])(Object(string["a" /* ucFirstObject */])(data), credentials, response);
+        return Object(settingsApi["a" /* addU2FKeyConfirm */])(Object(string["a" /* ucFirstObject */])(data), normalizeCredentials(creds), response);
     });
 
     return function addU2FKey(_x3, _x4) {
@@ -69380,11 +69390,7 @@ var resetRecoveryCodes = function () {
     var _ref3 = _asyncToGenerator(function* (creds) {
         var response = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
 
-        var credentials = Object(string["a" /* ucFirstObject */])(creds);
-        if (credentials.U2F) {
-            credentials.U2F = Object(string["a" /* ucFirstObject */])(credentials.U2F);
-        }
-        return Object(settingsApi["h" /* regenerateTwoFactorCodes */])(credentials, response);
+        return Object(settingsApi["h" /* regenerateTwoFactorCodes */])(normalizeCredentials(creds), response);
     });
 
     return function resetRecoveryCodes(_x6) {
@@ -69405,11 +69411,7 @@ var security_enableTOTP = function () {
     var _ref4 = _asyncToGenerator(function* (data, creds) {
         var response = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
 
-        var credentials = Object(string["a" /* ucFirstObject */])(creds);
-        if (credentials.U2F) {
-            credentials.U2F = Object(string["a" /* ucFirstObject */])(credentials.U2F);
-        }
-        return Object(settingsApi["e" /* enableTwoFactor */])(data, credentials, response);
+        return Object(settingsApi["e" /* enableTwoFactor */])(data, normalizeCredentials(creds), response);
     });
 
     return function enableTOTP(_x8, _x9) {
@@ -69426,11 +69428,7 @@ var security_enableTOTP = function () {
  */
 var removeU2FKey = function () {
     var _ref5 = _asyncToGenerator(function* (keyHandle, creds, response) {
-        var credentials = Object(string["a" /* ucFirstObject */])(creds);
-        if (credentials.U2F) {
-            credentials.U2F = Object(string["a" /* ucFirstObject */])(credentials.U2F);
-        }
-        return Object(settingsApi["i" /* removeU2FKey */])(keyHandle, credentials, response);
+        return Object(settingsApi["i" /* removeU2FKey */])(keyHandle, normalizeCredentials(creds), response);
     });
 
     return function removeU2FKey(_x10, _x11, _x12) {
@@ -69446,11 +69444,7 @@ var removeU2FKey = function () {
  */
 var security_disableTwoFactor = function () {
     var _ref6 = _asyncToGenerator(function* (creds, response) {
-        var credentials = Object(string["a" /* ucFirstObject */])(creds);
-        if (credentials.U2F) {
-            credentials.U2F = Object(string["a" /* ucFirstObject */])(credentials.U2F);
-        }
-        return Object(settingsApi["d" /* disableTwoFactor */])({}, credentials, response);
+        return Object(settingsApi["d" /* disableTwoFactor */])({}, normalizeCredentials(creds), response);
     });
 
     return function disableTwoFactor(_x13, _x14) {
@@ -69466,11 +69460,7 @@ var security_disableTwoFactor = function () {
  */
 var security_disableTOTP = function () {
     var _ref7 = _asyncToGenerator(function* (creds, response) {
-        var credentials = Object(string["a" /* ucFirstObject */])(creds);
-        if (credentials.U2F) {
-            credentials.U2F = Object(string["a" /* ucFirstObject */])(credentials.U2F);
-        }
-        return Object(settingsApi["c" /* disableTOTP */])({}, credentials, response);
+        return Object(settingsApi["c" /* disableTOTP */])({}, normalizeCredentials(creds), response);
     });
 
     return function disableTOTP(_x15, _x16) {
@@ -71537,7 +71527,7 @@ function ucFirst() {
  * Transforms ```{username: "blabla", password: "truc", u2f: { data}}```
  * to ```{Username: "blabla", Password: "truc", U2f: { data}}```
  * @param {Object} input
- * @returns {{}}
+ * @returns {Object}
  * @private
  */
 var ucFirstObject = function ucFirstObject(input) {
@@ -80006,4 +79996,4 @@ module.exports = modes
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.ff5f5.js.map
+//# sourceMappingURL=bundle.66c3f.js.map
