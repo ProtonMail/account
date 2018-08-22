@@ -8607,18 +8607,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
  * @param  {String} Username
  * @param  {String} Password      [description]
  * @param  {String} TwoFactorCode [description]
- * @param  {Object} U2F
+ * @param  {Object} [U2F]
  * @return {Promise}
  */
 var loginUser = function () {
     var _ref = authProcess__asyncToGenerator(function* (Username, Password) {
         var TwoFactorCode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-        var U2F = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+        var U2F = arguments[3];
 
         var config = {
             Username: Username,
-            ClientID: appProvider["a" /* default */].getConfig('clientID'),
-            ClientSecret: appProvider["a" /* default */].getConfig('clientSecret')
+            ClientID: appProvider["a" /* default */].getConfig('clientID')
         };
 
         var _ref2 = yield srp["b" /* default */].post(requestURL(), config, {
@@ -8646,7 +8645,7 @@ var loginUser = function () {
         return data;
     });
 
-    return function loginUser(_x6, _x7) {
+    return function loginUser(_x5, _x6) {
         return _ref.apply(this, arguments);
     };
 }();
@@ -8657,7 +8656,7 @@ var loginUser = function () {
  * @param  {String} username
  * @param  {String} password
  * @param  {String} TwoFactorCode
- * @param  {Object} U2FResponse
+ * @param  {Object} [U2FResponse]
  * @return {Promise}
  */
 
@@ -8665,7 +8664,7 @@ var loginUser = function () {
 var loginProcess = function () {
     var _ref3 = authProcess__asyncToGenerator(function* (username, password) {
         var TwoFactorCode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-        var U2FResponse = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+        var U2FResponse = arguments[3];
 
         try {
             var data = yield loginUser(username, password, TwoFactorCode, U2FResponse);
@@ -8704,7 +8703,7 @@ var loginProcess = function () {
         }
     });
 
-    return function loginProcess(_x10, _x11) {
+    return function loginProcess(_x8, _x9) {
         return _ref3.apply(this, arguments);
     };
 }();
@@ -8735,7 +8734,7 @@ var srpLogin = function () {
         };
     });
 
-    return function srpLogin(_x12, _x13) {
+    return function srpLogin(_x10, _x11) {
         return _ref4.apply(this, arguments);
     };
 }();
@@ -8793,7 +8792,7 @@ var unlockWithPassword = function () {
         upgradePassword();
     });
 
-    return function unlockWithPassword(_x21) {
+    return function unlockWithPassword(_x19) {
         return _ref9.apply(this, arguments);
     };
 }();
@@ -19335,8 +19334,7 @@ var randomVerifier = function () {
 function authInfo(Username) {
     return __WEBPACK_IMPORTED_MODULE_2__api_authApi__["b" /* info */]({
         Username: Username,
-        ClientID: __WEBPACK_IMPORTED_MODULE_3__appProvider__["a" /* default */].getConfig('clientID'),
-        ClientSecret: __WEBPACK_IMPORTED_MODULE_3__appProvider__["a" /* default */].getConfig('clientSecret')
+        ClientID: __WEBPACK_IMPORTED_MODULE_3__appProvider__["a" /* default */].getConfig('clientID')
     });
 }
 
@@ -19344,7 +19342,7 @@ function authInfo(Username) {
  * Check the validity of a user
  * @param  {String} method          HTTP methods
  * @param  {String} endpoint        URL
- * @param  {Object} req             {Username:<String>, ClientID:<String>, ClientSecret:<String>}
+ * @param  {Object} req             {Username:<String>, ClientID:<String>}
  * @param  {Object} creds           {Username:<String>, Password:<String>, TwoFactorCode:<Null>}
  * @param  {void} initialInfoResp
  * @param  {Object} headers
@@ -79996,4 +79994,4 @@ module.exports = modes
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.66c3f.js.map
+//# sourceMappingURL=bundle.64347.js.map
