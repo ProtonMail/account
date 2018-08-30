@@ -20076,7 +20076,7 @@ var model = __webpack_require__("ydVQ");
 /* harmony default export */ var config = ({
     "app_version": "0.0.0",
     "api_version": "3",
-    "date_version": "Wed Aug 22 2018",
+    "date_version": "Thu Aug 30 2018",
     "year": 2018,
     "clientID": "WebVPN",
     "clientSecret": "e601ca139540a6e55a25071c3a5b9557",
@@ -79994,4 +79994,4 @@ module.exports = modes
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.64347.js.map
+//# sourceMappingURL=bundle.2b495.js.map
