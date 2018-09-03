@@ -42,8 +42,15 @@ const actions = (store) => {
             isLoggedIn: true,
             step: ''
         });
-        store.setState(data);
-        route('/', data);
+        store.setState(
+            toState(state, 'auth', {
+                user,
+                isLoggedIn: true,
+                step: ''
+            })
+        );
+
+        route('/dashboard', store.getState());
     }
 
     /**
