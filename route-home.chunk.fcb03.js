@@ -72,11 +72,7 @@ var formLogin_formLogin = function formLogin(_ref) {
 
     return Object(preact_min["h"])(
         'form',
-        {
-            name: 'formLogin',
-            method: 'post',
-            novalidate: true,
-            onsubmit: function onsubmit(e) {
+        { name: 'formLogin', method: 'post', novalidate: true, onsubmit: function onsubmit(e) {
                 return e.preventDefault(), login(model);
             } },
         Object(preact_min["h"])(
@@ -145,16 +141,11 @@ var formUnlock__ref4 = Object(preact_min["h"])(
 var formUnlock_formUnlock = function formUnlock(_ref) {
     var unlock = _ref.unlock;
 
-
     var model = {};
 
     return Object(preact_min["h"])(
         "form",
-        {
-            name: "formLogin",
-            method: "post",
-            novalidate: true,
-            onsubmit: function onsubmit(e) {
+        { name: "formLogin", method: "post", novalidate: true, onsubmit: function onsubmit(e) {
                 return e.preventDefault(), unlock(model);
             } },
         Object(preact_min["h"])(
@@ -176,7 +167,8 @@ var formUnlock_formUnlock = function formUnlock(_ref) {
                         var value = _ref3.target.value;
 
                         model.passwordUnlock = value;
-                    } })
+                    }
+                })
             )
         ),
         formUnlock__ref4
@@ -257,7 +249,6 @@ var formSignU2F_FormSignU2F = function (_Component) {
 
 
         if (!success && code) {
-
             if (code === u2f["a" /* ERROR_CODE */].TIMEOUT) {
                 // we need an updated auth/info
                 // the timeout is 1 minute on the client side, it's better
@@ -425,22 +416,22 @@ var formLogin2FA_formLogin2FA = function formLogin2FA(_ref) {
 
 
 /* harmony default export */ var home = __webpack_exports__["default"] = (Object(preact["connect"])(['auth'], authentication["a" /* default */])(function (_ref) {
-  var auth = _ref.auth,
-      loginAction = _ref.loginAction,
-      login2FAAction = _ref.login2FAAction,
-      unlockAction = _ref.unlockAction;
+    var auth = _ref.auth,
+        loginAction = _ref.loginAction,
+        login2FAAction = _ref.login2FAAction,
+        unlockAction = _ref.unlockAction;
 
-  console.log('LOGIN', auth);
-  return Object(preact_min["h"])(
-    'div',
-    { className: style_default.a.home },
-    auth.step === 'login' && Object(preact_min["h"])(auth_formLogin, { login: loginAction }),
-    auth.step === 'unlock' && Object(preact_min["h"])(auth_formUnlock, { unlock: unlockAction }),
-    auth.step === '2fa' && Object(preact_min["h"])(auth_formLogin2FA, { login2FA: login2FAAction, twoFactorData: auth.twoFactorData })
-  );
+    console.log('LOGIN', auth);
+    return Object(preact_min["h"])(
+        'div',
+        { className: style_default.a.home },
+        auth.step === 'login' && Object(preact_min["h"])(auth_formLogin, { login: loginAction }),
+        auth.step === 'unlock' && Object(preact_min["h"])(auth_formUnlock, { unlock: unlockAction }),
+        auth.step === '2fa' && Object(preact_min["h"])(auth_formLogin2FA, { login2FA: login2FAAction, twoFactorData: auth.twoFactorData })
+    );
 }));
 
 /***/ })
 
 });
-//# sourceMappingURL=route-home.chunk.fc940.js.map
+//# sourceMappingURL=route-home.chunk.fcb03.js.map

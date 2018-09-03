@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + ({"0":"route-settings","1":"route-home","2":"route-dashboard"}[chunkId]||chunkId) + ".chunk." + {"0":"9e353","1":"fc940","2":"1b2ca"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + ({"0":"route-settings","1":"route-home","2":"route-dashboard"}[chunkId]||chunkId) + ".chunk." + {"0":"942c9","1":"fcb03","2":"f0c0f"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -19768,7 +19768,7 @@ var model = __webpack_require__("/547");
 
 // CONCATENATED MODULE: ./config.js
 /* harmony default export */ var config = ({
-    "app_version": "0.0.0",
+    "app_version": "1.7.5",
     "api_version": "3",
     "date_version": "Mon Sep 03 2018",
     "year": 2018,
@@ -19992,7 +19992,6 @@ var NotificationStack_NotificationStack = function (_Component) {
     };
 
     NotificationStack.prototype.render = function render() {
-
         var notifications = this.state.stack;
         if (notifications && notifications.length) {
             return Object(preact_min["h"])(
@@ -20062,7 +20061,6 @@ var _ref5 = Object(preact_min["h"])(NotificationStack_NotificationStack, null);
         loadAuthUserAction = _ref.loadAuthUserAction,
         logoutAction = _ref.logoutAction;
 
-
     /**
      * Check if the user is authenticated or not.
      * Redirect to the login if he is not or load the config
@@ -20072,7 +20070,6 @@ var _ref5 = Object(preact_min["h"])(NotificationStack_NotificationStack, null);
         var _ref3 = _asyncToGenerator(function* (_ref2) {
             var previous = _ref2.previous,
                 url = _ref2.url;
-
 
             if (!Object(model["c" /* isLoggedIn */])()) {
                 return Object(preact_router_es["route"])('/');
@@ -20148,19 +20145,19 @@ var style_default_0 = /*#__PURE__*/__webpack_require__.n(style_0);
 
 
 hookErrorActions(store["a" /* default */], function (e) {
-  console.log('-------- ¯\\_(ツ)_/¯ -------');
-  console.error(e);
-  console.log('---------------------------');
+    console.log('-------- ¯\\_(ツ)_/¯ -------');
+    console.error(e);
+    console.log('---------------------------');
 });
 
 var index__ref = Object(preact_min["h"])(
-  preact["Provider"],
-  { store: store["a" /* default */] },
-  Object(preact_min["h"])(app, null)
+    preact["Provider"],
+    { store: store["a" /* default */] },
+    Object(preact_min["h"])(app, null)
 );
 
 /* harmony default export */ var index = __webpack_exports__["default"] = (function () {
-  return index__ref;
+    return index__ref;
 });
 
 /***/ }),
@@ -63197,7 +63194,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
  * @link{https://github.com/developit/unistore#usage}
  */
 /* harmony default export */ __webpack_exports__["a"] = (function (store) {
-
     /**
      * initializate the unscope process.
      * @param {Object} state
@@ -70411,7 +70407,6 @@ function enableTOTP__asyncToGenerator(fn) { return function () { var gen = fn.ap
 
 
 /* harmony default export */ var settings_enableTOTP = (function (store) {
-
     /**
      * Creates a shared secret for TOTP.
      * @param {Object} state
@@ -70561,7 +70556,6 @@ function settings__asyncToGenerator(fn) { return function () { var gen = fn.appl
  * @link { https://github.com/developit/unistore#usage }
  */
 var settings_actions = function actions(store) {
-
     /**
      * Resets the state for the actions
      * @param {Object} state
@@ -79999,4 +79993,4 @@ var getPasswordParams = function () {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.b1478.js.map
+//# sourceMappingURL=bundle.5bc94.js.map

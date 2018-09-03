@@ -18,13 +18,13 @@ webpackJsonp([2],{
  * @returns {preact.Component}
  */
 /* harmony default export */ __webpack_exports__["a"] = (function (_ref) {
-  var onClick = _ref.onClick,
-      children = _ref.children;
-  return Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])(
-    "a",
-    { onClick: onClick, className: __WEBPACK_IMPORTED_MODULE_1__style_css___default.a.a, href: "#" },
-    children
-  );
+    var onClick = _ref.onClick,
+        children = _ref.children;
+    return Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])(
+        "a",
+        { onClick: onClick, className: __WEBPACK_IMPORTED_MODULE_1__style_css___default.a.a, href: "#" },
+        children
+    );
 });
 
 /***/ }),
@@ -66,10 +66,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ),
         Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])(
             __WEBPACK_IMPORTED_MODULE_2__components_ui_TextButton__["a" /* default */],
-            { onClick: function onClick() {
+            {
+                onClick: function onClick() {
                     var id = Math.floor(Math.random() * 100) + 1;
                     Object(__WEBPACK_IMPORTED_MODULE_3__helpers_notification__["b" /* info */])('Test notification ' + id, { id: id });
-                } },
+                }
+            },
             'Send a test notification'
         ),
         Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])(
@@ -91,4 +93,4 @@ module.exports = {"a":"a__2-NsR"};
 /***/ })
 
 });
-//# sourceMappingURL=route-dashboard.chunk.1b2ca.js.map
+//# sourceMappingURL=route-dashboard.chunk.f0c0f.js.map

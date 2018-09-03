@@ -3292,23 +3292,23 @@ var Modal_default = /*#__PURE__*/__webpack_require__.n(ui_Modal);
 
 
 /* harmony default export */ var Content = (function (props) {
-    return Object(preact_min["h"])(
-        'div',
-        { className: [Modal_default.a.content, props.className].join(' ') },
-        props.children
-    );
+  return Object(preact_min["h"])(
+    'div',
+    { className: [Modal_default.a.content, props.className].join(' ') },
+    props.children
+  );
 });
 // CONCATENATED MODULE: ./components/ui/Modal/Footer.js
 
 
 
 /* harmony default export */ var Footer = (function (_ref) {
-    var children = _ref.children;
-    return Object(preact_min["h"])(
-        'footer',
-        { className: Modal_default.a.footer },
-        children
-    );
+  var children = _ref.children;
+  return Object(preact_min["h"])(
+    'footer',
+    { className: Modal_default.a.footer },
+    children
+  );
 });
 // CONCATENATED MODULE: ./components/ui/Modal/Wrapper.js
 
@@ -3823,7 +3823,8 @@ var ScopeFormModal_ScopeFormModal = function (_Component) {
                     value: this.state.data.twoFactorCode,
                     onInput: function onInput(e) {
                         return _this2.onFieldUpdated(e);
-                    } })
+                    }
+                })
             )
         )];
         if (info['2FA'].U2F) {
@@ -3936,11 +3937,7 @@ var ScopeModal_steps = function steps(scope) {
                 onPreviousStep = _ref.onPreviousStep,
                 onSkipStep = _ref.onSkipStep,
                 message = _ref.message;
-            return Object(preact_min["h"])(ScopeModal_ScopeFormModal, {
-                onSubmit: onNextStep,
-                onCancel: onPreviousStep,
-                skip: onSkipStep,
-                message: message });
+            return Object(preact_min["h"])(ScopeModal_ScopeFormModal, { onSubmit: onNextStep, onCancel: onPreviousStep, skip: onSkipStep, message: message });
         }
     }];
 };
@@ -4033,7 +4030,8 @@ var ConfirmModal_ConfirmModal = function (_Component) {
                                 onPreviousStep();
                             }
                             onAfterClose();
-                        } },
+                        }
+                    },
                     _ref2,
                     _ref3
                 );
@@ -4059,11 +4057,7 @@ var ConfirmModal_ConfirmModal = function (_Component) {
             };
         }();
 
-        return Object(preact_min["h"])(SteppedModal_SteppedModal, {
-            isOpen: isOpen,
-            onRequestClose: onAfterClose,
-            steps: steps,
-            beforeDismiss: beforeDismiss });
+        return Object(preact_min["h"])(SteppedModal_SteppedModal, { isOpen: isOpen, onRequestClose: onAfterClose, steps: steps, beforeDismiss: beforeDismiss });
     };
 
     return ConfirmModal;
@@ -4134,11 +4128,13 @@ var U2FKeyList_U2FKeyList = function (_Component) {
             !!u2fKey.Compromised && U2FKeyList__ref,
             Object(preact_min["h"])(
                 TextButton["a" /* default */],
-                { onClick: function onClick() {
+                {
+                    onClick: function onClick() {
                         return _this2.setState({
                             confirmDeleteModal: u2fKey
                         });
-                    } },
+                    }
+                },
                 'Delete'
             )
         );
@@ -4170,7 +4166,8 @@ var U2FKeyList_U2FKeyList = function (_Component) {
                 Object(preact_min["h"])(
                     'div',
                     null,
-                    'Are you sure you want to delete the key ',
+                    'Are you sure you want to delete the key',
+                    ' ',
                     Object(preact_min["h"])(
                         'span',
                         null,
@@ -4529,11 +4526,7 @@ var SaveRecoveryCodeModal_steps = [].concat(ScopeModal_steps('password'), [{
         var onNextStep = _ref.onNextStep,
             onPreviousStep = _ref.onPreviousStep,
             onReset = _ref.onReset;
-        return Object(preact_min["h"])(presentation, {
-            onSubmit: onNextStep,
-            onCancel: onPreviousStep,
-            onReset: onReset
-        });
+        return Object(preact_min["h"])(presentation, { onSubmit: onNextStep, onCancel: onPreviousStep, onReset: onReset });
     }
 }, {
     title: 'Test your recovery codes',
@@ -4541,10 +4534,7 @@ var SaveRecoveryCodeModal_steps = [].concat(ScopeModal_steps('password'), [{
     component: function component(_ref2) {
         var onNextStep = _ref2.onNextStep,
             onPreviousStep = _ref2.onPreviousStep;
-        return Object(preact_min["h"])(formTestCode, {
-            onSubmit: onNextStep,
-            onCancel: onPreviousStep
-        });
+        return Object(preact_min["h"])(formTestCode, { onSubmit: onNextStep, onCancel: onPreviousStep });
     }
 }]);
 
@@ -4706,7 +4696,8 @@ var formName_FormName = function FormName(_ref) {
             onReset: function onReset(e) {
                 e.preventDefault();
                 onCancel();
-            } },
+            }
+        },
         Object(preact_min["h"])(
             Content,
             null,
@@ -4955,10 +4946,7 @@ var AddU2FModal_steps = [{
     component: function component(_ref2) {
         var onNextStep = _ref2.onNextStep,
             onPreviousStep = _ref2.onPreviousStep;
-        return Object(preact_min["h"])(formName, {
-            onSubmit: onNextStep,
-            onCancel: onPreviousStep
-        });
+        return Object(preact_min["h"])(formName, { onSubmit: onNextStep, onCancel: onPreviousStep });
     }
 }, {
     title: 'Register new U2F Key',
@@ -5005,7 +4993,8 @@ var SetupTOTPModal_presentation__ref2 = Object(preact_min["h"])(
     Object(preact_min["h"])(
         'p',
         null,
-        'This wizard will enable Two Factor Authentication (2FA) on your ProtonMail account. 2FA will make your ProtonMail account more secure so we recommend enabling it. '
+        'This wizard will enable Two Factor Authentication (2FA) on your ProtonMail account. 2FA will make your ProtonMail account more secure so we recommend enabling it.',
+        ' '
     ),
     Object(preact_min["h"])(
         'p',
@@ -5151,8 +5140,7 @@ var sharedSecret_SharedSecret = function (_Component) {
             null,
             Object(preact_min["h"])(
                 TextButton["a" /* default */],
-                {
-                    onClick: function onClick() {
+                { onClick: function onClick() {
                         return _this2.setState({ showingQRCode: !_this2.state.showingQRCode });
                     } },
                 this.state.showingQRCode ? 'Enter key manually instead' : 'Scan QR code'
@@ -5448,10 +5436,7 @@ var SetupTOTPModal_steps = [{
     component: function component(_ref2) {
         var onNextStep = _ref2.onNextStep,
             onPreviousStep = _ref2.onPreviousStep;
-        return Object(preact_min["h"])(sharedSecret, {
-            onSubmit: onNextStep,
-            onCancel: onPreviousStep
-        });
+        return Object(preact_min["h"])(sharedSecret, { onSubmit: onNextStep, onCancel: onPreviousStep });
     }
 }, {
     title: 'Confirm your new method',
@@ -5735,10 +5720,13 @@ var TwoFactor_TwoFactorSettings = function (_Component) {
                 ),
                 Object(preact_min["h"])(
                     'button',
-                    { className: TwoFactor_style_default.a.action, onClick: function onClick() {
+                    {
+                        className: TwoFactor_style_default.a.action,
+                        onClick: function onClick() {
                             return _this7.openModal('AddU2FKey');
                         },
-                        disabled: !Object(dist["isSupported"])() },
+                        disabled: !Object(dist["isSupported"])()
+                    },
                     U2FKeys.length ? 'Add another key' : 'Enable'
                 )
             ),
@@ -5872,7 +5860,9 @@ function settings_renderContent(setting, user) {
                     Object(preact_min["h"])(
                         preact_router_es["Link"],
                         { activeClassName: settings_default.a.selected, href: '/settings' },
-                        ' Home '
+                        ' ',
+                        'Home',
+                        ' '
                     )
                 ),
                 Object(preact_min["h"])(
@@ -5881,7 +5871,9 @@ function settings_renderContent(setting, user) {
                     Object(preact_min["h"])(
                         preact_router_es["Link"],
                         { activeClassName: settings_default.a.selected, href: '/settings/security' },
-                        ' Security '
+                        ' ',
+                        'Security',
+                        ' '
                     )
                 )
             )
@@ -6113,13 +6105,13 @@ function polyfill(Component) {
  * @returns {preact.Component}
  */
 /* harmony default export */ __webpack_exports__["a"] = (function (_ref) {
-  var onClick = _ref.onClick,
-      children = _ref.children;
-  return Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])(
-    "a",
-    { onClick: onClick, className: __WEBPACK_IMPORTED_MODULE_1__style_css___default.a.a, href: "#" },
-    children
-  );
+    var onClick = _ref.onClick,
+        children = _ref.children;
+    return Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])(
+        "a",
+        { onClick: onClick, className: __WEBPACK_IMPORTED_MODULE_1__style_css___default.a.a, href: "#" },
+        children
+    );
 });
 
 /***/ }),
@@ -7073,4 +7065,4 @@ module.exports = CopyToClipboard;
 /***/ })
 
 });
-//# sourceMappingURL=route-settings.chunk.9e353.js.map
+//# sourceMappingURL=route-settings.chunk.942c9.js.map
