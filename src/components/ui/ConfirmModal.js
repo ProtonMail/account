@@ -21,30 +21,31 @@ export default class ConfirmModal extends Component {
         const steps = [
             {
                 title,
-                component: ({ onNextStep, onPreviousStep }) => (<Wrapper
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        onNextStep();
-                    }}
-                    onReset={(e) => {
-                        e.preventDefault();
-                        if (onCancel) {
-                            onPreviousStep();
-                        }
-                        onAfterClose();
-                    }}>
-                    <Content>
-                        {children}
-                    </Content>
-                    <Footer>
-                        <button type="reset" value="Reset">
-                            {cancelText}
-                        </button>
-                        <button type="submit" value="Submit">
-                            {confirmText}
-                        </button>
-                    </Footer>
-                </Wrapper>)
+                component: ({ onNextStep, onPreviousStep }) => (
+                    <Wrapper
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            onNextStep();
+                        }}
+                        onReset={(e) => {
+                            e.preventDefault();
+                            if (onCancel) {
+                                onPreviousStep();
+                            }
+                            onAfterClose();
+                        }}
+                    >
+                        <Content>{children}</Content>
+                        <Footer>
+                            <button type="reset" value="Reset">
+                                {cancelText}
+                            </button>
+                            <button type="submit" value="Submit">
+                                {confirmText}
+                            </button>
+                        </Footer>
+                    </Wrapper>
+                )
             }
         ];
 
@@ -61,11 +62,8 @@ export default class ConfirmModal extends Component {
             }
         };
 
-        return (<SteppedModal
-                isOpen={isOpen}
-                onRequestClose={onAfterClose}
-                steps={steps}
-                beforeDismiss={beforeDismiss}/>
+        return (
+            <SteppedModal isOpen={isOpen} onRequestClose={onAfterClose} steps={steps} beforeDismiss={beforeDismiss} />
         );
     }
 }

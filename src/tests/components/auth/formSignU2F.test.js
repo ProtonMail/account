@@ -24,8 +24,7 @@ describe('testing FormSignU2F component...', () => {
             }
         };
         store.setState({ auth });
-        expect(renderProvided(<ConnectedFormSignU2F/>, store)).toMatchSnapshot();
-
+        expect(renderProvided(<ConnectedFormSignU2F />, store)).toMatchSnapshot();
     });
 
     test('U2F not available on this browser', () => {
@@ -34,8 +33,7 @@ describe('testing FormSignU2F component...', () => {
             twoFactorResponse: {}
         };
         store.setState({ auth });
-        expect(renderProvided(<ConnectedFormSignU2F/>, store)).toMatchSnapshot();
-
+        expect(renderProvided(<ConnectedFormSignU2F />, store)).toMatchSnapshot();
     });
 
     test('correct state', () => {
@@ -43,8 +41,7 @@ describe('testing FormSignU2F component...', () => {
             twoFactorResponse: {}
         };
         store.setState({ auth });
-        expect(renderProvided(<ConnectedFormSignU2F/>, store)).toMatchSnapshot();
-
+        expect(renderProvided(<ConnectedFormSignU2F />, store)).toMatchSnapshot();
     });
 
     test('success state', () => {
@@ -52,8 +49,7 @@ describe('testing FormSignU2F component...', () => {
             twoFactorResponse: { success: true }
         };
         store.setState({ auth });
-        expect(renderProvided(<ConnectedFormSignU2F/>, store)).toMatchSnapshot();
-
+        expect(renderProvided(<ConnectedFormSignU2F />, store)).toMatchSnapshot();
     });
 
     test('retry button', () => {
@@ -70,9 +66,9 @@ describe('testing FormSignU2F component...', () => {
         const loginU2FAction = jest.fn();
         const abortLoginAction = jest.fn();
 
-        const component = shallow(<FormSignU2F auth={auth}
-                                               loginU2FAction={loginU2FAction}
-                                               abortLoginAction={abortLoginAction}/>);
+        const component = shallow(
+            <FormSignU2F auth={auth} loginU2FAction={loginU2FAction} abortLoginAction={abortLoginAction} />
+        );
 
         component.find('[onClick]').simulate('click');
         expect(loginU2FAction).toHaveBeenCalledTimes(2);
@@ -93,10 +89,9 @@ describe('testing FormSignU2F component...', () => {
         const loginU2FAction = jest.fn();
         const abortLoginAction = jest.fn();
 
-        const component = shallow(<FormSignU2F
-            auth={auth}
-            loginU2FAction={loginU2FAction}
-            abortLoginAction={abortLoginAction}/>);
+        const component = shallow(
+            <FormSignU2F auth={auth} loginU2FAction={loginU2FAction} abortLoginAction={abortLoginAction} />
+        );
 
         component.find('[onClick]').simulate('click');
         expect(loginU2FAction).toHaveBeenCalledTimes(0);
@@ -113,14 +108,11 @@ describe('testing FormSignU2F component...', () => {
         const loginU2FAction = jest.fn();
         const abortLoginAction = jest.fn();
 
-        const component = shallow(<FormSignU2F
-            auth={auth}
-            loginU2FAction={loginU2FAction}
-            abortLoginAction={abortLoginAction}/>);
+        const component = shallow(
+            <FormSignU2F auth={auth} loginU2FAction={loginU2FAction} abortLoginAction={abortLoginAction} />
+        );
 
         expect(loginU2FAction).toHaveBeenCalledTimes(1);
         expect(abortLoginAction).toHaveBeenCalledTimes(0);
-
     });
-
 });

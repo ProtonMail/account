@@ -1,11 +1,7 @@
-import {
-    addU2FKey,
-    getAddU2FChallenge
-} from 'frontend-commons/src/settings/security';
+import { addU2FKey, getAddU2FChallenge } from 'frontend-commons/src/settings/security';
 
 import { toState, extended } from '../../helpers/stateFormatter';
 import { registerU2F } from '../../helpers/u2f';
-
 
 /**
  * @link { https://github.com/developit/unistore#usage }
@@ -40,17 +36,13 @@ export default (store) => {
      */
     async function fetchU2FRegisterChallenge() {
         const state = store.getState();
-        const {
-            errorCode,
-            request
-        } = state.settings.addU2FKey;
+        const { errorCode, request } = state.settings.addU2FKey;
 
         if (!(errorCode && request && Object.keys(request).length)) {
             await updateAddU2FKeyState(state, { status: 'fetching' });
 
             await updateAddU2FKeyState(state, { request: await getAddU2FChallenge(true), status: 'pending' });
-        }
-        else {
+        } else {
             // if failure, no need to refetch the challenge
             await updateAddU2FKeyState(state, {
                 status: 'pending'
@@ -83,44 +75,29 @@ export default (store) => {
     async function postResponse() {
         const state = store.getState();
 
-        const {
-            response,
-            u2fResponse
-        } = state.settings.addU2FKey;
+        const { response, u2fResponse } = state.settings.addU2FKey;
 
         const data = {
             ...response,
             ...u2fResponse
         };
 
-        const { data: { TwoFactorRecoveryCodes, UserSettings } } = await addU2FKey(
-            data,
-            state.scope.creds,
-            state.scope.response
-        );
+        const {
+            data: { TwoFactorRecoveryCodes, UserSettings }
+        } = await addU2FKey(data, state.scope.creds, state.scope.response);
 
         const newState = {
-            ...toState(
-                state,
-                'settings',
-                {
-                    addU2FKey: toState(state.settings, 'addU2FKey', { status: 'finished' }).addU2FKey,
-                    reset2FARecoveryCodes: toState(
-                        state.settings,
-                        'reset2FARecoveryCodes',
-                        {
-                            request: { codes: TwoFactorRecoveryCodes }
-                        }
-                    ).reset2FARecoveryCodes
-                }
-            ),
+            ...toState(state, 'settings', {
+                addU2FKey: toState(state.settings, 'addU2FKey', { status: 'finished' }).addU2FKey,
+                reset2FARecoveryCodes: toState(state.settings, 'reset2FARecoveryCodes', {
+                    request: { codes: TwoFactorRecoveryCodes }
+                }).reset2FARecoveryCodes
+            }),
             ...extended(state, 'config.settings.user', { ...UserSettings }),
             ...toState(state, 'scope', { used: true })
         };
 
-        return store.setState(
-            newState
-        );
+        return store.setState(newState);
     }
 
     /**

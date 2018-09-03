@@ -9,11 +9,10 @@ import { ERROR_CODE, getErrorMessage } from '../../helpers/u2f';
  * Form for the login 2FA action.
  */
 export class FormSignU2F extends Component {
-    sendSignRequest () {
+    sendSignRequest() {
         const { success, U2FResponse: { metaData: { code } = {} } = {} } = this.props.auth.twoFactorResponse;
 
         if (!success && code) {
-
             if (code === ERROR_CODE.TIMEOUT) {
                 // we need an updated auth/info
                 // the timeout is 1 minute on the client side, it's better
@@ -26,31 +25,49 @@ export class FormSignU2F extends Component {
         this.props.loginU2FAction();
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.sendSignRequest();
     }
 
-    render () {
+    render() {
         if (!isSupported()) {
-            return <div><p>Your browser is not supported, please use another 2FA method instead</p></div>;
+            return (
+                <div>
+                    <p>Your browser is not supported, please use another 2FA method instead</p>
+                </div>
+            );
         }
 
         const { success, U2FResponse = {} } = this.props.auth.twoFactorResponse;
 
         if (success && !U2FResponse.metaData) {
-            return <div><p>Success</p></div>;
+            return (
+                <div>
+                    <p>Success</p>
+                </div>
+            );
         }
 
         const { metaData: { code } = {} } = U2FResponse;
 
-        return (<div id={this.props.id} className={this.props.className}>
-            <p>Activate your security key...</p>
-            {!success && !!code && <p>
-                <span>{getErrorMessage(code)}. </span>
-                <button onClick={() => this.sendSignRequest()} type='button'>Retry</button>
-            </p>}
-        </div>);
+        return (
+            <div id={this.props.id} className={this.props.className}>
+                <p>Activate your security key...</p>
+                {!success &&
+                    !!code && (
+                        <p>
+                            <span>{getErrorMessage(code)}. </span>
+                            <button onClick={() => this.sendSignRequest()} type="button">
+                                Retry
+                            </button>
+                        </p>
+                    )}
+            </div>
+        );
     }
 }
 
-export default connect('auth', authActions)(FormSignU2F);
+export default connect(
+    'auth',
+    authActions
+)(FormSignU2F);

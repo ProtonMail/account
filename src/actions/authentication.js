@@ -9,7 +9,6 @@ import toActions from '../helpers/toActions';
 import { extended, toState } from '../helpers/stateFormatter';
 import { initialState } from '../helpers/store';
 
-
 /**
  * @link { https://github.com/developit/unistore#usage }
  */
@@ -63,18 +62,19 @@ const actions = (store) => {
             store.setState(extended(state, 'auth.twoFactorResponse', { U2FResponse: {} }));
             const result = await signU2F(state.auth.twoFactorData.U2F);
             return login2FA(state, { U2FResponse: result });
-
         } catch (e) {
             const { metaData: { code } = {} } = e;
             if (!code) {
                 throw e;
             }
-            return store.setState(toState(state, 'auth', {
-                twoFactorResponse: {
-                    success: false,
-                    U2FResponse: e
-                }
-            }));
+            return store.setState(
+                toState(state, 'auth', {
+                    twoFactorResponse: {
+                        success: false,
+                        U2FResponse: e
+                    }
+                })
+            );
         }
     }
 

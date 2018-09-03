@@ -16,53 +16,67 @@ export class SharedSecret extends Component {
     }
 
     renderSwitchModeButton() {
-        return (<p>
-            <TextButton
-                onClick={() => this.setState({ showingQRCode: !this.state.showingQRCode })}>
-                {this.state.showingQRCode ? 'Enter key manually instead' : 'Scan QR code'}
-            </TextButton>
-        </p>);
+        return (
+            <p>
+                <TextButton onClick={() => this.setState({ showingQRCode: !this.state.showingQRCode })}>
+                    {this.state.showingQRCode ? 'Enter key manually instead' : 'Scan QR code'}
+                </TextButton>
+            </p>
+        );
     }
 
     renderQRCode() {
         const { setupTOTP: { request: { qrURI } = {} } = {} } = this.props.settings;
 
-        return (<ModalContent>
-            <p>{this.props.message || 'Scan this QR code with your two factor authentication device to set up your account. '}</p>
-            {this.renderSwitchModeButton()}
-            {qrURI
-                ? <QRCode value={qrURI} renderAs={'svg'} fgColor={'#505061'} size={256}/>
-                : <p>Loading...</p>
-            }
-        </ModalContent>);
-
+        return (
+            <ModalContent>
+                <p>
+                    {this.props.message ||
+                        'Scan this QR code with your two factor authentication device to set up your account. '}
+                </p>
+                {this.renderSwitchModeButton()}
+                {qrURI ? <QRCode value={qrURI} renderAs={'svg'} fgColor={'#505061'} size={256} /> : <p>Loading...</p>}
+            </ModalContent>
+        );
     }
 
     renderRawInformation() {
         const { setupTOTP: { request: { interval, digits, secret } = {} } = {} } = this.props.settings;
 
-        return <ModalContent>
-            <p>{this.props.message || 'Manually enter this information into your two factor authentication device to set up your account. '}</p>
-            {this.renderSwitchModeButton()}
+        return (
+            <ModalContent>
+                <p>
+                    {this.props.message ||
+                        'Manually enter this information into your two factor authentication device to set up your account. '}
+                </p>
+                {this.renderSwitchModeButton()}
 
-            {secret ?
-                (<div className={styles.grid}>
-                    <div className={styles.row}>
-                        <label className={styles.label}>KEY</label>
-                        <span className={styles.value}><pre>{secret}</pre></span>
+                {secret ? (
+                    <div className={styles.grid}>
+                        <div className={styles.row}>
+                            <label className={styles.label}>KEY</label>
+                            <span className={styles.value}>
+                                <pre>{secret}</pre>
+                            </span>
+                        </div>
+                        <div className={styles.row}>
+                            <label className={styles.label}>INTERVAL</label>
+                            <span className={styles.value}>
+                                <pre>{interval} seconds</pre>
+                            </span>
+                        </div>
+                        <div className={styles.row}>
+                            <label className={styles.label}>LENGTH</label>
+                            <span className={styles.value}>
+                                <pre>{digits} digits</pre>
+                            </span>
+                        </div>
                     </div>
-                    <div className={styles.row}>
-                        <label className={styles.label}>INTERVAL</label>
-                        <span className={styles.value}><pre>{interval} seconds</pre></span>
-                    </div>
-                    <div className={styles.row}>
-                        <label className={styles.label}>LENGTH</label>
-                        <span className={styles.value}><pre>{digits} digits</pre></span>
-                    </div>
-                </div>)
-                : <p>Loading...</p>
-            }
-        </ModalContent>;
+                ) : (
+                    <p>Loading...</p>
+                )}
+            </ModalContent>
+        );
     }
 
     render() {
@@ -91,4 +105,7 @@ export class SharedSecret extends Component {
     }
 }
 
-export default connect('settings', settingsActions)(SharedSecret);
+export default connect(
+    'settings',
+    settingsActions
+)(SharedSecret);

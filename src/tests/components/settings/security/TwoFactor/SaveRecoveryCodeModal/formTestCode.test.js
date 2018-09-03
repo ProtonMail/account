@@ -5,9 +5,14 @@ import { FormTestCode } from '../../../../../../components/settings/security/Two
 
 const renderFormTestCode = (props = {}, { code = '', result = undefined } = {}) => {
     const response = code ? { code } : undefined;
-    return <FormTestCode {...props} settings={{
-        reset2FARecoveryCodes: { result, response }
-    }}/>;
+    return (
+        <FormTestCode
+            {...props}
+            settings={{
+                reset2FARecoveryCodes: { result, response }
+            }}
+        />
+    );
 };
 
 describe('test for SaveRecoveryCodeModal SaveCode step', () => {
@@ -29,10 +34,15 @@ describe('test for SaveRecoveryCodeModal SaveCode step', () => {
 
     test('on input test', () => {
         const reset2FARecoveryCodesCheckNewCodeAction = jest.fn();
-        const context = deep(renderFormTestCode({ reset2FARecoveryCodesCheckNewCodeAction }, {
-            result: false,
-            code: '945dc'
-        }));
+        const context = deep(
+            renderFormTestCode(
+                { reset2FARecoveryCodesCheckNewCodeAction },
+                {
+                    result: false,
+                    code: '945dc'
+                }
+            )
+        );
 
         context.find('input').simulate('input', { target: { value: '945dcc' } });
         expect(reset2FARecoveryCodesCheckNewCodeAction).not.toHaveBeenCalled();
@@ -44,10 +54,15 @@ describe('test for SaveRecoveryCodeModal SaveCode step', () => {
     test('submit and cancel', () => {
         const onSubmit = jest.fn();
         const onCancel = jest.fn();
-        const context = deep(renderFormTestCode({ onSubmit, onCancel }, {
-            result: false,
-            code: '945dc'
-        }));
+        const context = deep(
+            renderFormTestCode(
+                { onSubmit, onCancel },
+                {
+                    result: false,
+                    code: '945dc'
+                }
+            )
+        );
 
         const event = { preventDefault: () => undefined };
 

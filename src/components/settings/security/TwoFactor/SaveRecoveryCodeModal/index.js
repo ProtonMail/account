@@ -9,19 +9,14 @@ export const steps = [
     {
         title: 'Save your recovery codes',
         mustSucceed: true,
-        component: ({ onNextStep, onPreviousStep, onReset }) => (<Presentation
-            onSubmit={onNextStep}
-            onCancel={onPreviousStep}
-            onReset={onReset}
-        />)
+        component: ({ onNextStep, onPreviousStep, onReset }) => (
+            <Presentation onSubmit={onNextStep} onCancel={onPreviousStep} onReset={onReset} />
+        )
     },
     {
         title: 'Test your recovery codes',
         mustSucceed: true,
-        component: ({ onNextStep, onPreviousStep }) => (<TestCode
-            onSubmit={onNextStep}
-            onCancel={onPreviousStep}
-        />)
+        component: ({ onNextStep, onPreviousStep }) => <TestCode onSubmit={onNextStep} onCancel={onPreviousStep} />
     }
 ];
 

@@ -10,11 +10,8 @@ export const steps = (scope) => {
         {
             title: 'Confirm your identity',
             component: ({ onNextStep, onPreviousStep, onSkipStep, message }) => (
-                <ScopeFormModal
-                    onSubmit={onNextStep}
-                    onCancel={onPreviousStep}
-                    skip={onSkipStep}
-                    message={message}/>)
+                <ScopeFormModal onSubmit={onNextStep} onCancel={onPreviousStep} skip={onSkipStep} message={message} />
+            )
         }
     ];
 };

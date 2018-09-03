@@ -14,18 +14,22 @@ import styles from './index.css';
  */
 function renderContent(setting, user) {
     if (setting === 'security') {
-        return (<Security user={user}/>);
+        return <Security user={user} />;
     }
-    return (<h1>
-        Paramètres pour <b>{user.Username}</b>
-    </h1>);
+    return (
+        <h1>
+            Paramètres pour <b>{user.Username}</b>
+        </h1>
+    );
 }
 
 export default connect(['auth', 'config'])(({ side, config }) => {
     if (!config) {
         return null;
     }
-    const { settings: { user } } = config;
+    const {
+        settings: { user }
+    } = config;
     console.log('SETTINGS', user);
     if (!Object.keys(user).length) return null;
     return (
@@ -33,10 +37,16 @@ export default connect(['auth', 'config'])(({ side, config }) => {
             <div className={styles.nav}>
                 <ul>
                     <li>
-                        <Link activeClassName={styles.selected} href="/settings"> Home </Link>
+                        <Link activeClassName={styles.selected} href="/settings">
+                            {' '}
+                            Home{' '}
+                        </Link>
                     </li>
                     <li>
-                        <Link activeClassName={styles.selected} href="/settings/security"> Security </Link>
+                        <Link activeClassName={styles.selected} href="/settings/security">
+                            {' '}
+                            Security{' '}
+                        </Link>
                     </li>
                 </ul>
             </div>

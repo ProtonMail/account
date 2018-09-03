@@ -4,9 +4,7 @@ import { enableTOTP as enableTOTPApi } from 'frontend-commons/src/settings/secur
 
 import { extended, toState } from '../../helpers/stateFormatter';
 
-
 export default (store) => {
-
     /**
      * Creates a shared secret for TOTP.
      * @param {Object} state
@@ -26,15 +24,17 @@ export default (store) => {
         const digits = 6;
         const qrURI = `otpauth://totp/${identifier}?secret=${sharedSecret}&issuer=ProtonMail&algorithm=SHA1&digits=${digits}&period=${interval}`;
 
-        store.setState(extended(state, 'settings.setupTOTP', {
-            request: {
-                qrURI,
-                interval,
-                digits,
-                secret: sharedSecret
-            },
-            status: 'init'
-        }));
+        store.setState(
+            extended(state, 'settings.setupTOTP', {
+                request: {
+                    qrURI,
+                    interval,
+                    digits,
+                    secret: sharedSecret
+                },
+                status: 'init'
+            })
+        );
     }
 
     /**
@@ -44,14 +44,20 @@ export default (store) => {
      * @return {Promise<boolean>} if the verification is valid
      */
     async function verifyParamsBeforeEnabling(state, code) {
-        if (!state.settings.setupTOTP || !state.settings.setupTOTP.request || !state.settings.setupTOTP.request.secret) {
+        if (
+            !state.settings.setupTOTP ||
+            !state.settings.setupTOTP.request ||
+            !state.settings.setupTOTP.request.secret
+        ) {
             throw new Error('Please create a secret before enabling TOTP'); // this happens when enableTOTP is called before createSharedSecret
         }
         if (!code || code.length !== 6) {
-            store.setState(extended(state, 'settings.setupTOTP', {
-                status: 'failure',
-                error: 'The code is not valid'
-            }));
+            store.setState(
+                extended(state, 'settings.setupTOTP', {
+                    status: 'failure',
+                    error: 'The code is not valid'
+                })
+            );
             return false;
         }
         return true;
@@ -64,7 +70,7 @@ export default (store) => {
      * @return {Promise<void>}
      */
     async function enableTOTP(state, code) {
-        if (!await verifyParamsBeforeEnabling(state, code)) {
+        if (!(await verifyParamsBeforeEnabling(state, code))) {
             return;
         }
         const data = {
@@ -74,7 +80,9 @@ export default (store) => {
 
         store.setState(extended(state, 'settings.setupTOTP', { status: 'fetching' }));
         try {
-            const { data: { TwoFactorRecoveryCodes, UserSettings } } = await enableTOTPApi(data, state.scope.creds, state.scope.response);
+            const {
+                data: { TwoFactorRecoveryCodes, UserSettings }
+            } = await enableTOTPApi(data, state.scope.creds, state.scope.response);
 
             const newState = {
                 settings: {
@@ -96,11 +104,12 @@ export default (store) => {
             };
             store.setState(newState);
         } catch (e) {
-            return store.setState(extended(state, 'settings.setupTOTP', {
-                status: 'failure',
-                error: e
-            }));
-
+            return store.setState(
+                extended(state, 'settings.setupTOTP', {
+                    status: 'failure',
+                    error: e
+                })
+            );
         }
     }
 
@@ -108,4 +117,4 @@ export default (store) => {
         createSharedSecret,
         enableTOTP
     };
-}
+};

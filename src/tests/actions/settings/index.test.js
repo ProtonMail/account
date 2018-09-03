@@ -2,7 +2,7 @@ import {
     disableTOTP as disableTOTPApi,
     disableTwoFactor as disableTwoFactorApi,
     removeU2FKey,
-    resetRecoveryCodes,
+    resetRecoveryCodes
 } from 'frontend-commons/src/settings/security';
 
 import store, { initialState } from '../../../helpers/store';
@@ -21,13 +21,10 @@ const scope = {
     }
 };
 
-
 const testSimpleMethodThatUpdateUserSettings = (
     action,
-    apiAction, {
-        actionParams = [],
-        apiActionParams = []
-    } = {}
+    apiAction,
+    { actionParams = [], apiActionParams = [] } = {}
 ) => {
     afterAll(() => apiAction.mockRestore());
     beforeEach(() => apiAction.mockClear());
@@ -42,10 +39,13 @@ const testSimpleMethodThatUpdateUserSettings = (
             }
         }));
 
-        await action({
-            ...store.getState(),
-            scope
-        }, ...actionParams);
+        await action(
+            {
+                ...store.getState(),
+                scope
+            },
+            ...actionParams
+        );
 
         expect(apiAction).toHaveBeenCalledTimes(1);
         expect(apiAction).toHaveBeenCalledWith(...apiActionParams, scope.creds, scope.response);
@@ -63,10 +63,13 @@ const testSimpleMethodThatUpdateUserSettings = (
         });
 
         expect(apiAction);
-        await action({
-            ...store.getState(),
-            scope
-        }, ...actionParams);
+        await action(
+            {
+                ...store.getState(),
+                scope
+            },
+            ...actionParams
+        );
 
         expect(apiAction).toHaveBeenCalledTimes(1);
         expect(apiAction).toHaveBeenCalledWith(...apiActionParams, scope.creds, scope.response);
@@ -81,7 +84,6 @@ describe('settings actions', () => {
         success.mockImplementation(() => ({}));
         error.mockImplementation(() => ({}));
     });
-
 
     afterAll(() => {
         success.mockRestore();
@@ -135,7 +137,6 @@ describe('settings actions', () => {
             expect(store.getState()).toBe(stateAtBegin); // SAME object, setStore should not have been called
         });
 
-
         test('mix', async () => {
             await actions.resetStoreAction(store.getState(), ['f', 'a', 'b', 'g', 'd', 'e']);
             expect(store.getState().settings).toEqual({
@@ -149,13 +150,21 @@ describe('settings actions', () => {
 
     describe('test reset 2FA Recovery Codes', () => {
         const codes = [
-            '6e99339c', '90818e6c', '1c27d9ae', '01bc0b5f',
-            '7bbdc69f', '5f838025', '645bf6fe', '7d8e8b8d',
-            '069ff8c7', '08966014', '63d97753', '4945b3ac'
+            '6e99339c',
+            '90818e6c',
+            '1c27d9ae',
+            '01bc0b5f',
+            '7bbdc69f',
+            '5f838025',
+            '645bf6fe',
+            '7d8e8b8d',
+            '069ff8c7',
+            '08966014',
+            '63d97753',
+            '4945b3ac'
         ];
 
         describe('reset2FARecoveryCodesInit', () => {
-
             beforeAll(() => {
                 resetRecoveryCodes.mockImplementation(() => ({
                     data: {
@@ -240,10 +249,13 @@ describe('settings actions', () => {
             });
 
             test('without codes provided', async () => {
-                await actions.reset2FARecoveryCodesCheckNewCodeAction({
-                    ...store.getState(),
-                    settings: { reset2FARecoveryCodes: {} }
-                }, codes[0]);
+                await actions.reset2FARecoveryCodesCheckNewCodeAction(
+                    {
+                        ...store.getState(),
+                        settings: { reset2FARecoveryCodes: {} }
+                    },
+                    codes[0]
+                );
                 expect(store.getState().settings.reset2FARecoveryCodes).toMatchObject({
                     result: false,
                     response: {
@@ -255,30 +267,22 @@ describe('settings actions', () => {
 
         describe('delete U2F Key', () => {
             const keyHandle = 'Some key handle';
-            testSimpleMethodThatUpdateUserSettings(
-                actions.deleteU2FKeyAction,
-                removeU2FKey,
-                {
-                    actionParams: [{
+            testSimpleMethodThatUpdateUserSettings(actions.deleteU2FKeyAction, removeU2FKey, {
+                actionParams: [
+                    {
                         KeyHandle: keyHandle
-                    }],
-                    apiActionParams: [keyHandle]
-                }
-            );
+                    }
+                ],
+                apiActionParams: [keyHandle]
+            });
         });
 
         describe('disable TOTP', () => {
-            testSimpleMethodThatUpdateUserSettings(
-                actions.disableTOTPAction,
-                disableTOTPApi
-            );
+            testSimpleMethodThatUpdateUserSettings(actions.disableTOTPAction, disableTOTPApi);
         });
 
         describe('disable 2FA', () => {
-            testSimpleMethodThatUpdateUserSettings(
-                actions.disableTwoFactorAction,
-                disableTwoFactorApi
-            );
+            testSimpleMethodThatUpdateUserSettings(actions.disableTwoFactorAction, disableTwoFactorApi);
         });
     });
 });

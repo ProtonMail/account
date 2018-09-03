@@ -20,14 +20,12 @@ export default connect(
     'auth',
     authActions
 )(({ auth, loadAuthUserAction, logoutAction }) => {
-
     /**
      * Check if the user is authenticated or not.
      * Redirect to the login if he is not or load the config
      * @link  {https://github.com/developit/preact-router#detecting-route-changes}
      */
     const onChangeRoute = async ({ previous, url }) => {
-
         if (!isAuthenticated()) {
             return route('/');
         }
@@ -38,13 +36,13 @@ export default connect(
     };
     return (
         <div id="app">
-            <Header isLoggedIn={auth.isLoggedIn} logout={logoutAction}/>
+            <Header isLoggedIn={auth.isLoggedIn} logout={logoutAction} />
             <Router onChange={onChangeRoute}>
-                <Home path="/"/>
-                <Dashboard path="/dashboard" config={auth.config} user={auth.user}/>
-                <Settings path="/settings/:side?" config={auth.config} user={auth.user}/>
+                <Home path="/" />
+                <Dashboard path="/dashboard" config={auth.config} user={auth.user} />
+                <Settings path="/settings/:side?" config={auth.config} user={auth.user} />
             </Router>
-            <NotificationStack/>
+            <NotificationStack />
         </div>
     );
 });

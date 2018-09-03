@@ -24,7 +24,6 @@ export const initialState = {
 };
 const store = process.env.NODE_ENV === 'production' ? createStore(initialState) : devtools(createStore(initialState));
 
-
 export const actions = (store) => ({
     ...authActions(store),
     ...settingsActions(store),

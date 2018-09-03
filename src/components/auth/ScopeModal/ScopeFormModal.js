@@ -12,7 +12,6 @@ import style from './index.css';
  * Modal Form to asks credentials information (password and 2FA).
  */
 export class ScopeFormModal extends Component {
-
     componentWillMount() {
         if (this.props.scope.used) {
             this.props.skip();
@@ -53,77 +52,78 @@ export class ScopeFormModal extends Component {
         }
         if (!info.TwoFactor) {
             // returning empty div, to keep the place
-            return <div className={style.scopeFormModal}/>;
+            return <div className={style.scopeFormModal} />;
         }
 
-        const {
-            creds: { U2F } = {},
-            U2FRequest: { status, error } = {}
-        } = this.props.scope;
+        const { creds: { U2F } = {}, U2FRequest: { status, error } = {} } = this.props.scope;
 
         if (U2F) {
-            return (<div className={style.scopeFormModal}>
-                <span>Your security key was used. </span>
-                <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
-                    Undo
-                </TextButton>
-            </div>);
+            return (
+                <div className={style.scopeFormModal}>
+                    <span>Your security key was used. </span>
+                    <TextButton onClick={this.props.unscopeResetTwoFactorAction}>Undo</TextButton>
+                </div>
+            );
         }
 
         if (status === 'pending') {
-            return (<div className={style.scopeFormModal}>
-                <p>
-                    <span>Please activate your security key... </span>
-                    <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
-                        Cancel
-                    </TextButton></p>
-            </div>);
+            return (
+                <div className={style.scopeFormModal}>
+                    <p>
+                        <span>Please activate your security key... </span>
+                        <TextButton onClick={this.props.unscopeResetTwoFactorAction}>Cancel</TextButton>
+                    </p>
+                </div>
+            );
         }
 
         if (status === 'failure') {
-            const errorMessage = error.metaData && error.metaData.code
-                ? getErrorMessage(error.metaData.code)
-                : error.message + '.';
-            return (<div className={style.scopeFormModal}><p>
-                <span>{errorMessage} You can </span>
-                <TextButton onClick={this.props.unscopeU2FAction}>
-                    Try again
-                </TextButton>
-                <span> or </span>
-                <TextButton onClick={this.props.unscopeResetTwoFactorAction}>
-                    Use a code
-                </TextButton>
-                <span>.</span>
-            </p>
-            </div>);
+            const errorMessage =
+                error.metaData && error.metaData.code ? getErrorMessage(error.metaData.code) : error.message + '.';
+            return (
+                <div className={style.scopeFormModal}>
+                    <p>
+                        <span>{errorMessage} You can </span>
+                        <TextButton onClick={this.props.unscopeU2FAction}>Try again</TextButton>
+                        <span> or </span>
+                        <TextButton onClick={this.props.unscopeResetTwoFactorAction}>Use a code</TextButton>
+                        <span>.</span>
+                    </p>
+                </div>
+            );
         }
 
-        const components = [<div className={[style.scopeFormModal, 'form-row'].join(' ')}>
-            <label htmlFor="twoFactorCode" className={style.label}>2FA code</label>
-            <div>
-                <input
-                    className={style.input}
-                    type="text"
-                    name="twoFactorCode"
-                    id="twoFactorCode"
-                    autoCapitalize="off"
-                    autoCorrect="off"
-                    autoComplete="off"
-                    minLength="6"
-                    maxLength="8"
-                    required
-                    value={this.state.data.twoFactorCode}
-                    onInput={(e) => this.onFieldUpdated(e)}/>
+        const components = [
+            <div className={[style.scopeFormModal, 'form-row'].join(' ')}>
+                <label htmlFor="twoFactorCode" className={style.label}>
+                    2FA code
+                </label>
+                <div>
+                    <input
+                        className={style.input}
+                        type="text"
+                        name="twoFactorCode"
+                        id="twoFactorCode"
+                        autoCapitalize="off"
+                        autoCorrect="off"
+                        autoComplete="off"
+                        minLength="6"
+                        maxLength="8"
+                        required
+                        value={this.state.data.twoFactorCode}
+                        onInput={(e) => this.onFieldUpdated(e)}
+                    />
+                </div>
             </div>
-        </div>];
+        ];
         if (info['2FA'].U2F) {
-            components.push((<div className={style.scopeFormModal}>
-                <p>
-                    <TextButton onClick={() => this.props.unscopeU2FAction()}>
-                        Or use your security key
-                    </TextButton>
-                </p>
-            </div>));
+            components.push(
+                <div className={style.scopeFormModal}>
+                    <p>
+                        <TextButton onClick={() => this.props.unscopeU2FAction()}>Or use your security key</TextButton>
+                    </p>
+                </div>
+            );
         }
         return components;
     }
@@ -143,11 +143,11 @@ export class ScopeFormModal extends Component {
                 }}
             >
                 <ModalContent>
-                    {!!this.props.message && (
-                        <div>{this.props.message}</div>
-                    )}
+                    {!!this.props.message && <div>{this.props.message}</div>}
                     <div className={[style.scopeFormModal, 'form-row'].join(' ')}>
-                        <label htmlFor="password" className={style.label}>password</label>
+                        <label htmlFor="password" className={style.label}>
+                            password
+                        </label>
                         <div>
                             <input
                                 className={style.input}
@@ -177,4 +177,7 @@ export class ScopeFormModal extends Component {
     }
 }
 
-export default connect(['scope', 'auth'], scopeActions)(ScopeFormModal);
+export default connect(
+    ['scope', 'auth'],
+    scopeActions
+)(ScopeFormModal);

@@ -10,19 +10,21 @@ import Link from '../../../../ui/Link';
  */
 export default ({ onSubmit, onCancel, message }) => (
     <ModalWrapper
-        onSubmit={( e ) => {
+        onSubmit={(e) => {
             e.preventDefault();
             onSubmit();
         }}
-        onReset={( e ) => {
+        onReset={(e) => {
             e.preventDefault();
             onCancel();
         }}
     >
-        {message ? (<ModalContent>
+        {message ? (
+            <ModalContent>
                 <div>{message}</div>
-            </ModalContent>) :
-            (<ModalContent>
+            </ModalContent>
+        ) : (
+            <ModalContent>
                 <p>This wizard will add a new security key to your Proton Account. </p>
                 <p>
                     Please note that you will not be able to access your account if you loose your U2F device and your
@@ -36,7 +38,8 @@ export default ({ onSubmit, onCancel, message }) => (
                 <div>
                     <Link href="https://protonmail.com/blog/">READ U2F GUIDE </Link>
                 </div>
-            </ModalContent>)}
+            </ModalContent>
+        )}
         <ModalFooter>
             <button type="reset" value="Reset">
                 Back

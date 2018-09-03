@@ -19,7 +19,8 @@ const ERROR_MAP = {
     [ERROR_CODE.CONFIGURATION_UNSUPPORTED]: () => 'This security key is not supported.',
     [ERROR_CODE.DEVICE_INELIGIBLE]: (register) =>
         register ? 'This security key is already registered for your account!' : 'This security key is not recognized.',
-    [ERROR_CODE.TIMEOUT]: () => 'Looks like you are taking too long to respond, please try again with a bit of motivation.'
+    [ERROR_CODE.TIMEOUT]: () =>
+        'Looks like you are taking too long to respond, please try again with a bit of motivation.'
 };
 
 /**
@@ -50,9 +51,7 @@ export async function signU2F({ RegisteredKeys: registeredKeys, Challenge: chall
  * @param {String[]} U2FRequest.Versions - the different versions accepted by the server
  * @return {Promise<RegisterResponse>}
  */
-export async function registerU2F(
-    { RegisteredKeys: registeredKeys, Challenge: challenge, Versions: versions }
-) {
+export async function registerU2F({ RegisteredKeys: registeredKeys, Challenge: challenge, Versions: versions }) {
     const { appId, timeout } = appProvider.getConfig('u2f');
     const signRequest = registeredKeys.map(({ Version: version, KeyHandle: keyHandle }) => ({
         version,
@@ -66,7 +65,6 @@ export async function registerU2F(
     }));
 
     return await register(registerRequests, signRequest, timeout);
-
 }
 
 /**

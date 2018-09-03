@@ -9,14 +9,12 @@ import { getErrorMessage } from '../../../../../helpers/u2f';
 import styles from './index.css';
 import image from './sign-u2f.png';
 
-
 /**
  * Modal Form to register a new U2F Key.
  *
  * Fetches the challenge from the server, forward it to U2F API, and sends back the answer to the API.
  */
 export class FormRegisterKey extends Component {
-
     /**
      * when next button is pressed.
      * @param {Event} e
@@ -32,11 +30,15 @@ export class FormRegisterKey extends Component {
 
     componentWillReceiveProps(newProps) {
         const {
-            settings: { addU2FKey: { status: newStatus } }
+            settings: {
+                addU2FKey: { status: newStatus }
+            }
         } = newProps;
 
         const {
-            settings: { addU2FKey: { status } }
+            settings: {
+                addU2FKey: { status }
+            }
         } = this.props;
 
         if (newStatus !== status && newStatus === 'finished') {
@@ -50,39 +52,47 @@ export class FormRegisterKey extends Component {
      */
     renderStatus() {
         const {
-            settings: { addU2FKey: { response: { name } = {}, status, request, error } }
+            settings: {
+                addU2FKey: { response: { name } = {}, status, request, error }
+            }
         } = this.props;
 
         if (status !== 'failure') {
-            return (<div className={styles.status}>
-                <div className={styles.row}>
-                    <span className={styles.text}>Activate your key</span>
-                    <span className={styles.text}>
-                            {status || 'fetching'}...
+            return (
+                <div className={styles.status}>
+                    <div className={styles.row}>
+                        <span className={styles.text}>Activate your key</span>
+                        <span className={styles.text}>
+                            {status || 'fetching'}
+                            ...
                         </span>
-                </div>
+                    </div>
 
-                <div className={styles.row}>
-                    <span className={styles.text}>Name</span>
-                    <span className={[styles.text, styles.nameLabel].join(' ')}>{name}</span>
+                    <div className={styles.row}>
+                        <span className={styles.text}>Name</span>
+                        <span className={[styles.text, styles.nameLabel].join(' ')}>{name}</span>
+                    </div>
                 </div>
-            </div>);
-
+            );
         }
         const { metaData: { code } = {} } = error;
         if (code) {
-            return (<div className={styles.status}>
-                <span>{getErrorMessage(code, true)}</span>
-                <TextButton onClick={() => this.props.addU2FKeyRegisterAction()}>Retry</TextButton>
-            </div>);
+            return (
+                <div className={styles.status}>
+                    <span>{getErrorMessage(code, true)}</span>
+                    <TextButton onClick={() => this.props.addU2FKeyRegisterAction()}>Retry</TextButton>
+                </div>
+            );
         }
 
         this.props.onReset(error.message);
     }
 
-    render () {
+    render() {
         const {
-            settings: { addU2FKey: { status } }
+            settings: {
+                addU2FKey: { status }
+            }
         } = this.props;
 
         return (
@@ -94,15 +104,15 @@ export class FormRegisterKey extends Component {
                 }}
             >
                 <ModalContent className={styles.container}>
-                    <img src={image}/>
+                    <img src={image} />
 
                     {this.renderStatus()}
                 </ModalContent>
                 <ModalFooter>
-                    <button type="reset" value="Reset" disabled={(status === 'finished')}>
+                    <button type="reset" value="Reset" disabled={status === 'finished'}>
                         Back
                     </button>
-                    <button type="submit" value="Submit" disabled={(status !== 'finished')}>
+                    <button type="submit" value="Submit" disabled={status !== 'finished'}>
                         Next
                     </button>
                 </ModalFooter>
@@ -111,5 +121,7 @@ export class FormRegisterKey extends Component {
     }
 }
 
-
-export default connect(['scope', 'settings'], settingsActions)(FormRegisterKey);
+export default connect(
+    ['scope', 'settings'],
+    settingsActions
+)(FormRegisterKey);

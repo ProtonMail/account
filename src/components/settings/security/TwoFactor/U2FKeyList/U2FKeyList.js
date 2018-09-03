@@ -24,13 +24,16 @@ export class U2FKeyList extends Component {
 
         return (
             <li key={u2fKey.KeyHandle} className={style.listElement}>
-                <div className={headerClasses.join(' ')}>
-                    {u2fKey.Label}
-                </div>
-                {!!u2fKey.Compromised && <div class='badge badge-danger'>Compromised</div>}
-                <TextButton onClick={() => this.setState({
-                    confirmDeleteModal: u2fKey
-                })}>Delete
+                <div className={headerClasses.join(' ')}>{u2fKey.Label}</div>
+                {!!u2fKey.Compromised && <div class="badge badge-danger">Compromised</div>}
+                <TextButton
+                    onClick={() =>
+                        this.setState({
+                            confirmDeleteModal: u2fKey
+                        })
+                    }
+                >
+                    Delete
                 </TextButton>
             </li>
         );
@@ -40,7 +43,7 @@ export class U2FKeyList extends Component {
         const confirmDeleteModal = this.state.confirmDeleteModal;
 
         const closeModal = () => {
-            this.setState({ confirmDeleteModal: ''});
+            this.setState({ confirmDeleteModal: '' });
         };
         return (
             <ul className={style.list}>
@@ -50,12 +53,11 @@ export class U2FKeyList extends Component {
                     isOpen={!!confirmDeleteModal}
                     onAfterClose={closeModal}
                     onConfirm={() => this.props.deleteU2FKeyAction(confirmDeleteModal)}
-                    onCancel={() => {
-                    }}
+                    onCancel={() => {}}
                 >
                     <div>
-                        Are you sure you want to delete the
-                        key <span>{confirmDeleteModal ? confirmDeleteModal.Label : ''}</span>?
+                        Are you sure you want to delete the key{' '}
+                        <span>{confirmDeleteModal ? confirmDeleteModal.Label : ''}</span>?
                     </div>
                 </ConfirmModal>
                 {this.props.U2FKeys.map((u2fKey) => this.renderU2FKey(u2fKey))}
@@ -64,4 +66,7 @@ export class U2FKeyList extends Component {
     }
 }
 
-export default connect('settings', settingsActions)(U2FKeyList);
+export default connect(
+    'settings',
+    settingsActions
+)(U2FKeyList);

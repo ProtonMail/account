@@ -1,4 +1,4 @@
-import appDispatcher from 'frontend-commons/src/utils/appDispatcher'
+import appDispatcher from 'frontend-commons/src/utils/appDispatcher';
 
 const dispatcher = appDispatcher('notification');
 

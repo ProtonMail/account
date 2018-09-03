@@ -5,11 +5,11 @@ import { renderProvided } from '../../../../testsHelpers/storeTools';
 
 describe('TwoFactorSettings', () => {
     test('2FA disabled', () => {
-        expect(renderProvided(<TwoFactorSettings TwoFactor={0} TOTP={0}/>)).toMatchSnapshot();
+        expect(renderProvided(<TwoFactorSettings TwoFactor={0} TOTP={0} />)).toMatchSnapshot();
     });
 
     test('TOTP only enable', () => {
-        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={1} U2FKeys={[]}/>)).toMatchSnapshot();
+        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={1} U2FKeys={[]} />)).toMatchSnapshot();
     });
 
     test('U2F only enable', () => {
@@ -20,7 +20,7 @@ describe('TwoFactorSettings', () => {
             { KeyHandle: '4', Compromised: false, Label: 'Last key' }
         ];
 
-        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={0} U2FKeys={keys}/>)).toMatchSnapshot();
+        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={0} U2FKeys={keys} />)).toMatchSnapshot();
     });
 
     test('Everything enable', () => {
@@ -31,7 +31,7 @@ describe('TwoFactorSettings', () => {
             { KeyHandle: '4', Compromised: false, Label: 'Last key' }
         ];
 
-        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={1} U2FKeys={keys}/>)).toMatchSnapshot();
+        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={1} U2FKeys={keys} />)).toMatchSnapshot();
     });
 
     test('U2F not supported', () => {
@@ -42,6 +42,6 @@ describe('TwoFactorSettings', () => {
 
         isSupported.mockReturnValueOnce(false);
 
-        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={1} U2FKeys={keys}/>)).toMatchSnapshot();
+        expect(renderProvided(<TwoFactorSettings TwoFactor={1} TOTP={1} U2FKeys={keys} />)).toMatchSnapshot();
     });
 });

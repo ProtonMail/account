@@ -14,7 +14,6 @@ describe('test for enableTOTP action', () => {
     });
     const actions = enableTOTPAction(store);
 
-
     describe('createSharedSecret', () => {
         beforeAll(() => {
             webcrypto.getRandomValues.mockImplementation((array) => {
@@ -48,10 +47,14 @@ describe('test for enableTOTP action', () => {
             };
 
             await actions.createSharedSecret({ ...store.getState(), auth });
-            const { request: { qrURI, interval, digits, secret }, status } = store.getState().settings.setupTOTP;
-            expect(qrURI).toMatch(`otpauth://totp/${
-            auth.user.Name + '@protonmail'
-                }?secret=${secret}&issuer=ProtonMail&algorithm=SHA1&digits=${digits}&period=${interval}`);
+            const {
+                request: { qrURI, interval, digits, secret },
+                status
+            } = store.getState().settings.setupTOTP;
+            expect(qrURI).toMatch(
+                `otpauth://totp/${auth.user.Name +
+                    '@protonmail'}?secret=${secret}&issuer=ProtonMail&algorithm=SHA1&digits=${digits}&period=${interval}`
+            );
             expect(status).toMatch('init');
         });
 
@@ -76,55 +79,77 @@ describe('test for enableTOTP action', () => {
                 auth: { ...primaryAddressUserAuth }
             });
 
-            const { request: { qrURI, interval, digits, secret }, status } = store.getState().settings.setupTOTP;
-            expect(qrURI).toMatch(`otpauth://totp/${
-                primaryAddressUserAuth.user.Addresses[0].Email
-                }?secret=${secret}&issuer=ProtonMail&algorithm=SHA1&digits=${digits}&period=${interval}`);
+            const {
+                request: { qrURI, interval, digits, secret },
+                status
+            } = store.getState().settings.setupTOTP;
+            expect(qrURI).toMatch(
+                `otpauth://totp/${
+                    primaryAddressUserAuth.user.Addresses[0].Email
+                }?secret=${secret}&issuer=ProtonMail&algorithm=SHA1&digits=${digits}&period=${interval}`
+            );
             expect(status).toMatch('init');
         });
     });
 
     describe('enableTOTP', () => {
-
         afterAll(() => enableTOTPApi.mockRestore());
         beforeEach(() => enableTOTPApi.mockClear());
 
         describe('state is not initialized', () => {
             test('no setupTOTP', () => {
-                return expect(actions.enableTOTP({
-                    settings: {}
-                }, '123456')).rejects.toThrow();
+                return expect(
+                    actions.enableTOTP(
+                        {
+                            settings: {}
+                        },
+                        '123456'
+                    )
+                ).rejects.toThrow();
             });
 
             test('no setupTOTP.request', () => {
-                return expect(actions.enableTOTP({
-                    settings: {
-                        setupTOTP: {}
-                    }
-                }, '123456')).rejects.toThrow();
+                return expect(
+                    actions.enableTOTP(
+                        {
+                            settings: {
+                                setupTOTP: {}
+                            }
+                        },
+                        '123456'
+                    )
+                ).rejects.toThrow();
             });
 
             test('no setupTOTP.request.secret', () => {
-                return expect(actions.enableTOTP({
-                    settings: {
-                        setupTOTP: {
-                            request: {}
-                        }
-                    }
-                }, '123456')).rejects.toThrow();
+                return expect(
+                    actions.enableTOTP(
+                        {
+                            settings: {
+                                setupTOTP: {
+                                    request: {}
+                                }
+                            }
+                        },
+                        '123456'
+                    )
+                ).rejects.toThrow();
             });
 
             test('code incorrect', async () => {
                 for (const code of ['', '123', '13246578']) {
-                    await actions.enableTOTP({
-                        settings: {
-                            setupTOTP: {
-                                request: {
-                                    secret: 's3cr3t'
+                    await actions.enableTOTP(
+                        {
+                            settings: {
+                                setupTOTP: {
+                                    request: {
+                                        secret: 's3cr3t'
+                                    }
                                 }
                             }
-                        }
-                    }, code);
+                        },
+                        code
+                    );
                     expect(store.getState().settings.setupTOTP).toMatchObject({
                         status: 'failure',
                         error: 'The code is not valid'
@@ -164,34 +189,36 @@ describe('test for enableTOTP action', () => {
             enableTOTPApi.mockImplementation(() => ({
                 data
             }));
-            waitForNewState(done,
+            waitForNewState(
+                done,
                 ({ settings: { setupTOTP } }) => {
                     return expect(setupTOTP.status).toBe('fetching');
                 },
-                (state) => expect(state).toMatchObject({
-                    settings: {
-                        reset2FARecoveryCodes: {
-                            request: {
-                                codes: data.TwoFactorRecoveryCodes
+                (state) =>
+                    expect(state).toMatchObject({
+                        settings: {
+                            reset2FARecoveryCodes: {
+                                request: {
+                                    codes: data.TwoFactorRecoveryCodes
+                                }
+                            },
+                            setupTOTP: {
+                                status: 'success',
+                                request: {
+                                    ...state.settings.setupTOTP.request,
+                                    TOTPConfirmation: code
+                                }
                             }
                         },
-                        setupTOTP: {
-                            status: 'success',
-                            request: {
-                                ...state.settings.setupTOTP.request,
-                                TOTPConfirmation: code
+                        config: {
+                            settings: {
+                                user: data.UserSettings
                             }
+                        },
+                        scope: {
+                            used: true
                         }
-                    },
-                    config: {
-                        settings: {
-                            user: data.UserSettings
-                        }
-                    },
-                    scope: {
-                        used: true
-                    }
-                })
+                    })
             );
             await actions.enableTOTP(state, code);
         });
@@ -209,7 +236,8 @@ describe('test for enableTOTP action', () => {
             enableTOTPApi.mockImplementation(() => {
                 throw new Error(errorMessage);
             });
-            waitForNewState(done,
+            waitForNewState(
+                done,
                 ({ settings: { setupTOTP } }) => {
                     return expect(setupTOTP.status).toBe('fetching');
                 },

@@ -1,7 +1,4 @@
-import {
-    addU2FKey,
-    getAddU2FChallenge
-} from 'frontend-commons/src/settings/security';
+import { addU2FKey, getAddU2FChallenge } from 'frontend-commons/src/settings/security';
 
 import addU2FKeyAction from '../../../actions/settings/addU2FKey';
 import store, { initialState } from '../../../helpers/store';
@@ -17,7 +14,8 @@ const begin = new Promise((resolve) => {
             response: {
                 label: 'name of the new key'
             }
-        }, steps: []
+        },
+        steps: []
     });
 });
 
@@ -34,7 +32,6 @@ const end = (store, actions, done) => {
         return actions.addU2FKeyRegister(store.getState());
     };
 };
-
 
 const normalFetchingPromise = (addU2FKeyState = {}) => ({ state, steps }) => {
     const request = {
@@ -64,11 +61,9 @@ const normalFetchingPromise = (addU2FKeyState = {}) => ({ state, steps }) => {
     };
 };
 
-
 const normalCallU2FRegisterAPIPromise = ({ state, steps }) => {
     const U2FResponse = {
         KeyHandle: 'some KeyHandle'
-
     };
     registerU2F.mockImplementation(() => U2FResponse);
     return {
@@ -113,7 +108,11 @@ const normalPostResponsePromise = ({ state, steps }) => {
             ...steps,
             (state) => {
                 expect(addU2FKey).toHaveBeenCalledTimes(1);
-                expect(addU2FKey).toHaveBeenCalledWith(expect.objectContaining(state.settings.addU2FKey.u2fResponse), scope.creds, scope.response);
+                expect(addU2FKey).toHaveBeenCalledWith(
+                    expect.objectContaining(state.settings.addU2FKey.u2fResponse),
+                    scope.creds,
+                    scope.response
+                );
                 expect(state).toMatchObject({
                     settings: {
                         addU2FKey: {
@@ -139,7 +138,6 @@ const normalPostResponsePromise = ({ state, steps }) => {
     };
 };
 
-
 describe('test for addU2FKey action', () => {
     beforeEach(() => {
         store.setState(initialState, true);
@@ -154,16 +152,19 @@ describe('test for addU2FKey action', () => {
         });
         test('erases the previous state', async () => {
             const label = '!Labello';
-            await actions.addU2FKeyLabel({
-                ...store.getState(),
-                settings: {
-                    addU2FKey: {
-                        response: {
-                            truc: 'mush'
+            await actions.addU2FKeyLabel(
+                {
+                    ...store.getState(),
+                    settings: {
+                        addU2FKey: {
+                            response: {
+                                truc: 'mush'
+                            }
                         }
                     }
-                }
-            }, label);
+                },
+                label
+            );
             expect(store.getState().settings.addU2FKey.response).toEqual({ label });
         });
     });
@@ -177,9 +178,7 @@ describe('test for addU2FKey action', () => {
             getAddU2FChallenge.mockClear();
             addU2FKey.mockClear();
             registerU2F.mockClear();
-
         });
-
 
         test('full behaviour', async (done) => {
             await begin
@@ -192,9 +191,11 @@ describe('test for addU2FKey action', () => {
         describe('different fetching possibilities', () => {
             test('full behaviour after failure and not existing request', async (done) => {
                 await begin
-                    .then(normalFetchingPromise({
-                        errorCode: ERROR_CODE.OTHER_ERROR
-                    }))
+                    .then(
+                        normalFetchingPromise({
+                            errorCode: ERROR_CODE.OTHER_ERROR
+                        })
+                    )
                     .then(normalCallU2FRegisterAPIPromise)
                     .then(normalPostResponsePromise)
                     .then(end(store, actions, done));
@@ -202,15 +203,16 @@ describe('test for addU2FKey action', () => {
 
             test('full behaviour after failure and empty request', async (done) => {
                 await begin
-                    .then(normalFetchingPromise({
-                        errorCode: ERROR_CODE.OTHER_ERROR,
-                        request: {}
-                    }))
+                    .then(
+                        normalFetchingPromise({
+                            errorCode: ERROR_CODE.OTHER_ERROR,
+                            request: {}
+                        })
+                    )
                     .then(normalCallU2FRegisterAPIPromise)
                     .then(normalPostResponsePromise)
                     .then(end(store, actions, done));
             });
-
 
             test('full behaviour after failure and existing request', async (done) => {
                 await begin
@@ -237,7 +239,6 @@ describe('test for addU2FKey action', () => {
                     .then(normalPostResponsePromise)
                     .then(end(store, actions, done));
             });
-
         });
 
         test('failure of registerU2F', async (done) => {
@@ -266,7 +267,6 @@ describe('test for addU2FKey action', () => {
                 })
                 .then(end(store, actions, done));
 
-
             test('failure of post message', async (done) => {
                 await begin
                     .then(normalFetchingPromise())
@@ -292,14 +292,17 @@ describe('test for addU2FKey action', () => {
                                 ...steps,
                                 (state) => {
                                     expect(addU2FKey).toHaveBeenCalledTimes(1);
-                                    expect(addU2FKey).toHaveBeenCalledWith(expect.objectContaining(state.settings.addU2FKey.u2fResponse), scope.creds, scope.response);
+                                    expect(addU2FKey).toHaveBeenCalledWith(
+                                        expect.objectContaining(state.settings.addU2FKey.u2fResponse),
+                                        scope.creds,
+                                        scope.response
+                                    );
                                     expect(state.settings.addU2FKey.error.message).toBe(errorMessage);
                                     expect(state.settings.addU2FKey.status).toBe('failure');
                                     expect(state.scope).not.toMatchObject({ used: true });
                                 }
                             ]
                         };
-
                     })
                     .then(end(store, actions, done));
             });

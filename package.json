@@ -17,7 +17,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "echo 0 || prettier -c --write",
+      "prettier -c --write",
       "git add"
     ]
   },
@@ -62,7 +62,7 @@
     "preact-cli": "^2.1.0",
     "preact-render-spy": "^1.2.1",
     "preact-render-to-string": "^3.7.0",
-    "prettier": "^1.13.5",
+    "prettier": "^1.14.2",
     "react-modal": "^3.4.5"
   },
   "dependencies": {

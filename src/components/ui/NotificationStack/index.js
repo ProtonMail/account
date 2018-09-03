@@ -17,7 +17,7 @@ export default class NotificationStack extends Component {
             stack: [],
             popping: false
         };
-        onInput(notification => {
+        onInput((notification) => {
             const removed = this.state.stack[MAX_STACK_SIZE - 1];
             const newNotification = {
                 notification,
@@ -46,25 +46,29 @@ export default class NotificationStack extends Component {
     }
 
     render() {
-
         const notifications = this.state.stack;
         if (notifications && notifications.length) {
-            return (<ul className={styles.notificationStack}>
-                {notifications.map(NotificationStack.renderNotification)}
-            </ul>);
-
+            return (
+                <ul className={styles.notificationStack}>{notifications.map(NotificationStack.renderNotification)}</ul>
+            );
         }
         return null;
     }
 
-    static renderNotification({ notification: { type, data: { message, opt } } }) {
+    static renderNotification({
+        notification: {
+            type,
+            data: { message, opt }
+        }
+    }) {
         const classes = [styles.notification];
         if (styles[type]) {
             classes.push(styles[type]);
         }
-        return (<li className={classes.join(' ')}>
-            <p>{message}</p>
-        </li>);
+        return (
+            <li className={classes.join(' ')}>
+                <p>{message}</p>
+            </li>
+        );
     }
 }
-

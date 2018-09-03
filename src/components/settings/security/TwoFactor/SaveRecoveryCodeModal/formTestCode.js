@@ -4,13 +4,12 @@ import settingsActions from '../../../../../actions/settings';
 
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
 
-
 import styles from './index.css';
 
 const renderInfo = (result) => {
     if (typeof result === 'undefined') {
         // result is undefined until the input is lower than 6 characters.
-        return (<p>Your recovery code will not be erased</p>);
+        return <p>Your recovery code will not be erased</p>;
     }
 
     return <p>{result ? '✓ Test succeeded' : '⚠ Please test your recovery code to proceed'}</p>;
@@ -26,7 +25,9 @@ const renderInfo = (result) => {
 export const FormTestCode = ({
     onSubmit,
     onCancel,
-    settings: { reset2FARecoveryCodes: { result, response = {} } },
+    settings: {
+        reset2FARecoveryCodes: { result, response = {} }
+    },
     reset2FARecoveryCodesCheckNewCodeAction
 }) => {
     const model = { code: response.code };
@@ -67,9 +68,7 @@ export const FormTestCode = ({
                         />
                     </div>
                 </div>
-                <div className={styles.result}>
-                    {renderInfo(result)}
-                </div>
+                <div className={styles.result}>{renderInfo(result)}</div>
             </ModalContent>
             <ModalFooter>
                 <button type="reset" value="Reset">
@@ -83,4 +82,7 @@ export const FormTestCode = ({
     );
 };
 
-export default connect('settings', settingsActions)(FormTestCode);
+export default connect(
+    'settings',
+    settingsActions
+)(FormTestCode);

@@ -52,9 +52,7 @@ export class ConfirmCode extends Component {
                 }}
             >
                 <ModalContent>
-                    <p className={styles.description}>
-                        Test your new 2FA method:
-                    </p>
+                    <p className={styles.description}>Test your new 2FA method:</p>
                     <div className="form-row">
                         <label htmlFor="verifyCode">Input your code</label>
                         <div>
@@ -88,4 +86,7 @@ export class ConfirmCode extends Component {
     }
 }
 
-export default connect('settings', settingsActions)(ConfirmCode);
+export default connect(
+    'settings',
+    settingsActions
+)(ConfirmCode);

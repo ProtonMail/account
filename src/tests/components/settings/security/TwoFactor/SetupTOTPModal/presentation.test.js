@@ -5,16 +5,16 @@ import Presentation from '../../../../../../components/settings/security/TwoFact
 
 describe('SetupTOTPModal Presentation step', () => {
     test('regular display', () => {
-        expect(render(<Presentation/>)).toMatchSnapshot();
+        expect(render(<Presentation />)).toMatchSnapshot();
     });
     test('display with message', () => {
-        expect(render(<Presentation message='This is a message'/>)).toMatchSnapshot();
+        expect(render(<Presentation message="This is a message" />)).toMatchSnapshot();
     });
 
     test('submit and cancel', () => {
         const onSubmit = jest.fn();
         const onCancel = jest.fn();
-        const context = deep(<Presentation onSubmit={onSubmit} onCancel={onCancel}/>);
+        const context = deep(<Presentation onSubmit={onSubmit} onCancel={onCancel} />);
 
         const event = { preventDefault: () => undefined };
 

@@ -11,29 +11,37 @@ import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper
  */
 export default ({ onSubmit, onCancel, message }) => (
     <ModalWrapper
-        onSubmit={( e ) => {
+        onSubmit={(e) => {
             e.preventDefault();
             onSubmit();
         }}
-        onReset={( e ) => {
+        onReset={(e) => {
             e.preventDefault();
             onCancel();
         }}
     >
-        {message ? (<ModalContent>
+        {message ? (
+            <ModalContent>
                 <div>{message}</div>
-            </ModalContent>) :
-            (<ModalContent>
-                <p>This wizard will enable Two Factor Authentication (2FA) on your ProtonMail account. 2FA will make your ProtonMail account more secure so we recommend enabling it. </p>
+            </ModalContent>
+        ) : (
+            <ModalContent>
+                <p>
+                    This wizard will enable Two Factor Authentication (2FA) on your ProtonMail account. 2FA will make
+                    your ProtonMail account more secure so we recommend enabling it.{' '}
+                </p>
                 <p>
                     <strong>
                         If you have never used 2FA before, we strongly recommend you reading our 2FA Guide first.
                     </strong>
                 </p>
                 <div>
-                    <Link href="https://protonmail.com/support/knowledge-base/two-factor-authentication/">2FA GUIDE</Link>
+                    <Link href="https://protonmail.com/support/knowledge-base/two-factor-authentication/">
+                        2FA GUIDE
+                    </Link>
                 </div>
-            </ModalContent>)}
+            </ModalContent>
+        )}
         <ModalFooter>
             <button type="reset" value="Reset">
                 Cancel

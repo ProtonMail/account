@@ -5,12 +5,14 @@ import { FormName } from '../../../../../../components/settings/security/TwoFact
 
 describe('AddU2FModal SharedSecret step', () => {
     test('display', () => {
-        expect(render(<FormName settings={{ addU2FKey: {} }}/>)).toMatchSnapshot();
-        expect(render(<FormName settings={{ addU2FKey: { response: { label: 'Test for key' } } }}/>)).toMatchSnapshot();
+        expect(render(<FormName settings={{ addU2FKey: {} }} />)).toMatchSnapshot();
+        expect(
+            render(<FormName settings={{ addU2FKey: { response: { label: 'Test for key' } } }} />)
+        ).toMatchSnapshot();
     });
 
     test('input event', () => {
-        const context = deep(<FormName settings={{ addU2FKey: {} }}/>);
+        const context = deep(<FormName settings={{ addU2FKey: {} }} />);
         context.find('input').simulate('input', { target: { value: 'Something' } });
     });
 
@@ -18,11 +20,16 @@ describe('AddU2FModal SharedSecret step', () => {
         const onSubmit = jest.fn();
         const onCancel = jest.fn();
         const addU2FKeyLabelAction = jest.fn();
-        const context = deep(<FormName settings={{ addU2FKey: { response: { label: 'Test for key' } } }} {...{
-            onSubmit,
-            onCancel,
-            addU2FKeyLabelAction
-        }}/>);
+        const context = deep(
+            <FormName
+                settings={{ addU2FKey: { response: { label: 'Test for key' } } }}
+                {...{
+                    onSubmit,
+                    onCancel,
+                    addU2FKeyLabelAction
+                }}
+            />
+        );
 
         const event = { preventDefault: () => undefined };
 

@@ -7,10 +7,11 @@ jest.mock('frontend-commons/src/appProvider');
 jest.mock('u2f-api');
 
 describe('u2f helper', () => {
-    beforeAll(() => appProvider.getConfig.mockImplementation(() => ({
-        appId: 'https://example.com',
-        timeout: 30
-    })));
+    beforeAll(() =>
+        appProvider.getConfig.mockImplementation(() => ({
+            appId: 'https://example.com',
+            timeout: 30
+        })));
     afterAll(() => appProvider.getConfig.mockRestore());
 
     test('getErrorMessage', () => {

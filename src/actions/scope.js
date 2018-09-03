@@ -8,7 +8,6 @@ import { toState, extended } from '../helpers/stateFormatter';
  * @link{https://github.com/developit/unistore#usage}
  */
 export default (store) => {
-
     /**
      * initializate the unscope process.
      * @param {Object} state
@@ -46,17 +45,16 @@ export default (store) => {
      * @returns {Promise<void>}
      */
     async function unscopeU2F(state) {
-        store.setState(toState(state, 'scope', { U2FRequest: { status: 'pending'} }));
+        store.setState(toState(state, 'scope', { U2FRequest: { status: 'pending' } }));
         try {
             const response = await signU2F(state.scope.response['2FA'].U2F);
             store.setState(extended(state, 'scope.creds', { U2F: response }));
-        }
-        catch (error) {
-            const {metaData: {code} = {}} = error;
+        } catch (error) {
+            const { metaData: { code } = {} } = error;
             if (!code) {
-                throw  error;
+                throw error;
             }
-            store.setState(toState(store.getState(), 'scope', { U2FRequest: { status: 'failure', error} }));
+            store.setState(toState(store.getState(), 'scope', { U2FRequest: { status: 'failure', error } }));
         }
     }
 
@@ -65,12 +63,14 @@ export default (store) => {
      * @param {Object} state
      */
     async function unscopeResetTwoFactor(state) {
-        return store.setState(toState(state, 'scope', {
-            U2FRequest: {},
-            creds: {
-                password: state.scope.creds.password
-            }
-        }));
+        return store.setState(
+            toState(state, 'scope', {
+                U2FRequest: {},
+                creds: {
+                    password: state.scope.creds.password
+                }
+            })
+        );
     }
 
     /**

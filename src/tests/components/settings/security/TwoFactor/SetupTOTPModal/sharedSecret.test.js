@@ -5,39 +5,52 @@ import { SharedSecret } from '../../../../../../components/settings/security/Two
 
 describe('SetupTOTP SharedSecret step', () => {
     test('regular display', () => {
-        expect(render(<SharedSecret settings={{
-            setupTOTP: {
-                request: {
-                    qrURI: 'otp://it does not really care'
-                }
-            }
-        }}/>)).toMatchSnapshot();
+        expect(
+            render(
+                <SharedSecret
+                    settings={{
+                        setupTOTP: {
+                            request: {
+                                qrURI: 'otp://it does not really care'
+                            }
+                        }
+                    }}
+                />
+            )
+        ).toMatchSnapshot();
 
-
-        expect(render(<SharedSecret settings={{}}/>)).toMatchSnapshot();
+        expect(render(<SharedSecret settings={{}} />)).toMatchSnapshot();
     });
 
     test('raw display', () => {
         const createSharedSecretAction = jest.fn();
 
-        const tree = deep(<SharedSecret
-            settings={{
-                setupTOTP: {
-                    request: {
-                        interval: 60,
-                        digits: 25.3,
-                        secret: 'THIS_IS_SECRET',
-                        qrURI: 'otp://it does not really care'
+        const tree = deep(
+            <SharedSecret
+                settings={{
+                    setupTOTP: {
+                        request: {
+                            interval: 60,
+                            digits: 25.3,
+                            secret: 'THIS_IS_SECRET',
+                            qrURI: 'otp://it does not really care'
+                        }
                     }
-                }
-            }}
-            createSharedSecretAction={createSharedSecretAction}/>);
-        tree.find('a').first().simulate('click');
+                }}
+                createSharedSecretAction={createSharedSecretAction}
+            />
+        );
+        tree.find('a')
+            .first()
+            .simulate('click');
         expect(tree).toMatchSnapshot();
         expect(createSharedSecretAction).toHaveBeenCalledTimes(1);
 
-        const groot = deep(<SharedSecret settings={{}} createSharedSecretAction={createSharedSecretAction}/>);
-        groot.find('a').first().simulate('click');
+        const groot = deep(<SharedSecret settings={{}} createSharedSecretAction={createSharedSecretAction} />);
+        groot
+            .find('a')
+            .first()
+            .simulate('click');
         expect(groot).toMatchSnapshot();
         expect(createSharedSecretAction).toHaveBeenCalledTimes(2);
     });
@@ -47,11 +60,14 @@ describe('SetupTOTP SharedSecret step', () => {
 
         const onSubmit = jest.fn();
         const onCancel = jest.fn();
-        const context = deep(<SharedSecret
-            settings={{}}
-            onSubmit={onSubmit}
-            onCancel={onCancel}
-            createSharedSecretAction={createSharedSecretAction}/>);
+        const context = deep(
+            <SharedSecret
+                settings={{}}
+                onSubmit={onSubmit}
+                onCancel={onCancel}
+                createSharedSecretAction={createSharedSecretAction}
+            />
+        );
 
         const event = { preventDefault: () => undefined };
 

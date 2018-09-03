@@ -11,12 +11,10 @@ import toActions from '../../helpers/toActions';
 import { error, success } from '../../helpers/notification';
 import { toState, extended } from '../../helpers/stateFormatter';
 
-
 /**
  * @link { https://github.com/developit/unistore#usage }
  */
 const actions = (store) => {
-
     /**
      * Resets the state for the actions
      * @param {Object} state
@@ -50,14 +48,24 @@ const actions = (store) => {
      * @returns {Promise<void>}
      */
     async function reset2FARecoveryCodesInit(state) {
-        const { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = state;
+        const {
+            settings: {
+                reset2FARecoveryCodes: { request: { codes } = {} }
+            }
+        } = state;
 
         try {
             if (!codes || !codes.length) {
                 const response = await resetRecoveryCodes(state.scope.creds, state.scope.response);
-                store.setState(toState(state, 'settings', toState(state.settings, 'reset2FARecoveryCodes', {
-                    request: { codes: response.data.TwoFactorRecoveryCodes }
-                })));
+                store.setState(
+                    toState(
+                        state,
+                        'settings',
+                        toState(state.settings, 'reset2FARecoveryCodes', {
+                            request: { codes: response.data.TwoFactorRecoveryCodes }
+                        })
+                    )
+                );
             }
         } catch (e) {
             store.setState(extended(state, 'settings.reset2FARecoveryCodes', { error: e }));
@@ -71,12 +79,18 @@ const actions = (store) => {
      * @returns {Promise<void>}
      */
     async function reset2FARecoveryCodesCheckNewCode(state, code) {
-        const { settings: { reset2FARecoveryCodes: { request: { codes = [] } = {} } } } = state;
+        const {
+            settings: {
+                reset2FARecoveryCodes: { request: { codes = [] } = {} }
+            }
+        } = state;
 
-        return store.setState(extended(state, 'settings.reset2FARecoveryCodes', {
-            result: codes.indexOf(code) >= 0,
-            response: { code }
-        }));
+        return store.setState(
+            extended(state, 'settings.reset2FARecoveryCodes', {
+                result: codes.indexOf(code) >= 0,
+                response: { code }
+            })
+        );
     }
 
     /**
@@ -117,10 +131,7 @@ const actions = (store) => {
      */
     async function disableTOTP(state) {
         try {
-            updateUserSettingsFromResponse(
-                state,
-                await disableTOTPApi(state.scope.creds, state.scope.response)
-            );
+            updateUserSettingsFromResponse(state, await disableTOTPApi(state.scope.creds, state.scope.response));
             success('2FA via application was successfully disabled');
         } catch (e) {
             error(e);
@@ -134,15 +145,12 @@ const actions = (store) => {
      */
     async function disableTwoFactor(state) {
         try {
-            updateUserSettingsFromResponse(
-                state, await disableTwoFactorApi(state.scope.creds, state.scope.response)
-            );
+            updateUserSettingsFromResponse(state, await disableTwoFactorApi(state.scope.creds, state.scope.response));
             success('Two Factor authentication was successfully disabled');
         } catch (e) {
             error(e);
         }
     }
-
 
     return toActions({
         reset2FARecoveryCodesCheckNewCode,
@@ -157,4 +165,3 @@ const actions = (store) => {
 };
 
 export default actions;
-

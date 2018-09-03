@@ -7,5 +7,7 @@ import style from './style.css';
  * @returns {preact.Component}
  */
 export default ({ onClick, children }) => (
-    <a onClick={onClick} className={style.a} href="#">{children}</a>
+    <a onClick={onClick} className={style.a} href="#">
+        {children}
+    </a>
 );

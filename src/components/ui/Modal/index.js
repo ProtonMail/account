@@ -14,23 +14,25 @@ import ModalStyles from './index.css';
  * @return {ReactModal} the modal components.
  * @function
  */
-const Modal = ( { isOpen, title, children, onRequestClose, onAfterOpen, contentLabel = null } ) => {
+const Modal = ({ isOpen, title, children, onRequestClose, onAfterOpen, contentLabel = null }) => {
     ReactModal.setAppElement('#app');
-    return (<ReactModal
-        isOpen={isOpen}
-        onAfterOpen={onAfterOpen}
-        onRequestClose={onRequestClose}
-        contentLabel={contentLabel || title}
-        className={ModalStyles.modal}
-    >
-        <header className={ModalStyles.header}><h3>{title}</h3></header>
-        {children}
-
-    </ReactModal>);
+    return (
+        <ReactModal
+            isOpen={isOpen}
+            onAfterOpen={onAfterOpen}
+            onRequestClose={onRequestClose}
+            contentLabel={contentLabel || title}
+            className={ModalStyles.modal}
+        >
+            <header className={ModalStyles.header}>
+                <h3>{title}</h3>
+            </header>
+            {children}
+        </ReactModal>
+    );
 };
 
 export default Modal;
 export Content from './Content';
 export Footer from './Footer';
 export Wrapper from './Wrapper';
-

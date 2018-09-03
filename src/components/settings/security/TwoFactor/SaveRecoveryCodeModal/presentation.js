@@ -9,15 +9,17 @@ import { downloadAsFile } from '../../../../../helpers/text';
 
 import styles from './index.css';
 
-
 export class Presentation extends Component {
-
     componentDidMount() {
         this.props.reset2FARecoveryCodesInitAction();
     }
 
     componentWillReceiveProps(newProps) {
-        const { settings: { reset2FARecoveryCodes: { error } } } = newProps;
+        const {
+            settings: {
+                reset2FARecoveryCodes: { error }
+            }
+        } = newProps;
 
         if (this.props.settings.reset2FARecoveryCodes.error !== error && error) {
             this.props.onReset(error.message);
@@ -28,7 +30,11 @@ export class Presentation extends Component {
      * generates a TXT file, containing the codes, and download it on the browser.
      */
     downloadClicked() {
-        const { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = this.props;
+        const {
+            settings: {
+                reset2FARecoveryCodes: { request: { codes } = {} }
+            }
+        } = this.props;
 
         downloadAsFile('proton-recovery-codes.txt', codes);
     }
@@ -38,59 +44,66 @@ export class Presentation extends Component {
      * @returns {ModalContent}
      */
     renderContent() {
-        const { settings: { reset2FARecoveryCodes: { request: { codes } = {} } } } = this.props;
+        const {
+            settings: {
+                reset2FARecoveryCodes: { request: { codes } = {} }
+            }
+        } = this.props;
 
-        return (<ModalContent>
-            <p>
-                Please keep your recovery codes in a safe place. Otherwise, you can permanently lose access to your
-                account if you loose your 2FA device
-            </p>
-            <p>Each recovery code can only be used once</p>
-            {codes && codes.length && [
-                <ol className={styles.list}>
-                    {codes.map((code) => (
-                        <li className={styles.item}>
-                            <pre className={styles.code}>{code}</pre>
-                        </li>
-                    ))}
-                </ol>,
-                <div className={styles.actions}>
-                    <TextButton onClick={() => this.downloadClicked()}>
-                        DOWNLOAD CODES
-                    </TextButton>
-                    <CopyToClipboard text={codes.join('\n')}>
-                        <TextButton>COPY CODES </TextButton>
-                    </CopyToClipboard>
-                </div>
-            ] || <p>Loading... </p>}
-
-        </ModalContent>);
-    };
-
+        return (
+            <ModalContent>
+                <p>
+                    Please keep your recovery codes in a safe place. Otherwise, you can permanently lose access to your
+                    account if you loose your 2FA device
+                </p>
+                <p>Each recovery code can only be used once</p>
+                {(codes &&
+                    codes.length && [
+                        <ol className={styles.list}>
+                            {codes.map((code) => (
+                                <li className={styles.item}>
+                                    <pre className={styles.code}>{code}</pre>
+                                </li>
+                            ))}
+                        </ol>,
+                        <div className={styles.actions}>
+                            <TextButton onClick={() => this.downloadClicked()}>DOWNLOAD CODES</TextButton>
+                            <CopyToClipboard text={codes.join('\n')}>
+                                <TextButton>COPY CODES </TextButton>
+                            </CopyToClipboard>
+                        </div>
+                    ]) || <p>Loading... </p>}
+            </ModalContent>
+        );
+    }
 
     render() {
-        return (<ModalWrapper
-            onSubmit={(e) => {
-                e.preventDefault();
-                this.props.onSubmit();
-            }}
-            onReset={(e) => {
-                e.preventDefault();
-                this.props.onCancel();
-            }}
-        >
-            {this.renderContent()}
-            <ModalFooter>
-                <button type="reset" value="Reset" disabled>
-                    Back
-                </button>
-                <button type="submit" value="Submit">
-                    Next
-                </button>
-            </ModalFooter>
-        </ModalWrapper>);
+        return (
+            <ModalWrapper
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    this.props.onSubmit();
+                }}
+                onReset={(e) => {
+                    e.preventDefault();
+                    this.props.onCancel();
+                }}
+            >
+                {this.renderContent()}
+                <ModalFooter>
+                    <button type="reset" value="Reset" disabled>
+                        Back
+                    </button>
+                    <button type="submit" value="Submit">
+                        Next
+                    </button>
+                </ModalFooter>
+            </ModalWrapper>
+        );
     }
 }
 
-
-export default connect('settings', settingsActions)(Presentation);
+export default connect(
+    'settings',
+    settingsActions
+)(Presentation);

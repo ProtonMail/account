@@ -11,25 +11,24 @@ export const steps = [
     {
         title: 'Set Up Two Factor Authentication',
         component: ({ onNextStep, onPreviousStep, message }) => (
-            <Presentation onSubmit={onNextStep} onCancel={onPreviousStep} message={message}/>
+            <Presentation onSubmit={onNextStep} onCancel={onPreviousStep} message={message} />
         )
     },
     ...ScopeModal('password'),
     {
         title: 'Set Up Two Factor Authentication',
-        component: ({ onNextStep, onPreviousStep }) => (<SharedSecret
-            onSubmit={onNextStep}
-            onCancel={onPreviousStep}
-        />)
+        component: ({ onNextStep, onPreviousStep }) => <SharedSecret onSubmit={onNextStep} onCancel={onPreviousStep} />
     },
     {
         title: 'Confirm your new method',
-        component: ({ onNextStep, onPreviousStep, onReset, forbidClosure }) => (<ConfirmCode
-            onSubmit={onNextStep}
-            onCancel={onPreviousStep}
-            onReset={onReset}
-            forbidClosure={forbidClosure}
-        />)
+        component: ({ onNextStep, onPreviousStep, onReset, forbidClosure }) => (
+            <ConfirmCode
+                onSubmit={onNextStep}
+                onCancel={onPreviousStep}
+                onReset={onReset}
+                forbidClosure={forbidClosure}
+            />
+        )
     },
     ...RecoveryCodeSteps
 ];

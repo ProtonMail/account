@@ -10,7 +10,6 @@ jest.mock('frontend-commons/src/auth/userConnector');
 jest.mock('frontend-commons/src/user/model');
 jest.mock('frontend-commons/src/appProvider');
 
-
 describe('authentication actions test', () => {
     const actions = authenticationActions(store);
 
@@ -67,12 +66,14 @@ describe('authentication actions test', () => {
             signU2F.mockImplementation(async () => {
                 throw error;
             });
-            waitForNewState(done,
+            waitForNewState(
+                done,
                 (state) => expect(state.auth.twoFactorResponse.U2FResponse).toEqual({}),
-                (state) => expect(state.auth.twoFactorResponse).toEqual({
-                    success: false,
-                    U2FResponse: error
-                })
+                (state) =>
+                    expect(state.auth.twoFactorResponse).toEqual({
+                        success: false,
+                        U2FResponse: error
+                    })
             );
             await actions.loginU2FAction({
                 ...store.getState(),

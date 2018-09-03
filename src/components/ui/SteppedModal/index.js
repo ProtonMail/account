@@ -34,7 +34,7 @@ export default class SteppedModal extends Component {
      * @param {Boolean} lastStepSuccess - whether the last step succeeded.
      */
     onRequestClose(requestClosed = null, lastStepSuccess = false) {
-        if (!(this.state.mustSucceed || this.props.steps[this.state.step].mustSucceed ) || lastStepSuccess) {
+        if (!(this.state.mustSucceed || this.props.steps[this.state.step].mustSucceed) || lastStepSuccess) {
             this.setState({ step: -1 });
 
             if (this.props.beforeDismiss) {
@@ -43,7 +43,6 @@ export default class SteppedModal extends Component {
             this.props.onRequestClose();
         }
     }
-
 
     onSkipStep() {
         if (this.state.previousAction === 'next' || this.state.previousAction === 'enter') {
@@ -58,11 +57,12 @@ export default class SteppedModal extends Component {
     onNextStep() {
         const state = this.state;
 
-        if (this.state.step + 1 >= this.props.steps.length) { // if last step
+        if (this.state.step + 1 >= this.props.steps.length) {
+            // if last step
             this.onRequestClose(null, true);
         } else {
             this.setState({
-                step: (state.step + 1),
+                step: state.step + 1,
                 previousAction: 'next',
                 mustSucceed: false,
                 message: null
@@ -79,7 +79,7 @@ export default class SteppedModal extends Component {
             this.onRequestClose();
         } else {
             this.setState({
-                step: (state.step - 1),
+                step: state.step - 1,
                 previousAction: 'previous',
                 mustSucceed: false,
                 message: null
@@ -137,15 +137,17 @@ export default class SteppedModal extends Component {
 
     render() {
         if (!this.props.steps || !this.props.steps.length) return null;
-        return (<Modal
-            isOpen={this.props.isOpen}
-            onAfterOpen={() => this.onAfterOpen()}
-            onRequestClose={(requestClosed = null, lastStepSuccess = false) => this.onRequestClose(
-                requestClosed, lastStepSuccess
-            )}
-            title={this.computeCurrentTitle()}
-        >
-            {this.renderCurrentStep()}
-        </Modal>);
+        return (
+            <Modal
+                isOpen={this.props.isOpen}
+                onAfterOpen={() => this.onAfterOpen()}
+                onRequestClose={(requestClosed = null, lastStepSuccess = false) =>
+                    this.onRequestClose(requestClosed, lastStepSuccess)
+                }
+                title={this.computeCurrentTitle()}
+            >
+                {this.renderCurrentStep()}
+            </Modal>
+        );
     }
 }

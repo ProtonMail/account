@@ -37,14 +37,17 @@ describe('scope unit tests', () => {
         test('initial state', async () => {
             await actions.unscopeInitAction(store.getState());
             expect(authInfo).toHaveBeenCalledTimes(1);
-            const { scope: { creds, response } } = store.getState();
+            const {
+                scope: { creds, response }
+            } = store.getState();
             expect(creds).toEqual({});
             expect(response).toEqual(authResponse);
         });
 
         test('with a response', () => {
             actions.unscopeInitAction({
-                ...store.getState(), scope: {
+                ...store.getState(),
+                scope: {
                     response: {
                         something: 'something'
                     }
@@ -137,17 +140,20 @@ describe('scope unit tests', () => {
             };
 
             signU2F.mockImplementation(() => U2FResponse);
-            waitForNewState(done,
+            waitForNewState(
+                done,
                 (state) => expect(state.scope.U2FRequest).toEqual({ status: 'pending' }),
-                (state) => expect(state.scope).toEqual({
-                    ...scope,
-                    creds: {
-                        U2F: U2FResponse
-                    }
-                })
+                (state) =>
+                    expect(state.scope).toEqual({
+                        ...scope,
+                        creds: {
+                            U2F: U2FResponse
+                        }
+                    })
             );
             actions.unscopeU2FAction({
-                ...store.getState(), scope
+                ...store.getState(),
+                scope
             });
         });
 
@@ -160,15 +166,17 @@ describe('scope unit tests', () => {
             signU2F.mockImplementation(async () => {
                 throw error;
             });
-            waitForNewState(done,
+            waitForNewState(
+                done,
                 (state) => expect(state.scope.U2FRequest.status).toBe('pending'),
-                (state) => expect(state.scope).toEqual({
-                    ...scope,
-                    U2FRequest: {
-                        error,
-                        status: 'failure'
-                    }
-                })
+                (state) =>
+                    expect(state.scope).toEqual({
+                        ...scope,
+                        U2FRequest: {
+                            error,
+                            status: 'failure'
+                        }
+                    })
             );
             actions.unscopeU2FAction({ ...store.getState(), scope });
         });
@@ -180,7 +188,8 @@ describe('scope unit tests', () => {
             });
             try {
                 await actions.unscopeU2FAction({
-                    ...store.getState(), scope
+                    ...store.getState(),
+                    scope
                 });
             } catch (e) {
                 expect(e.message).toMatch(errorMessage);
@@ -228,7 +237,8 @@ describe('scope unit tests', () => {
 
     test('reset scope', async () => {
         await actions.resetScopeStateAction({
-            ...store.getState(), scope: fullScope
+            ...store.getState(),
+            scope: fullScope
         });
 
         expect(store.getState().scope).toEqual({});
