@@ -2432,7 +2432,7 @@ module.exports = QRCode;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "version", function() { return version; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "version", function() { return version; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DOM", function() { return DOM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Children", function() { return Children; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render$1; });
@@ -2487,7 +2487,11 @@ var CAMEL_PROPS = /^(?:accent|alignment|arabic|baseline|cap|clip|color|fill|floo
 var BYPASS_HOOK = {};
 
 /*global process*/
-var DEV = typeof process !== 'undefined' && process.env && "production"!=='production';
+var DEV = false;
+try {
+	DEV = "production"!=='production';
+}
+catch (e) {}
 
 // a component that renders nothing. Used to replace components for unmountComponentAtNode.
 function EmptyComponent() { return null; }
@@ -2871,7 +2875,7 @@ function shallowDiffers(a, b) {
 
 
 function findDOMNode(component) {
-	return component && component.base || null;
+	return component && (component.base || component.nodeType === 1 && component) || null;
 }
 
 
@@ -3101,7 +3105,6 @@ var index = {
 
 //# sourceMappingURL=preact-compat.es.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__("a6oe")))
 
 /***/ }),
 
@@ -7070,4 +7073,4 @@ module.exports = CopyToClipboard;
 /***/ })
 
 });
-//# sourceMappingURL=route-settings.chunk.5fa52.js.map
+//# sourceMappingURL=route-settings.chunk.9e353.js.map
