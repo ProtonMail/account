@@ -1,4 +1,4 @@
-# account
+# account [![CircleCI](https://circleci.com/gh/ProtonMail/account.svg?style=svg)](https://circleci.com/gh/ProtonMail/account)
 
 
 ## Install
