@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { connect } from 'unistore/full/preact';
 
 import settingsActions from '../../../../../actions/settings';
@@ -60,7 +60,7 @@ export class ConfirmCode extends Component {
                                 onInput={({ target: { value: code } }) => {
                                     this.setState({ code });
                                 }}
-                                required={true}
+                                required
                                 value={this.state.code}
                                 disabled={this.state.loading}
                                 type="code"
@@ -68,7 +68,7 @@ export class ConfirmCode extends Component {
                                 placeholder="Code"
                                 minLength="6"
                                 maxLength="6"
-                                autoFocus={true}
+                                autoFocus
                             />
                         </div>
                     </div>

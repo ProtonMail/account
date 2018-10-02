@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import ScopeFormModal from './ScopeFormModal';
 import store from '../../../helpers/store';
 import actions from '../../../actions/scope';
@@ -9,9 +11,16 @@ export const steps = (scope) => {
     return [
         {
             title: 'Confirm your identity',
-            component: ({ onNextStep, onPreviousStep, onSkipStep, message }) => (
-                <ScopeFormModal onSubmit={onNextStep} onCancel={onPreviousStep} skip={onSkipStep} message={message} />
-            )
+            component({ onNextStep, onPreviousStep, onSkipStep, message }) {
+                return (
+                    <ScopeFormModal
+                        onSubmit={onNextStep}
+                        onCancel={onPreviousStep}
+                        skip={onSkipStep}
+                        message={message}
+                    />
+                );
+            }
         }
     ];
 };

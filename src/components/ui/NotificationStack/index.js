@@ -1,7 +1,6 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { onInput } from '../../../helpers/notification';
-
 import styles from './index.css';
 
 const EXPIRATION_TIME = 5000;

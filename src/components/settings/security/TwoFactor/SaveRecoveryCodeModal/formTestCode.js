@@ -1,7 +1,7 @@
+import { h } from 'preact';
 import { connect } from 'unistore/full/preact';
 
 import settingsActions from '../../../../../actions/settings';
-
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
 
 import styles from './index.css';
@@ -58,13 +58,13 @@ export const FormTestCode = ({
                                     reset2FARecoveryCodesCheckNewCodeAction(model.code);
                                 }
                             }}
-                            required={true}
+                            required
                             value={model.code}
                             type="code"
                             id="verifyCode"
                             placeholder="Code"
                             disabled={!!result}
-                            autoFocus={true}
+                            autoFocus
                         />
                     </div>
                 </div>

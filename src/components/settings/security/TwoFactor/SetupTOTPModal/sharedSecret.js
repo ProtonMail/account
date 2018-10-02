@@ -1,6 +1,6 @@
-import { Component } from 'preact';
-import QRCode from 'qrcode.react';
+import { h, Component } from 'preact';
 import { connect } from 'unistore/full/preact';
+import QRCode from 'qrcode.react';
 
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
 import TextButton from '../../../../ui/TextButton';

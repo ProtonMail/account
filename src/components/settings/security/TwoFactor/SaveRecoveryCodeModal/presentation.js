@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { connect } from 'unistore/full/preact';
 
 import settingsActions from '../../../../../actions/settings';
@@ -39,6 +39,27 @@ export class Presentation extends Component {
         downloadAsFile('proton-recovery-codes.txt', codes);
     }
 
+    renderCodes(codes = []) {
+        if (!codes.length) {
+            return <p>Loading... </p>;
+        }
+        return [
+            <ol className={styles.list}>
+                {codes.map((code) => (
+                    <li className={styles.item}>
+                        <pre className={styles.code}>{code}</pre>
+                    </li>
+                ))}
+            </ol>,
+            <div className={styles.actions}>
+                <TextButton onClick={() => this.downloadClicked()}>DOWNLOAD CODES</TextButton>
+                <CopyToClipboard text={codes.join('\n')}>
+                    <TextButton>COPY CODES </TextButton>
+                </CopyToClipboard>
+            </div>
+        ];
+    }
+
     /**
      * renders the content of the modal.
      * @returns {ModalContent}
@@ -57,22 +78,7 @@ export class Presentation extends Component {
                     account if you loose your 2FA device
                 </p>
                 <p>Each recovery code can only be used once</p>
-                {(codes &&
-                    codes.length && [
-                        <ol className={styles.list}>
-                            {codes.map((code) => (
-                                <li className={styles.item}>
-                                    <pre className={styles.code}>{code}</pre>
-                                </li>
-                            ))}
-                        </ol>,
-                        <div className={styles.actions}>
-                            <TextButton onClick={() => this.downloadClicked()}>DOWNLOAD CODES</TextButton>
-                            <CopyToClipboard text={codes.join('\n')}>
-                                <TextButton>COPY CODES </TextButton>
-                            </CopyToClipboard>
-                        </div>
-                    ]) || <p>Loading... </p>}
+                {this.renderCodes(codes)}
             </ModalContent>
         );
     }

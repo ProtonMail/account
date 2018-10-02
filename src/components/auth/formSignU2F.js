@@ -29,6 +29,19 @@ export class FormSignU2F extends Component {
         this.sendSignRequest();
     }
 
+    renderCodes(code) {
+        if (code) {
+            return (
+                <p>
+                    <span>{getErrorMessage(code)}. </span>
+                    <button onClick={() => this.sendSignRequest()} type="button">
+                        Retry
+                    </button>
+                </p>
+            );
+        }
+    }
+
     render() {
         if (!isSupported()) {
             return (
@@ -53,15 +66,7 @@ export class FormSignU2F extends Component {
         return (
             <div id={this.props.id} className={this.props.className}>
                 <p>Activate your security key...</p>
-                {!success &&
-                    !!code && (
-                        <p>
-                            <span>{getErrorMessage(code)}. </span>
-                            <button onClick={() => this.sendSignRequest()} type="button">
-                                Retry
-                            </button>
-                        </p>
-                    )}
+                {!success && this.renderCodes(code)}
             </div>
         );
     }

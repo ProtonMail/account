@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import { connect } from 'unistore/full/preact';
 
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';

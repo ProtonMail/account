@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { connect } from 'unistore/full/preact';
 
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../ui/Modal/index';
@@ -20,6 +20,7 @@ export class ScopeFormModal extends Component {
 
     componentDidMount() {
         this.props.unscopeInitAction();
+        /*  eslint react/no-did-mount-set-state: 0 */
         this.setState({ data: { ...this.props.scope.creds } });
     }
 
@@ -158,7 +159,7 @@ export class ScopeFormModal extends Component {
                                 required
                                 placeholder="Password"
                                 onInput={(e) => this.onFieldUpdated(e)}
-                                autoFocus={true}
+                                autoFocus
                             />
                         </div>
                     </div>

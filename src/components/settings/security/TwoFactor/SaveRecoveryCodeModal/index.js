@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import Presentation from './presentation';
 import TestCode from './formTestCode';
 import { steps as ScopeModal, beforeDismiss as beforeDismissScopeModal } from '../../../../auth/ScopeModal';
@@ -9,14 +11,16 @@ export const steps = [
     {
         title: 'Save your recovery codes',
         mustSucceed: true,
-        component: ({ onNextStep, onPreviousStep, onReset }) => (
-            <Presentation onSubmit={onNextStep} onCancel={onPreviousStep} onReset={onReset} />
-        )
+        component({ onNextStep, onPreviousStep, onReset }) {
+            return <Presentation onSubmit={onNextStep} onCancel={onPreviousStep} onReset={onReset} />;
+        }
     },
     {
         title: 'Test your recovery codes',
         mustSucceed: true,
-        component: ({ onNextStep, onPreviousStep }) => <TestCode onSubmit={onNextStep} onCancel={onPreviousStep} />
+        component({ onNextStep, onPreviousStep }) {
+            return <TestCode onSubmit={onNextStep} onCancel={onPreviousStep} />;
+        }
     }
 ];
 

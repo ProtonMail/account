@@ -1,5 +1,5 @@
 import { route } from 'preact-router';
-import { c, addLocale, useLocale } from 'c-3po';
+import { addLocale, useLocale } from 'c-3po';
 import { loadExtendedConfig } from 'frontend-commons/src/user/model';
 import * as userConnector from 'frontend-commons/src/auth/userConnector';
 import appProvider from 'frontend-commons/src/appProvider';
@@ -36,7 +36,7 @@ const actions = (store) => {
     async function unlock(state, opt) {
         const { user } = await userConnector.unlock(opt);
         await loadUserConfig(state, user);
-        const data = toState(state, 'auth', {
+        toState(state, 'auth', {
             user,
             isLoggedIn: true,
             step: ''

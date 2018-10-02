@@ -20,7 +20,6 @@ const formLogin2FA = ({ login2FA, twoFactorData: { isTOTP = true, U2F: U2FReques
                             autocapitalize="off"
                             autocorrect="off"
                             autocomplete="off"
-                            type="text"
                             minlength="6"
                             maxlength="8"
                             required

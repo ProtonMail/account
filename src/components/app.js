@@ -1,8 +1,7 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import { Router, route } from 'preact-router';
 import { connect } from 'unistore/full/preact';
 import appProvider from 'frontend-commons/src/appProvider';
-import appDispatcher from 'frontend-commons/src/utils/appDispatcher';
 import { isLoggedIn as isAuthenticated } from 'frontend-commons/src/user/model';
 
 import config from '../config';
@@ -14,7 +13,6 @@ import authActions from '../actions/authentication';
 import NotificationStack from './ui/NotificationStack';
 
 appProvider.setConfig(config);
-const authEvent = appDispatcher('auth');
 
 export default connect(
     'auth',

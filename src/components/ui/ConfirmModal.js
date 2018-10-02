@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import _ from 'lodash';
 
 import { Content, Footer, Wrapper } from './Modal';
 import SteppedModal from './SteppedModal';
@@ -13,8 +14,8 @@ export default class ConfirmModal extends Component {
             isOpen,
             onConfirm,
             onAfterClose,
-            scope = noop,
-            onCancel = noop,
+            scope = _.noop,
+            onCancel = _.noop,
             cancelText = 'Cancel',
             confirmText = 'Confirm'
         } = this.props;

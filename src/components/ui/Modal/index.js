@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import ReactModal from 'react-modal';
 
 import ModalStyles from './index.css';
@@ -10,11 +11,11 @@ import ModalStyles from './index.css';
  * @param {Function} onRequestClose - called after the modal is closed.
  * @param {Function} onBeforeClose - called after the modal is closed.
  * @param {Function} onAfterOpen - called after the modal is opened.
- * @param {String} [contentLabel=null]- the content label. If not given, title is used.
+ * @param {String} contentLabel- the content label. If not given, title is used.
  * @return {ReactModal} the modal components.
  * @function
  */
-const Modal = ({ isOpen, title, children, onRequestClose, onAfterOpen, contentLabel = null }) => {
+const Modal = ({ isOpen, title, children, onRequestClose, onAfterOpen, contentLabel }) => {
     ReactModal.setAppElement('#app');
     return (
         <ReactModal

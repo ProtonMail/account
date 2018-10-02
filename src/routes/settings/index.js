@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import { Link } from 'preact-router';
 import { connect } from 'unistore/full/preact';
 
@@ -31,7 +31,12 @@ export default connect(['auth', 'config'])(({ side, config }) => {
         settings: { user }
     } = config;
     console.log('SETTINGS', user);
-    if (!Object.keys(user).length) return null;
+
+    if (!Object.keys(user).length) {
+        return null;
+    }
+
+    // @TODO fix padding
     return (
         <div className={styles.security}>
             <div className={styles.nav}>

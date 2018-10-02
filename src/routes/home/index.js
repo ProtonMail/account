@@ -1,5 +1,4 @@
-import { h, Component } from 'preact';
-import { route } from 'preact-router';
+import { h } from 'preact';
 import { connect } from 'unistore/full/preact';
 
 import style from './style';

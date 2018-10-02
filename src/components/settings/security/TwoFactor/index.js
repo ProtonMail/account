@@ -113,7 +113,7 @@ class TwoFactorSettings extends Component {
         const { TwoFactor, TOTP, U2FKeys = [] } = this.props;
 
         const u2fClasses = [style.item];
-        if (!!TwoFactor) {
+        if (TwoFactor) {
             u2fClasses.push(style.lastItem);
         }
 

@@ -1,3 +1,7 @@
+import { h } from 'preact';
+
 import styles from './index.css';
 
-export default (props) => <div className={[styles.content, props.className].join(' ')}>{props.children}</div>;
+const ModalContent = (props) => <div className={[styles.content, props.className].join(' ')}>{props.children}</div>;
+
+export default ModalContent;

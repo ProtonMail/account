@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import { Content as ModalContent, Footer as ModalFooter, Wrapper as ModalWrapper } from '../../../../ui/Modal';
 import Link from '../../../../ui/Link';
 
@@ -8,7 +10,7 @@ import Link from '../../../../ui/Link';
  * @param {Function} props.onCancel - triggers the previous step.
  * @return {*}
  */
-export default ({ onSubmit, onCancel, message }) => (
+const Presentation = ({ onSubmit, onCancel, message }) => (
     <ModalWrapper
         onSubmit={(e) => {
             e.preventDefault();
@@ -50,3 +52,5 @@ export default ({ onSubmit, onCancel, message }) => (
         </ModalFooter>
     </ModalWrapper>
 );
+
+export default Presentation;

@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 import Presentation from './presentation';
 import FormName from './formName';
 import RegisterKeyForm from './formRegisterKey';
@@ -9,25 +11,29 @@ import actions from '../../../../../actions/settings';
 export const steps = [
     {
         title: 'Register new U2F Key',
-        component: ({ onNextStep, onPreviousStep, message }) => (
-            <Presentation onSubmit={onNextStep} onCancel={onPreviousStep} message={message} />
-        )
+        component({ onNextStep, onPreviousStep, message }) {
+            return <Presentation onSubmit={onNextStep} onCancel={onPreviousStep} message={message} />;
+        }
     },
     ...ScopeModal('password'),
     {
         title: 'Name your U2F Key',
-        component: ({ onNextStep, onPreviousStep }) => <FormName onSubmit={onNextStep} onCancel={onPreviousStep} />
+        component({ onNextStep, onPreviousStep }) {
+            return <FormName onSubmit={onNextStep} onCancel={onPreviousStep} />;
+        }
     },
     {
         title: 'Register new U2F Key',
-        component: ({ onNextStep, onPreviousStep, forbidClosure, onReset }) => (
-            <RegisterKeyForm
-                onSubmit={onNextStep}
-                onCancel={onPreviousStep}
-                forbidClosure={forbidClosure}
-                onReset={onReset}
-            />
-        )
+        component({ onNextStep, onPreviousStep, forbidClosure, onReset }) {
+            return (
+                <RegisterKeyForm
+                    onSubmit={onNextStep}
+                    onCancel={onPreviousStep}
+                    forbidClosure={forbidClosure}
+                    onReset={onReset}
+                />
+            );
+        }
     },
     ...RecoveryCodeSteps
 ];

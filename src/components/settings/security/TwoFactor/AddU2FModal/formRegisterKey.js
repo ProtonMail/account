@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import { connect } from 'unistore/full/preact';
 
 import settingsActions from '../../../../../actions/settings';
@@ -53,7 +53,7 @@ export class FormRegisterKey extends Component {
     renderStatus() {
         const {
             settings: {
-                addU2FKey: { response: { name } = {}, status, request, error }
+                addU2FKey: { response: { name } = {}, status, error }
             }
         } = this.props;
 
