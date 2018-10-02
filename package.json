@@ -12,7 +12,6 @@
     "dev": "preact watch -p 3000 --no-prerender",
     "lint": "eslint src --quiet",
     "test": "cross-env NODE_ENV=test jest ./tests",
-    "precommit": "lint-staged",
     "pretty": "prettier -c --write $(find src -type f -name '*.js')"
   },
   "lint-staged": {
@@ -22,7 +21,10 @@
     ]
   },
   "eslintConfig": {
-    "extends": ["eslint-config-synacor", "standard-preact"],
+    "extends": [
+      "eslint-config-synacor",
+      "standard-preact"
+    ],
     "rules": {
       "indent": [
         "error",
@@ -32,11 +34,24 @@
         "error",
         "1tbs"
       ],
-      "jsx-quotes": ["error", "prefer-double"],
-      "lines-around-comment": [0],
-      "react/jsx-indent": [2, 4],
-      "react/jsx-indent-props": [2, 4],
-      "react/sort-comp": [0]
+      "jsx-quotes": [
+        "error",
+        "prefer-double"
+      ],
+      "lines-around-comment": [
+        0
+      ],
+      "react/jsx-indent": [
+        2,
+        4
+      ],
+      "react/jsx-indent-props": [
+        2,
+        4
+      ],
+      "react/sort-comp": [
+        0
+      ]
     }
   },
   "eslintIgnore": [
@@ -120,6 +135,11 @@
     },
     "globals": {
       "window": {}
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
   }
 }
