@@ -34,6 +34,6 @@ const Modal = ({ isOpen, title, children, onRequestClose, onAfterOpen, contentLa
 };
 
 export default Modal;
-export Content from './Content';
-export Footer from './Footer';
-export Wrapper from './Wrapper';
+export { default as Content } from './Content';
+export { default as Footer } from './Footer';
+export { default as Wrapper } from './Wrapper';
