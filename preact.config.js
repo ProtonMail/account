@@ -1,16 +1,28 @@
-const preactCliLodash = require('preact-cli-lodash');
+import { join as joinPath } from 'path';
 
-module.exports = function (config, env, helpers) {
-  config.node.process = 'mock';
-  config.node.Buffer = true;
-  // console.log(config);
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
-  preactCliLodash(config);
+const openpgpDep = (name) => {
+    return joinPath(__dirname, `node_modules/frontend-commons/node_modules/pmcrypto/node_modules/openpgp/dist/${name}`);
+};
 
-  const loaders = config.module.loaders;
-  const babelLoader = loaders.find(loader => loader.loader === 'babel-loader');
-  babelLoader.exclude = /node_modules/;
+export default (config, env, helpers) => {
+    config.node.process = 'mock';
+    config.node.Buffer = true;
 
-  const [ { index = null } = {} ] = helpers.getPluginsByName(config, 'UglifyJsPlugin');
-  (index !== null) && config.plugins.splice(index, 1);
+    // Add openpgp
+    config.plugins.push(
+        new CopyWebpackPlugin([
+            {
+                from: openpgpDep('openpgp.min.js')
+            },
+            {
+                from: openpgpDep('openpgp.worker.min.js')
+            }
+        ])
+    );
+
+    const loaders = config.module.rules;
+    const babelLoader = loaders.find((loader) => loader.loader === 'babel-loader');
+    babelLoader.exclude = /node_modules\/(?!frontend-commons)/;
 };

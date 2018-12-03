@@ -1,5 +1,6 @@
 import { route } from 'preact-router';
-import { addLocale, useLocale } from 'c-3po';
+import { addLocale, useLocale } from 'ttag';
+
 import { loadExtendedConfig } from 'frontend-commons/src/user/model';
 import * as userConnector from 'frontend-commons/src/auth/userConnector';
 import appProvider from 'frontend-commons/src/appProvider';
