@@ -5,9 +5,7 @@
                 "major": 1,
                 "minor": 0
             },
-            "ids": [
-                "https://account.protonmail.red"
-            ]
+            "ids": ["https://account.protonmail.red"]
         }
     ]
 }
